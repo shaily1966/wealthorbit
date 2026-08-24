@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7. The option chain · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0d0f12;--card:#15181d;--card2:#1a1e24;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b4bbc4;--ink3:#8b939d;--live:#60a5fa;--up:#4ade80;--down:#f87171;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 7 &middot; <b>The option chain</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"The option chain","html":"<p>Day 6 of 17</p><p>Everything from Days 4 and 5, on one screen.</p>"},{"id":"2","title":"What a chain is","html":"<p>Every option available on one stock, for one expiration, in one table.</p><p><strong>Calls on the left. Puts on the right. Strikes down the middle.</strong></p>"},{"id":"3","title":"Choosing the expiration first","html":"<p>A chain shows <strong>one expiration at a time.</strong></p><p>Most stocks have many: weekly, monthly, and further out.</p><blockquote>Pick the date first. Then read the strikes.</blockquote>"},{"id":"4","title":"The columns you'll actually use","html":"<table><thead><tr><th>Column</th><th>Tells you</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Bid</strong></td><td>What you&#x27;d receive selling</td></tr><tr><td><strong>Ask</strong></td><td>What you&#x27;d pay buying</td></tr><tr><td><strong>Volume</strong></td><td>Contracts traded today</td></tr><tr><td><strong>Open interest</strong></td><td>Contracts outstanding</td></tr><tr><td><strong>Implied volatility</strong></td><td>Expected movement, priced in</td></tr><tr><td><strong>Delta</strong></td><td><em>Day 9</em></td></tr></tbody></table>"},{"id":"5","title":"Reading a single row","html":"<p>Every row is <strong>two contracts</strong>, sharing one strike.</p><p>A call and a put. Same underlying, same strike, same expiration.</p><p>Different instruments, opposite purposes.</p>"},{"id":"6","title":"Our chain","html":"<p><strong>NORTH \u00b7 $50.00 \u00b7 30 days</strong></p><table><thead><tr><th>Call Bid</th><th>Call Ask</th><th><strong>STRIKE</strong></th><th>Put Bid</th><th>Put Ask</th></tr></thead><tbody><tr><td></td></tr><tr><td>5.40</td><td>5.60</td><td><strong>45.00</strong></td><td>0.55</td><td>0.65</td></tr><tr><td>3.45</td><td>3.60</td><td><strong>47.50</strong></td><td>1.15</td><td>1.25</td></tr><tr><td>2.00</td><td>2.10</td><td><strong>50.00</strong></td><td>2.05</td><td>2.15</td></tr><tr><td>1.00</td><td>1.10</td><td><strong>52.50</strong></td><td>3.50</td><td>3.65</td></tr><tr><td>0.45</td><td>0.55</td><td><strong>55.00</strong></td><td>5.40</td><td>5.60</td></tr><tr><td>0.08</td><td>0.18</td><td><strong>60.00</strong></td><td>10.10</td><td>10.45</td></tr></tbody></table>"},{"id":"7","title":"Notice the direction","html":"<p><strong>As strikes rise:</strong> calls get cheaper, puts get more expensive.</p><p>$45 call: $5.50 \u2192 $60 call: $0.13</p><p>$45 put: $0.60 \u2192 $60 put: $10.28</p><p>The two run in opposite directions. Always.</p>"},{"id":"8","title":"In, at, and out of the money","html":"<p><strong>Calls</strong></p><ul><li>In the money: strike <strong>below</strong> the price</li><li>At the money: strike <strong>at</strong> the price</li><li>Out of the money: strike <strong>above</strong></li></ul><p><strong>Puts: the reverse.</strong></p>"},{"id":"9","title":"Applied to our chain","html":"<p>NORTH at $50.</p><table><thead><tr><th>Strike</th><th>Call is</th><th>Put is</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>In the money</td><td>Out of the money</td></tr><tr><td>$47.50</td><td>In the money</td><td>Out of the money</td></tr><tr><td>$50</td><td>At the money</td><td>At the money</td></tr><tr><td>$52.50</td><td>Out of the money</td><td>In the money</td></tr><tr><td>$55</td><td>Out of the money</td><td>In the money</td></tr><tr><td>$60</td><td>Out of the money</td><td>In the money</td></tr></tbody></table>"},{"id":"10","title":"Why beginners invert this","html":"<p class='shout'>&quot;In the money&quot; means the right is worth using <strong>right now.</strong></p><p>A call to buy at $45 when shares cost $50: worth using.</p><p>A put to sell at $45 when shares fetch $50: worthless.</p><p>Reason it out. Don&#x27;t memorise it.</p>"},{"id":"11","title":"The spread, in the chain","html":"<p>$50 call: bid <strong>2.00</strong>, ask <strong>2.10</strong>. Spread <strong>$0.10</strong> \u2014 under 5%.</p><p>$60 call: bid <strong>0.08</strong>, ask <strong>0.18</strong>. Spread <strong>$0.10</strong> \u2014 over <strong>55%.</strong></p><p>Same ten cents. Completely different trade.</p>"},{"id":"12","title":"Judge the spread as a percentage","html":"<p class='shout'>Spread \u00f7 Ask</p><table><thead><tr><th>Strike</th><th>Call spread</th><th>As % of ask</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>$0.20</td><td>3.6%</td></tr><tr><td>$50</td><td>$0.10</td><td>4.8%</td></tr><tr><td>$55</td><td>$0.10</td><td>18.2%</td></tr><tr><td>$60</td><td>$0.10</td><td><strong>55.6%</strong></td></tr></tbody></table>"},{"id":"13","title":"The $60 call","html":"<p>Ask $0.18. Bid $0.08.</p><p>Buy it and immediately sell it: <strong>you lose 56%.</strong></p><p>Volume 40. Open interest 620.</p><blockquote>Cheap is not the same as good value.</blockquote>"},{"id":"14","title":"Volume and open interest, in the chain","html":"<table><thead><tr><th>Strike</th><th>Call vol</th><th>Call OI</th><th>Reading</th></tr></thead><tbody><tr><td></td></tr><tr><td>$50</td><td>3,100</td><td>12,400</td><td>Heavily traded, heavily held</td></tr><tr><td>$55</td><td>980</td><td>6,100</td><td>Active</td></tr><tr><td>$60</td><td>40</td><td>620</td><td>Nearly deserted</td></tr></tbody></table><p>Activity clusters near the current price.</p>"},{"id":"15","title":"The liquidity check","html":"<p>Before any trade, three glances:</p><ol><li><strong>Spread</strong> as a percentage of the ask</li><li><strong>Volume</strong> \u2014 is anyone trading it today?</li><li><strong>Open interest</strong> \u2014 does anyone hold it?</li></ol><blockquote>Two seconds. Never skipped.</blockquote>"},{"id":"16","title":"Implied volatility, in passing","html":"<p>A column showing what the market expects the stock to move.</p><p>Higher number, more expected movement, more expensive options.</p><blockquote>The full treatment is Day 8. For now, just notice the column exists.</blockquote>"},{"id":"17","title":"Putting Days 4 and 5 on the chain","html":"<p>You want the NORTH 52.50 call. You pay the <strong>ask: $1.10</strong> \u2192 $110.</p><ul><li>Break-even: $52.50 + $1.10 = <strong>$53.60</strong></li><li>NORTH must rise <strong>7.2%</strong> in 30 days</li><li>To exit immediately, you&#x27;d sell at the bid: $1.00</li></ul>"},{"id":"18","title":"And a covered call","html":"<p>You own 100 NORTH at $50. You sell the <strong>55 call at the bid: $0.45</strong> \u2192 $45.</p><ul><li>Break-even: <strong>$49.55</strong></li><li>Maximum profit: <strong>$545</strong> at $55 or above</li><li>Spread is 18% of the ask, so price it carefully</li></ul>"},{"id":"19","title":"Common mistakes","html":"<ul><li>Reading the ask when selling, or the bid when buying</li><li>Judging a spread in cents rather than as a percentage</li><li>Buying far out of the money options because they look cheap</li><li>Ignoring open interest entirely</li><li>Comparing strikes across different expirations by mistake</li><li>Using a market order</li></ul>"},{"id":"20","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Calls left, puts right, strikes down the middle, one expiration at a time</li><li>Rising strikes: calls cheaper, puts dearer</li><li>Moneyness is reasoned, not memorised</li><li>Judge spreads as a percentage of the ask</li><li>Liquidity is three glances before every trade</li><li>You buy at the ask and sell at the bid</li></ul><p><strong>Next: Day 7.</strong> Where an option&#x27;s price actually comes from.</p>"}], AU = {}, KEY = 'wo-day-06';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10. Time decay and volatility · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0d0f12;--card:#15181d;--card2:#1a1e24;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b4bbc4;--ink3:#8b939d;--live:#60a5fa;--up:#4ade80;--down:#f87171;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 10 &middot; <b>Time decay and volatility</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Time decay and volatility","html":"<p>Day 8 of 17</p><p>The two inputs that drive extrinsic value.</p>"},{"id":"2","title":"Where we stopped","html":"<p>Yesterday: buying more time gets progressively worse value per day.</p><p>Which means:</p><p class='shout'>Decay cannot be even.</p><p>The days nearest expiration are the expensive ones.</p>"},{"id":"3","title":"Theta","html":"<p>The rate at which an option loses extrinsic value as one day passes.</p><ul><li>Negative for buyers</li><li>Positive for sellers</li><li>Runs whether the market moves or not</li></ul>"},{"id":"4","title":"The decay curve","html":"<p>NORTH 50 call. At the money throughout. <strong>All extrinsic value.</strong></p><table><thead><tr><th>Days left</th><th>Price</th><th>Lost since last</th><th>Per day</th></tr></thead><tbody><tr><td></td></tr><tr><td>30</td><td>$2.05</td><td>\u2014</td><td>\u2014</td></tr><tr><td>21</td><td>$1.72</td><td>$0.33</td><td>4\u00a2</td></tr><tr><td>14</td><td>$1.40</td><td>$0.31</td><td>4\u00a2</td></tr><tr><td>7</td><td>$0.99</td><td>$0.41</td><td>6\u00a2</td></tr><tr><td>3</td><td>$0.65</td><td>$0.34</td><td>9\u00a2</td></tr><tr><td>1</td><td>$0.37</td><td>$0.27</td><td>14\u00a2</td></tr><tr><td>0</td><td>$0.00</td><td>$0.37</td><td><strong>37\u00a2</strong></td></tr></tbody></table>"},{"id":"5","title":"The shape","html":"<p>Not a slope. A <strong>curve.</strong></p><p>Gentle for most of the option&#x27;s life, then falling away steeply at the end.</p>"},{"id":"6","title":"Split the life in half","html":"<table><thead><tr><th>Period</th><th>Value lost</th></tr></thead><tbody><tr><td></td></tr><tr><td>Days 30 \u2192 15</td><td><strong>$0.60</strong></td></tr><tr><td>Days 15 \u2192 0</td><td><strong>$1.45</strong></td></tr></tbody></table><p>The second half of an option&#x27;s life destroys nearly <strong>two and a half times</strong> what the first half does.</p>"},{"id":"7","title":"The last day","html":"<p>$0.37 disappears in the final day.</p><p>That single day costs more than <strong>days 30 through 21 combined.</strong></p>"},{"id":"8","title":"Which side of this are you on?","html":"<table><thead><tr><th></th><th>Buyer</th><th>Seller</th></tr></thead><tbody><tr><td></td></tr><tr><td>Time is</td><td>Against you</td><td>For you</td></tr><tr><td>You are</td><td>Paying rent</td><td>Collecting rent</td></tr><tr><td>Nothing happens</td><td>You lose</td><td>You win</td></tr></tbody></table>"},{"id":"9","title":"This is why sellers get paid","html":"<p>An option seller&#x27;s business is <strong>letting the clock run.</strong></p><p>They do not need to be right about direction.</p><p>They need the stock to fail to reach the strike.</p><blockquote>Time is the only input that moves predictably. It is the only one you can build a business on.</blockquote>"},{"id":"10","title":"The trade-off nobody mentions","html":"<p>Short-dated options decay fastest \u2014 attractive if you&#x27;re selling.</p><p>They also leave <strong>no time to recover</strong> if the stock moves against you.</p><blockquote>Faster decay and less room are the same property.</blockquote>"},{"id":"11","title":"Implied volatility","html":"<p>The market&#x27;s expectation of how much a stock will move.</p><ul><li>Expressed as a percentage per year</li><li>Says nothing about <strong>direction</strong></li><li>Priced into every option, at every strike</li></ul>"},{"id":"12","title":"Same option, different expectations","html":"<p>NORTH 50 call, 30 days, at the money.</p><table><thead><tr><th>Implied volatility</th><th>Price</th></tr></thead><tbody><tr><td></td></tr><tr><td>20%</td><td>$1.14</td></tr><tr><td>28%</td><td>$1.60</td></tr><tr><td><strong>36%</strong></td><td><strong>$2.05</strong></td></tr><tr><td>60%</td><td>$3.43</td></tr></tbody></table><p>Same stock. Same strike. Same date.</p>"},{"id":"13","title":"It is an expectation, not a measurement","html":"<p>Implied volatility is not something the stock is doing.</p><p>It is what <strong>buyers and sellers currently agree</strong> it might do.</p><blockquote>Expectations change. When they do, your option&#x27;s price changes with them \u2014 even if the stock has not moved at all.</blockquote>"},{"id":"14","title":"Historical versus implied","html":"<p><strong>Historical volatility.</strong> How much it <em>has</em> moved. Measurable. A fact.</p><p><strong>Implied volatility.</strong> How much the market <em>expects</em> it to move. An opinion, expressed in a price.</p><p>They frequently disagree. That disagreement is where option sellers look for an edge.</p>"},{"id":"15","title":"Earnings","html":"<p>Before a scheduled announcement, nobody knows the result.</p><p>Uncertainty rises. <strong>Implied volatility rises. Options get expensive.</strong></p><p>After the announcement, the uncertainty is gone \u2014 whatever the result was.</p>"},{"id":"16","title":"The setup","html":"<p>NORTH reports tomorrow.</p><p>You buy the <strong>50 call, 7 days out.</strong></p><p>Implied volatility is <strong>65%</strong>, elevated for the event.</p><p><strong>Cost: $1.79</strong></p>"},{"id":"17","title":"The morning after","html":"<p>Earnings are out. Implied volatility falls back to <strong>36%.</strong> Six days left.</p><table><thead><tr><th>NORTH now</th><th>Call worth</th><th>Change</th></tr></thead><tbody><tr><td></td></tr><tr><td>$48</td><td>$0.23</td><td><strong>\u221287%</strong></td></tr><tr><td>$50</td><td>$0.92</td><td><strong>\u221249%</strong></td></tr><tr><td>$51</td><td>$1.51</td><td><strong>\u221216%</strong></td></tr><tr><td>$52</td><td>$2.26</td><td>+26%</td></tr><tr><td>$53</td><td>$3.12</td><td>+74%</td></tr></tbody></table>"},{"id":"18","title":"Read the $51 row again","html":"<p>NORTH <strong>rose 2%.</strong> You were right about direction.</p><p class='shout'>You lost 16%.</p><p>Break-even required NORTH at <strong>$51.40</strong> \u2014 a 2.8% move overnight.</p>"},{"id":"19","title":"Volatility crush","html":"<p>You paid for uncertainty. The announcement removed it.</p><p>The stock moving in your favour has to outrun the collapse in what you paid for.</p><blockquote>Being right about direction is not enough. It was never enough.</blockquote>"},{"id":"20","title":"The seller's version of the same fact","html":"<p>That elevated premium was not a gift.</p><p>It was <strong>compensation</strong> for the risk of a large overnight move.</p><p>Sometimes the move arrives.</p><blockquote>Fourth time: higher premium always means higher obligation.</blockquote>"},{"id":"21","title":"Common mistakes","html":"<ul><li>Buying options into earnings because &quot;something will happen&quot;</li><li>Assuming decay is steady across an option&#x27;s life</li><li>Holding long options into the final week without a reason</li><li>Selling premium purely because it looks high</li><li>Comparing option prices without checking implied volatility</li><li>Forgetting that volatility moves even when the stock doesn&#x27;t</li></ul>"},{"id":"22","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Theta is the daily loss of extrinsic value</li><li>Decay is a curve, not a slope \u2014 the second half costs 2.5\u00d7 the first</li><li>Time is against the buyer and for the seller, every single day</li><li>Implied volatility is an expectation, not a measurement</li><li>It rises into earnings and collapses after, regardless of the result</li><li>You can be right about direction and still lose</li></ul><p><strong>Next: Day 9.</strong> The Greeks. Putting numbers on all of this.</p>"}], AU = {}, KEY = 'wo-day-08';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>
