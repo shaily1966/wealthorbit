@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Growth Intelligence · WealthOrbit</title>
+<meta name="description" content="What a lump sum invested in any S&P 500 company or major ETF would be worth today, on a total-return basis including dividends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1c2027;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--up:#3ddc84;--down:#ff6b6b;--live:#5b9dff;--gold:#d4a94a;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px 110px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:52px 0 16px}
+h1{font-size:40px;letter-spacing:-.03em;margin:0 0 14px;font-weight:600}
+.sub{color:var(--ink2);margin:0 0 34px;max-width:56ch;font-size:18px}
+
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:24px;margin-bottom:16px}
+.controls{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px}
+label{display:block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+input,select{width:100%;background:var(--card2);border:1px solid var(--rule);border-radius:6px;
+ color:var(--ink);font:500 16px/1 var(--body);padding:14px 15px;-webkit-appearance:none;appearance:none}
+input:focus,select:focus{outline:2px solid var(--live);outline-offset:1px}
+#amt{font-family:var(--mono)}
+.amt{position:relative}.amt span{position:absolute;left:15px;top:14px;color:var(--ink3);font-family:var(--mono);pointer-events:none}
+.amt input{padding-left:29px}
+select{background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%237f8892' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 15px center;background-size:11px;padding-right:38px}
+
+/* searchable picker */
+.pick{position:relative}
+#sym{cursor:text}
+.list{position:absolute;top:calc(100% + 5px);left:0;right:0;max-height:320px;overflow-y:auto;
+ background:var(--card2);border:1px solid var(--rule);border-radius:8px;z-index:40;display:none;
+ box-shadow:0 16px 44px rgba(0,0,0,.55)}
+.list.on{display:block}
+.opt{padding:11px 15px;cursor:pointer;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule2)}
+.opt:last-child{border-bottom:none}
+.opt:hover,.opt.hi{background:#20252d}
+.opt b{font:600 13px/1 var(--mono);color:var(--ink);min-width:56px}
+.opt span{font-size:14px;color:var(--ink2);flex:1}
+.opt i{font-style:normal;font-size:11.5px;color:var(--ink3);font-family:var(--mono)}
+.none{padding:16px 15px;color:var(--ink3);font-size:14px}
+
+.result{text-align:center;padding:38px 24px 34px}
+.result .lead{font-size:15.5px;color:var(--ink2);margin:0 0 16px;max-width:44ch;margin-inline:auto}
+.result .big{font:600 62px/1 var(--mono);letter-spacing:-.035em;margin:0 0 14px;word-break:break-all}
+.result .delta{font:500 16px/1 var(--mono)}
+.result .cagr{font-size:14px;color:var(--ink3);margin:18px 0 0}
+.up{color:var(--up)}.down{color:var(--down)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:1px;
+ background:var(--rule);border:1px solid var(--rule);border-radius:11px;overflow:hidden;margin-bottom:16px}
+.st{background:var(--card);padding:18px 20px}
+.st .k{font:400 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:9px}
+.st .v{font:600 23px/1 var(--mono);display:block}
+
+svg.line{width:100%;height:200px;display:block;overflow:visible}
+.line path.s{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.line path.f{opacity:.13}
+.line path.bs{fill:none;stroke:var(--ink3);stroke-width:1.25;stroke-dasharray:3 3;opacity:.7}
+.axis{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);color:var(--ink3);margin-top:12px}
+.leg{display:flex;gap:22px;font-size:12.5px;color:var(--ink3);margin-top:15px;flex-wrap:wrap}
+.leg i{display:inline-block;width:14px;height:2px;margin-right:8px;vertical-align:3px}
+
+.notes{margin-top:46px;padding-top:32px;border-top:1px solid var(--rule)}
+.notes h2{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 18px}
+.notes p{margin:0 0 13px;font-size:14.5px;color:var(--ink2);max-width:68ch}
+.notes strong{color:var(--ink);font-weight:600}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);font:400 12.5px/1.7 var(--mono);color:var(--ink3)}
+.loading{text-align:center;padding:60px 20px;color:var(--ink3);font-family:var(--mono);font-size:14px}
+.hard{border-left:3px solid var(--gold)}
+.hlbl{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 20px}
+.hard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+.hd .k{font:400 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:9px}
+.hd .v{font:600 25px/1 var(--mono);display:block;margin-bottom:7px}
+.hd .s{font-size:12.5px;color:var(--ink3);display:block;line-height:1.5}
+
+.method{margin-top:56px;padding-top:44px;border-top:1px solid var(--rule)}
+.mlbl{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 16px}
+.mh{font-size:29px;letter-spacing:-.025em;margin:0 0 36px;font-weight:600;max-width:20ch;line-height:1.2}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:32px 40px}
+.m .mn{font:600 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);display:block;margin-bottom:12px}
+.m h3{font-size:18px;margin:0 0 10px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.m p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.65}
+.mclose{margin-top:44px;padding:30px 34px;background:var(--card);border:1px solid var(--rule);
+ border-left:3px solid var(--gold);border-radius:11px}
+.mq{font-size:23px;font-weight:600;letter-spacing:-.015em;margin:0 0 16px;line-height:1.35;max-width:26ch}
+.mclose p{color:var(--ink2);font-size:15px;max-width:64ch;margin:0 0 13px}
+@media(max-width:760px){.mgrid{grid-template-columns:1fr;gap:28px}.mh{font-size:23px}
+ .mq{font-size:19px}.mclose{padding:24px}}
+.hnote{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--rule2);font-size:14.5px;color:var(--ink2);max-width:64ch}
+@media(max-width:760px){.controls{grid-template-columns:1fr}.result .big{font-size:42px}
+ h1{font-size:30px}.wrap{padding:0 20px 80px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav style="border-bottom:1px solid #242830;position:sticky;top:0;z-index:50;background:rgba(10,12,15,.93);backdrop-filter:blur(10px)">
+<div style="max-width:1140px;margin:0 auto;padding:17px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#e8eaed">
+<span style="width:21px;height:21px;border:1.5px solid #d4a94a;border-radius:50%;display:inline-block"></span>
+<b style="font:600 17px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-.01em">WealthOrbit</b></a>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;font:400 14.5px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<a href="../course/" style="color:#7f8892;text-decoration:none">Course</a>
+<a href="../idea-intelligence/" style="color:#7f8892;text-decoration:none">Idea</a>
+<a href="../volatility/" style="color:#7f8892;text-decoration:none">Volatility</a>
+<a href="../growth/" style="color:#e8eaed;text-decoration:none">Growth</a>
+<a href="../markets/" style="color:#7f8892;text-decoration:none">Markets</a>
+<a href="../insurance/" style="color:#7f8892;text-decoration:none">Insurance</a>
+<a href="../course/" style="background:#5b9dff;color:#04101f;font-weight:600;font-size:14px;padding:10px 17px;border-radius:6px;text-decoration:none;white-space:nowrap">Start the course</a>
+</div></div></nav>
+<div class="wrap">
+
+  <p class="kicker">Intelligence · Compare</p>
+  <h1>Growth Intelligence</h1>
+  <p class="sub">What a lump sum would be worth today &mdash; and what you would have had to
+  sit through to collect it. Total return, dividends reinvested, across the S&amp;P 500 and major ETFs.</p>
+
+  <div id="boot" class="loading">Loading market data…</div>
+
+  <div id="app" style="display:none">
+    <div class="panel">
+      <div class="controls">
+        <div class="pick">
+          <label for="sym">Invested in</label>
+          <input id="sym" type="text" autocomplete="off" spellcheck="false" placeholder="Search 495 companies and ETFs…">
+          <div class="list" id="list"></div>
+        </div>
+        <div>
+          <label for="amt">Amount</label>
+          <div class="amt"><span>$</span><input id="amt" type="text" inputmode="numeric" value="1,000"></div>
+        </div>
+        <div>
+          <label for="yrs">Years ago</label>
+          <select id="yrs"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel result">
+      <p class="lead" id="lead"></p>
+      <p class="big" id="big">—</p>
+      <p class="delta" id="delta"></p>
+      <p class="cagr" id="cagr"></p>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="panel hard">
+      <p class="hlbl">What it would have taken</p>
+      <div class="hard-grid" id="hard"></div>
+      <p class="hnote" id="hnote"></p>
+    </div>
+
+    <div class="panel">
+      <svg class="line" id="chart" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+      <div class="axis"><span id="ax0"></span><span id="ax1"></span></div>
+      <div class="leg">
+        <span><i id="legc"></i><span id="legn"></span></span>
+        <span><i style="background:#7f8892"></i>S&amp;P 500 ETF, same period</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="method">
+    <p class="mlbl">The methodology</p>
+    <h2 class="mh">Four things this page is actually about.</h2>
+
+    <div class="mgrid">
+      <div class="m">
+        <span class="mn">01</span>
+        <h3>Compounding does the work, not timing</h3>
+        <p>Nothing on this page involves a decision after the first one. No entries, no exits,
+        no view on the market. The number at the top is what happened to someone who bought
+        once and did nothing.</p>
+      </div>
+      <div class="m">
+        <span class="mn">02</span>
+        <h3>Dividends are a large part of the answer</h3>
+        <p>These are total-return figures. Price-only charts, which is what most people look at,
+        understate the result on any dividend payer &mdash; sometimes by a third or more over
+        fifteen years.</p>
+      </div>
+      <div class="m">
+        <span class="mn">03</span>
+        <h3>Most individual names lost to the index</h3>
+        <p>The comparison against the S&amp;P 500 ETF is on every result deliberately. Try a
+        few names. The number of times the index wins is the finding, not a footnote.</p>
+      </div>
+      <div class="m">
+        <span class="mn">04</span>
+        <h3>Hindsight hides what it cost</h3>
+        <p>The drawdown figures above exist because the headline number is misleading on its own.
+        A holding that returned six times your money and fell 55% along the way is not the
+        same experience as the chart suggests.</p>
+      </div>
+    </div>
+
+    <div class="mclose">
+      <p class="mq">Owning things is the engine. Options are how you manage what you own.</p>
+      <p>This is an options education business publishing a buy-and-hold calculator, which looks
+      contradictory until you look at what the course actually teaches: covered calls on shares
+      you already hold, and cash-secured puts on companies you would be content to own.</p>
+      <p>Options are a tool for shaping an equity position &mdash; its income, its cost basis,
+      its downside. They are not a replacement for owning the equity, and any course that
+      suggests otherwise is selling something.</p>
+      <p style="margin-top:22px"><a href="../course/" style="color:var(--live);text-decoration:none">See what the course teaches &rarr;</a></p>
+    </div>
+  </section>
+
+  <div class="notes">
+    <h2>What this does and does not show</h2>
+    <p>Prices are <strong>dividend and split adjusted</strong>, so this is total return. A price-only
+    chart would understate the result on any dividend payer, in some cases by a wide margin.</p>
+    <p>It assumes you bought once, reinvested every dividend, and <strong>never sold</strong> —
+    including through every drawdown in the period. That is the hard part, and no calculator shows it.</p>
+    <p>It ignores <strong>tax and currency</strong>. A Canadian holding US equities has both to think
+    about, and the answer in Canadian dollars will differ.</p>
+    <p>Every name here is a <strong>current</strong> index member that survived. Companies removed
+    from the index, or that failed, do not appear — which flatters every result on this page.</p>
+    <p><strong>Past performance does not predict future results. Nothing here is a recommendation.</strong></p>
+  </div>
+
+  <footer>Data through 24 Aug 2026 · WealthOrbit<br>
+  Education only. Not investment, tax or legal advice.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let S, BENCH, cur = null;
+
+const money = v => '$' + Math.round(v).toLocaleString('en-US');
+const pctf  = v => (v>=0?'+':'\u2212') + Math.abs(v).toFixed(1) + '%';
+
+fetch('growth_data.json').then(r=>r.json()).then(d=>{
+  S = d.symbols; BENCH = d.benchmark;
+  $('boot').style.display='none'; $('app').style.display='block';
+  init();
+}).catch(()=>{ $('boot').textContent = 'Could not load market data.'; });
+
+function init(){
+  const keys = Object.keys(S);
+  const maxY = Math.floor((S[BENCH].series.length - 1) / 12);
+  [1,3,5,10,15,20].filter(y=>y<=maxY).forEach(y=>{
+    const o=document.createElement('option'); o.value=y; o.textContent=y+(y===1?' year':' years');
+    $('yrs').appendChild(o);
+  });
+  $('yrs').value = [15,10,5,3,1].find(y=>y<=maxY);
+  cur = keys.includes('AAPL') ? 'AAPL' : keys[0];
+
+  const label = k => `${S[k].name}  (${k})`;
+  $('sym').value = label(cur);
+
+  let hi = -1, shown = [];
+  const render_list = q => {
+    q = q.trim().toLowerCase();
+    shown = keys.filter(k => !q || k.toLowerCase().includes(q) ||
+                             S[k].name.toLowerCase().includes(q) ||
+                             (S[k].sector||'').toLowerCase().includes(q)).slice(0,120);
+    hi = -1;
+    $('list').innerHTML = shown.length
+      ? shown.map(k=>`<div class="opt" data-k="${k}"><b>${k}</b><span>${S[k].name}</span><i>${S[k].sector||''}</i></div>`).join('')
+      : '<div class="none">No match</div>';
+    $('list').classList.add('on');
+  };
+  const choose = k => { cur=k; $('sym').value=label(k); $('list').classList.remove('on'); render(); };
+
+  $('sym').addEventListener('focus', e=>{ e.target.select(); render_list(''); });
+  $('sym').addEventListener('input', e=>render_list(e.target.value));
+  $('sym').addEventListener('keydown', e=>{
+    const n = $('list').querySelectorAll('.opt');
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      e.preventDefault(); if(!n.length) return;
+      hi = e.key==='ArrowDown' ? Math.min(hi+1,n.length-1) : Math.max(hi-1,0);
+      n.forEach(x=>x.classList.remove('hi')); n[hi].classList.add('hi');
+      n[hi].scrollIntoView({block:'nearest'});
+    } else if(e.key==='Enter'){
+      e.preventDefault(); if(shown.length) choose(shown[hi>=0?hi:0]);
+    } else if(e.key==='Escape'){ $('list').classList.remove('on'); $('sym').blur(); }
+  });
+  $('list').addEventListener('mousedown', e=>{
+    const o=e.target.closest('.opt'); if(o){ e.preventDefault(); choose(o.dataset.k); }
+  });
+  document.addEventListener('click', e=>{ if(!e.target.closest('.pick')) $('list').classList.remove('on'); });
+
+  $('amt').addEventListener('input', e=>{
+    const raw=e.target.value.replace(/[^0-9]/g,'');
+    e.target.value = raw ? parseInt(raw,10).toLocaleString('en-US') : '';
+    render();
+  });
+  $('yrs').addEventListener('change', render);
+  render();
+}
+
+function slice(sym, yrs){
+  const s=S[sym].series, n=Math.min(yrs*12, s.length-1);
+  return s.slice(s.length-1-n);
+}
+function path(v,w,h,lo,hi,close){
+  const span=(hi-lo)||1, step=w/(v.length-1);
+  let d=v.map((x,i)=>`${i?'L':'M'}${(i*step).toFixed(1)},${(h-(x-lo)/span*h).toFixed(1)}`).join(' ');
+  if(close) d+=` L${w},${h} L0,${h} Z`;
+  return d;
+}
+
+function render(){
+  if(!cur) return;
+  const yrs=+$('yrs').value, amt=parseFloat($('amt').value.replace(/,/g,''))||0;
+  const ser=slice(cur,yrs); if(ser.length<2) return;
+  const p0=ser[0][1], p1=ser[ser.length-1][1];
+  const vals=ser.map(r=>amt*r[1]/p0), final=vals[vals.length-1];
+  const gain=final-amt, pct=amt?gain/amt*100:0;
+  const cagr=(Math.pow(p1/p0,1/yrs)-1)*100, cls=gain>=0?'up':'down';
+
+  $('lead').textContent = `${money(amt)} invested in ${S[cur].name} ${yrs}${yrs===1?' year ago':' years ago'} would be worth`;
+  $('big').textContent = money(final); $('big').className='big '+cls;
+  $('delta').innerHTML = `<span class="${cls}">${gain>=0?'+':'\u2212'}${money(Math.abs(gain)).slice(1)} · ${pctf(pct)}</span>`;
+  $('cagr').textContent = `${cagr.toFixed(1)}% a year, compounded, over ${yrs}${yrs===1?' year':' years'}`;
+
+  const bser=slice(BENCH,yrs), bvals=bser.map(r=>amt*r[1]/bser[0][1]);
+  const bfinal=bvals[bvals.length-1], beat=final-bfinal;
+  $('stats').innerHTML=`
+    <div class="st"><span class="k">Multiple</span><span class="v ${cls}">${(p1/p0).toFixed(2)}\u00d7</span></div>
+    <div class="st"><span class="k">Annualised</span><span class="v ${cagr>=0?'up':'down'}">${cagr.toFixed(1)}%</span></div>
+    <div class="st"><span class="k">Sector</span><span class="v" style="font-size:15px">${S[cur].sector||'\u2014'}</span></div>
+    <div class="st"><span class="k">Same in ${BENCH}</span><span class="v">${money(bfinal)}</span></div>
+    <div class="st"><span class="k">Difference</span><span class="v ${beat>=0?'up':'down'}">${beat>=0?'+':'\u2212'}${money(Math.abs(beat)).slice(1)}</span></div>`;
+
+  // --- what it would have taken ---
+  let peak=vals[0], mdd=0, mddPeakI=0, mddTroughI=0, curPeakI=0;
+  vals.forEach((v,i)=>{
+    if(v>peak){ peak=v; curPeakI=i; }
+    const dd=(peak-v)/peak;
+    if(dd>mdd){ mdd=dd; mddPeakI=curPeakI; mddTroughI=i; }
+  });
+  let recI=-1;
+  for(let i=mddTroughI;i<vals.length;i++){ if(vals[i]>=vals[mddPeakI]){ recI=i; break; } }
+  const recMonths = recI<0 ? null : recI-mddPeakI;
+
+  let worst12=0, worst12End=0;
+  for(let i=12;i<vals.length;i++){
+    const r=(vals[i]-vals[i-12])/vals[i-12];
+    if(r<worst12){ worst12=r; worst12End=i; }
+  }
+  const down = vals.filter((v,i)=>i>0 && v<vals[i-1]).length;
+  const mfmt = d => new Date(d).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+
+  $('hard').innerHTML=`
+    <div class="hd"><span class="k">Worst drawdown</span>
+      <span class="v down">−${(mdd*100).toFixed(0)}%</span>
+      <span class="s">${mfmt(ser[mddPeakI][0])} to ${mfmt(ser[mddTroughI][0])}<br>
+      ${money(vals[mddPeakI])} fell to ${money(vals[mddTroughI])}</span></div>
+    <div class="hd"><span class="k">Time to recover</span>
+      <span class="v">${recMonths===null?'Not yet':(recMonths+' mo')}</span>
+      <span class="s">${recMonths===null?'Still below the earlier peak':'From peak back to peak'}</span></div>
+    <div class="hd"><span class="k">Worst 12 months</span>
+      <span class="v ${worst12<0?'down':''}">${worst12<0?'−':''}${Math.abs(worst12*100).toFixed(0)}%</span>
+      <span class="s">Year ending ${mfmt(ser[worst12End][0])}</span></div>
+    <div class="hd"><span class="k">Months down</span>
+      <span class="v">${down} of ${vals.length-1}</span>
+      <span class="s">${(down/(vals.length-1)*100).toFixed(0)}% of months ended lower than the last</span></div>`;
+
+  $('hnote').innerHTML = mdd>0.25
+    ? `To reach the figure above you had to hold through a <strong>${(mdd*100).toFixed(0)}% decline</strong> and keep holding. The result is arithmetic. Sitting through that was the hard part, and this page cannot show you what it felt like at the time.`
+    : `This period was unusually kind. Most holdings, over most periods, ask more of you than this one did.`;
+
+  const W=800,H=200, all=vals.concat(bvals), lo=Math.min(...all), hi=Math.max(...all);
+  const col=gain>=0?'var(--up)':'var(--down)';
+  $('chart').innerHTML =
+    `<path class="f" d="${path(vals,W,H,lo,hi,true)}" fill="${col}"/>`+
+    `<path class="bs" d="${path(bvals,W,H,lo,hi,false)}"/>`+
+    `<path class="s" d="${path(vals,W,H,lo,hi,false)}" stroke="${col}"/>`;
+  $('legc').style.background=col; $('legn').textContent=S[cur].name;
+  const f=d=>new Date(d).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  $('ax0').textContent=f(ser[0][0]); $('ax1').textContent=f(ser[ser.length-1][0]);
+}
+</script>
+</body>
+</html>
