@@ -1,0 +1,9 @@
+id,published,underlying,structure,strike,expiry,entry_price,grade,iv_rank,max_loss,breakeven,invalidation,events,status,exit_date,exit_price,result_dollars,result_r,exit_reason,thesis_played_out
+2026-001,2026-07-06,NORTH,Bull put spread 45/50,45/50,2026-08-07,1.40,A+,68,360,48.60,Close below 47,None,CLOSED,2026-08-07,0.00,140,0.39,Expired worthless,Yes
+2026-002,2026-07-09,NORTH,Bear call spread 52.50/55,52.50/55,2026-08-07,1.45,A+,71,355,51.45,Close above 52,None,CLOSED,2026-07-28,3.10,-165,-0.46,Stopped out,No
+2026-003,2026-07-14,NORTH,Cash-secured put 47.50,47.50,2026-08-14,1.15,A+,64,4635,46.35,Close below 44,None,CLOSED,2026-08-14,0.00,115,0.02,Expired worthless,Yes
+2026-004,2026-07-20,NORTH,Bull call spread 50/55,50/55,2026-08-21,1.65,A+,31,165,51.65,Close below 49,Earnings 2026-08-12,CLOSED,2026-08-12,0.55,-110,-0.67,Invalidation hit,No
+2026-005,2026-07-27,NORTH,Iron condor 45/47.50/52.50/55,47.50/52.50,2026-08-28,0.95,A+,73,155,46.55/53.45,Breach either wing,None,CLOSED,2026-08-28,0.00,95,0.61,Expired worthless,Yes
+2026-006,2026-08-03,NORTH,Bull put spread 45/50,45/50,2026-09-04,1.35,A+,66,365,48.65,Close below 47,None,OPEN,,,,,,
+2026-007,2026-08-11,NORTH,Covered call 55,55,2026-09-11,0.45,A+,58,4955,49.55,Thesis change,None,OPEN,,,,,,
+2026-008,2026-08-18,NORTH,Bear call spread 52.50/55,52.50/55,2026-09-18,1.50,A+,70,350,51.50,Close above 52,None,OPEN,,,,,,

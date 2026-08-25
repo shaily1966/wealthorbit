@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>13. Spreads · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 13 &middot; <b>Spreads</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Spread strategies","html":"<p>Day 11 of 17</p><p>Two options, one position.</p>"},{"id":"2","title":"What a spread is","html":"<p>Buy one option. Sell another. <strong>Same underlying, same expiration, different strikes.</strong></p><p>The two legs are one position.</p><p class='shout'>Both ends of the outcome become finite.</p>"},{"id":"3","title":"The trade you're making","html":"<table><thead><tr><th>You give up</th><th>You get</th></tr></thead><tbody><tr><td></td></tr><tr><td>Unlimited upside</td><td>Lower cost</td></tr><tr><td></td><td>Closer break-even</td></tr><tr><td></td><td>A known maximum loss</td></tr></tbody></table><blockquote>Every spread is funded by selling away the part of the outcome you didn&#x27;t expect to reach.</blockquote>"},{"id":"4","title":"Bull call spread","html":"<p>Bullish. Debit.</p><table><thead><tr><th>Leg</th><th>Action</th><th>Fill</th></tr></thead><tbody><tr><td></td></tr><tr><td>50 call</td><td><strong>Buy</strong> at ask</td><td>$2.10</td></tr><tr><td>55 call</td><td><strong>Sell</strong> at bid</td><td>$0.45</td></tr></tbody></table><p class='shout'>Net debit: $1.65 \u2192 $165</p>"},{"id":"5","title":"Every outcome","html":"<p>Paid $165. Width $5.</p><table><thead><tr><th>NORTH</th><th>Spread worth</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>$0</td><td><strong>\u2212$165</strong></td></tr><tr><td>$50</td><td>$0</td><td><strong>\u2212$165</strong></td></tr><tr><td>$51.65</td><td>$165</td><td><strong>$0</strong></td></tr><tr><td>$53</td><td>$300</td><td><strong>+$135</strong></td></tr><tr><td>$55</td><td>$500</td><td><strong>+$335</strong></td></tr><tr><td>$60</td><td>$500</td><td><strong>+$335</strong></td></tr><tr><td>$70</td><td>$500</td><td><strong>+$335</strong></td></tr></tbody></table>"},{"id":"6","title":"The four numbers","html":"<table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Maximum loss</td><td><strong>$165</strong> \u2014 the debit</td></tr><tr><td>Maximum profit</td><td><strong>$335</strong></td></tr><tr><td>Break-even</td><td><strong>$51.65</strong></td></tr><tr><td>Both reached at</td><td>$50 and below \u00b7 $55 and above</td></tr></tbody></table>"},{"id":"7","title":"The arithmetic","html":"<p><strong>Width</strong> = $55 \u2212 $50 = $5 \u2192 $500</p><p><strong>Max loss</strong> = the debit = $165</p><p><strong>Max profit</strong> = width \u2212 debit = $500 \u2212 $165 = <strong>$335</strong></p><p><strong>Break-even</strong> = lower strike + debit = <strong>$51.65</strong></p><blockquote>Width and debit give you everything.</blockquote>"},{"id":"8","title":"Against buying the call outright","html":"<table><thead><tr><th></th><th>Long 50 call</th><th>Bull call spread</th></tr></thead><tbody><tr><td></td></tr><tr><td>Cost</td><td>$210</td><td><strong>$165</strong></td></tr><tr><td>Break-even</td><td>$52.10</td><td><strong>$51.65</strong></td></tr><tr><td>Max profit</td><td>Uncapped</td><td>$335</td></tr><tr><td>Max loss</td><td>$210</td><td>$165</td></tr></tbody></table><p><strong>You gave up everything above $55.</strong></p>"},{"id":"9","title":"Bear put spread","html":"<p>Bearish. Debit. The mirror.</p><table><thead><tr><th>Leg</th><th>Action</th><th>Fill</th></tr></thead><tbody><tr><td></td></tr><tr><td>50 put</td><td><strong>Buy</strong> at ask</td><td>$2.15</td></tr><tr><td>45 put</td><td><strong>Sell</strong> at bid</td><td>$0.55</td></tr></tbody></table><p>Net debit <strong>$1.60</strong> \u2192 $160</p><p>Max profit <strong>$340</strong> \u00b7 Break-even <strong>$48.40</strong></p>"},{"id":"10","title":"Debit and credit","html":"<p><strong>Debit spread.</strong> You pay to open. You want the stock to <strong>move</strong> to your strikes.</p><p><strong>Credit spread.</strong> You receive to open. You want the stock to <strong>stay away</strong> from your strikes.</p><blockquote>Long premium and short premium, from Day 10. Same two categories.</blockquote>"},{"id":"11","title":"Bull put spread","html":"<p>Bullish. Credit.</p><table><thead><tr><th>Leg</th><th>Action</th><th>Fill</th></tr></thead><tbody><tr><td></td></tr><tr><td>50 put</td><td><strong>Sell</strong> at bid</td><td>$2.05</td></tr><tr><td>45 put</td><td><strong>Buy</strong> at ask</td><td>$0.65</td></tr></tbody></table><p>Net credit <strong>$1.40</strong> \u2192 $140</p><p>Max loss <strong>$360</strong> \u00b7 Break-even <strong>$48.60</strong></p>"},{"id":"12","title":"Bear call spread","html":"<p>Bearish. Credit.</p><table><thead><tr><th>Leg</th><th>Action</th><th>Fill</th></tr></thead><tbody><tr><td></td></tr><tr><td>50 call</td><td><strong>Sell</strong> at bid</td><td>$2.00</td></tr><tr><td>55 call</td><td><strong>Buy</strong> at ask</td><td>$0.55</td></tr></tbody></table><p>Net credit <strong>$1.45</strong> \u2192 $145</p><p>Max loss <strong>$355</strong> \u00b7 Break-even <strong>$51.45</strong></p>"},{"id":"13","title":"All four","html":"<table><thead><tr><th>Spread</th><th>View</th><th>Type</th><th>Max profit</th><th>Max loss</th><th>Break-even</th></tr></thead><tbody><tr><td></td></tr><tr><td>Bull call 50/55</td><td>Bullish</td><td>Debit $165</td><td>$335</td><td>$165</td><td>$51.65</td></tr><tr><td>Bear put 50/45</td><td>Bearish</td><td>Debit $160</td><td>$340</td><td>$160</td><td>$48.40</td></tr><tr><td>Bull put 45/50</td><td>Bullish</td><td>Credit $140</td><td>$140</td><td>$360</td><td>$48.60</td></tr><tr><td>Bear call 50/55</td><td>Bearish</td><td>Credit $145</td><td>$145</td><td>$355</td><td>$51.45</td></tr></tbody></table>"},{"id":"14","title":"Same strikes, either way","html":"<p>Bullish on the $50\u2013$55 range. Two routes:</p><p><strong>Bull call spread</strong> \u2014 debit $1.65. Max profit $335. Break-even $51.65.</p><p><strong>Bull put spread</strong> \u2014 credit $3.25. Max profit $325. Break-even $51.75.</p><p class='shout'>Nearly identical positions.</p>"},{"id":"15","title":"So why choose one?","html":"<ul><li><strong>Capital.</strong> A debit spread ties up the debit. A credit spread ties up the width minus the credit.</li><li><strong>Assignment.</strong> Credit spreads with in-the-money short legs get assigned more.</li><li><strong>Liquidity.</strong> Trade the side of the chain with tighter spreads.</li></ul><blockquote>Not a strategy choice. A logistics choice.</blockquote>"},{"id":"16","title":"Read the risk and reward honestly","html":"<p><strong>Bull call 50/55:</strong> risk $165 to make $335. Roughly <strong>2 to 1</strong> in your favour.</p><p><strong>Bull put 45/50:</strong> risk $360 to make $140. Roughly <strong>2.6 to 1</strong> against you.</p><blockquote>Neither is better. The first wins less often. The second loses bigger.</blockquote>"},{"id":"17","title":"What defined risk actually buys you","html":"<p>You know the worst case <strong>before you enter.</strong></p><ul><li>No unlimited loss</li><li>No margin call from this position</li><li>The number you can size against</li></ul><blockquote>Day 15 needs this number. Without it, position sizing is guesswork.</blockquote>"},{"id":"18","title":"Four legs, four spreads to cross","html":"<p>Bull call 50/55 at <strong>mid</strong> prices: debit $1.55</p><p>At <strong>real fills</strong>: debit $1.65</p><p><strong>6% more, before anything happens.</strong></p><blockquote>Every leg you add is another bid-ask spread paid. Twice \u2014 opening and closing.</blockquote>"},{"id":"19","title":"Managing a spread","html":"<ul><li><strong>Close both legs together.</strong> Your platform trades them as one order.</li><li><strong>Never close the long leg alone.</strong> You&#x27;d be left holding a naked short.</li><li>Most spreads are closed early, not held to expiration</li><li>Watch the short leg as it approaches the money</li></ul>"},{"id":"20","title":"Assignment on the short leg","html":"<p>Your short leg can be assigned early.</p><p><strong>You are still protected</strong> \u2014 the long leg caps the damage.</p><p>But you may end up holding shares, and using capital, unexpectedly.</p><blockquote>Ex-dividend dates raise the risk on short calls. Day 3, Day 15.</blockquote>"},{"id":"21","title":"Common mistakes","html":"<ul><li>Not calculating max loss and max profit before entering</li><li>Opening at market instead of working a limit on the whole spread</li><li>Choosing a width without thinking about it</li><li>Legging in one side at a time</li><li>Closing the long leg and leaving a naked short</li><li>Forgetting that four spreads get crossed, not one</li></ul>"},{"id":"22","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>A spread is two options, one position, finite at both ends</li><li>Width and debit give you every number you need</li><li>Debit spreads want movement. Credit spreads want stillness.</li><li>Same strikes either way is nearly the same position</li><li>Defined risk is the number Day 15 sizes against</li><li>Every extra leg is another spread crossed, twice</li></ul><p><strong>Next: Day 12.</strong> Iron condors, straddles and strangles. Volatility as the trade.</p>"}], AU = {}, KEY = 'wo-day-11';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Volatility Table · WealthOrbit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0d0f12; --card:#15181d; --rule:#242830; --rule-2:#1e2229;
+  --ink:#e8eaed; --ink-2:#b4bbc4; --ink-3:#8b939d;
+  --hi:#f87171; --mid:#fbbf24; --lo:#4ade80; --live:#60a5fa;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+     -webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:52px 24px 100px}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+         color:var(--ink-3);margin:0 0 12px}
+h1{font-size:34px;letter-spacing:-.02em;margin:0 0 10px}
+.sub{color:var(--ink-2);margin:0 0 32px;max-width:60ch}
+
+.order{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink-2);
+       border-radius:6px;padding:20px 24px;margin-bottom:28px}
+.order h2{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ink-3);margin:0 0 10px}
+.order p{margin:0 0 10px;font-size:15px}
+.order p:last-child{margin:0}
+.order code{font-family:var(--mono);font-size:13.5px;color:var(--ink);
+            background:var(--rule-2);padding:2px 6px;border-radius:3px}
+
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+      background:var(--rule);border:1px solid var(--rule);border-radius:6px;
+      overflow:hidden;margin-bottom:28px}
+.fig{background:var(--card);padding:18px 20px}
+.fig .k{font:400 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+        color:var(--ink-3);display:block;margin-bottom:8px}
+.fig .v{font:600 26px/1 var(--mono);display:block}
+.fig .s{font-size:12.5px;color:var(--ink-3);display:block;margin-top:7px}
+
+.scroll{overflow-x:auto;margin:0 -24px;padding:0 24px}
+table{width:100%;min-width:1000px;border-collapse:collapse}
+th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+   color:var(--ink-3);padding:0 16px 12px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:13px 16px 13px 0;border-bottom:1px solid var(--rule-2);font-size:14px}
+tr:last-child td{border-bottom:none}
+.sym{font:600 14px/1 var(--mono)}
+.nm{color:var(--ink-2)}
+.sec{color:var(--ink-3);font-size:13px}
+.num{font-family:var(--mono);font-size:13.5px;text-align:right;width:70px}
+th.num,th.rk,th.ev{text-align:right}
+.range{padding-left:8px}
+
+.range{width:190px}
+.bar{display:flex;align-items:center;gap:8px}
+.bar .lo,.bar .hi{font:400 11px/1 var(--mono);color:var(--ink-3);width:20px}
+.bar .hi{text-align:right}
+.track{position:relative;flex:1;height:4px;background:var(--rule);border-radius:2px}
+.mark{position:absolute;top:-3px;width:3px;height:10px;border-radius:1px;
+      transform:translateX(-1.5px)}
+.mark.hi{background:var(--hi)} .mark.mid{background:var(--mid)} .mark.lo{background:var(--lo)}
+
+.rk{font:600 16px/1 var(--mono);text-align:right;width:56px}
+.bd{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;width:84px}
+td.hi,.rk.hi{color:var(--hi)} td.mid,.rk.mid{color:var(--mid)} td.lo,.rk.lo{color:var(--lo)}
+.hvc{color:var(--ink3)}
+.sp{font-weight:600}
+.prem{color:var(--lo)}
+.disc{color:var(--hi)}
+.ev{text-align:right;font-family:var(--mono);font-size:13px;width:70px}
+.soon{color:var(--live);font-weight:600} .far{color:var(--ink-3)} .none{color:var(--rule)}
+
+.key{display:flex;flex-wrap:wrap;gap:22px;margin:22px 0 0;font-size:13px;color:var(--ink-3)}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;
+       vertical-align:-1px}
+.notes{margin-top:48px;padding-top:32px;border-top:1px solid var(--rule)}
+.notes h2{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ink-3);margin:0 0 18px}
+.notes p{margin:0 0 13px;font-size:14.5px;color:var(--ink-2);max-width:68ch}
+.notes strong{color:var(--ink);font-weight:600}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);
+       font:400 12.5px/1.7 var(--mono);color:var(--ink-3)}
+@media(max-width:640px){.wrap{padding:36px 18px 80px}h1{font-size:27px}
+  .scroll{margin:0 -18px;padding:0 18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">WealthOrbit</p>
+  <h1>Volatility Table</h1>
+  <p class="sub">Where option premium sits today relative to each name's own twelve-month range.</p>
+
+  <div class="order">
+    <h2>What IV rank is</h2>
+    <p><code>(current IV &minus; 52-week low) &divide; (52-week high &minus; 52-week low) &times; 100</code></p>
+    <p>Implied volatility on its own tells you almost nothing. Thirty-six percent might be the
+    calmest a name has been all year, or the most expensive. Rank compares a name to itself,
+    which is the only comparison that means anything.</p>
+  </div>
+
+  <div class="order">
+    <h2>IV minus HV</h2>
+    <p><strong>Implied</strong> volatility is what the options market expects. <strong>Historical</strong>
+    volatility is what the stock actually delivered. The difference is the volatility risk premium
+    &mdash; what sellers are being paid above what has been happening.</p>
+    <p>A positive number is the normal state and is the reason premium selling exists at all.
+    A negative number means options are priced below what the stock has been doing, which is
+    unusual and worth understanding before acting on.</p>
+  </div>
+
+  <div class="figs">
+    <div class="fig"><span class="k">Names tracked</span><span class="v">30</span><span class="s">updated daily</span></div>
+    <div class="fig"><span class="k">Rich</span><span class="v hi">12</span><span class="s">rank 70 and above</span></div>
+    <div class="fig"><span class="k">Cheap</span><span class="v lo">9</span><span class="s">rank under 40</span></div>
+    <div class="fig"><span class="k">Earnings inside 14d</span><span class="v live">7</span><span class="s">check before any trade</span></div>
+    <div class="fig"><span class="k">Avg IV&minus;HV</span><span class="v prem">+9.5</span><span class="s">30 of 30 priced above realised</span></div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr>
+        <th>Symbol</th><th>Name</th><th class="num">IV</th><th class="num">HV</th>
+        <th class="num">IV&minus;HV</th><th>52-week IV range</th><th class="rk">Rank</th>
+        <th>Reading</th><th class="ev">Earnings</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="sym">MSFT</td>
+          <td class="nm">Microsoft</td>
+          <td class="num">39.6</td>
+          <td class="num hvc">36.2</td>
+          <td class="num sp prem">+3.4</td>
+          <td class="range">
+            <div class="bar"><span class="lo">17</span>
+              <div class="track"><i class="mark hi" style="left:97.0%"></i></div>
+              <span class="hi">40</span></div>
+          </td>
+          <td class="rk hi">97</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">SPY</td>
+          <td class="nm">S&P 500 ETF</td>
+          <td class="num">73.5</td>
+          <td class="num hvc">63.5</td>
+          <td class="num sp prem">+10.0</td>
+          <td class="range">
+            <div class="bar"><span class="lo">29</span>
+              <div class="track"><i class="mark hi" style="left:94.3%"></i></div>
+              <span class="hi">76</span></div>
+          </td>
+          <td class="rk hi">94</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">META</td>
+          <td class="nm">Meta Platforms</td>
+          <td class="num">49.8</td>
+          <td class="num hvc">34.1</td>
+          <td class="num sp prem">+15.7</td>
+          <td class="range">
+            <div class="bar"><span class="lo">21</span>
+              <div class="track"><i class="mark hi" style="left:93.9%"></i></div>
+              <span class="hi">52</span></div>
+          </td>
+          <td class="rk hi">94</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">10d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">COST</td>
+          <td class="nm">Costco</td>
+          <td class="num">80.3</td>
+          <td class="num hvc">59.0</td>
+          <td class="num sp prem">+21.3</td>
+          <td class="range">
+            <div class="bar"><span class="lo">30</span>
+              <div class="track"><i class="mark hi" style="left:91.2%"></i></div>
+              <span class="hi">85</span></div>
+          </td>
+          <td class="rk hi">91</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">11d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">QQQ</td>
+          <td class="nm">Nasdaq 100 ETF</td>
+          <td class="num">56.4</td>
+          <td class="num hvc">37.1</td>
+          <td class="num sp prem">+19.3</td>
+          <td class="range">
+            <div class="bar"><span class="lo">26</span>
+              <div class="track"><i class="mark hi" style="left:90.1%"></i></div>
+              <span class="hi">60</span></div>
+          </td>
+          <td class="rk hi">90</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">WMT</td>
+          <td class="nm">Walmart</td>
+          <td class="num">60.1</td>
+          <td class="num hvc">46.5</td>
+          <td class="num sp prem">+13.6</td>
+          <td class="range">
+            <div class="bar"><span class="lo">21</span>
+              <div class="track"><i class="mark hi" style="left:87.4%"></i></div>
+              <span class="hi">66</span></div>
+          </td>
+          <td class="rk hi">87</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">7d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">NVDA</td>
+          <td class="nm">NVIDIA</td>
+          <td class="num">25.6</td>
+          <td class="num hvc">15.9</td>
+          <td class="num sp prem">+9.7</td>
+          <td class="range">
+            <div class="bar"><span class="lo">12</span>
+              <div class="track"><i class="mark hi" style="left:85.8%"></i></div>
+              <span class="hi">28</span></div>
+          </td>
+          <td class="rk hi">86</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">8d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">GOOGL</td>
+          <td class="nm">Alphabet</td>
+          <td class="num">91.8</td>
+          <td class="num hvc">57.5</td>
+          <td class="num sp prem">+34.3</td>
+          <td class="range">
+            <div class="bar"><span class="lo">30</span>
+              <div class="track"><i class="mark hi" style="left:84.4%"></i></div>
+              <span class="hi">103</span></div>
+          </td>
+          <td class="rk hi">84</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">AVGO</td>
+          <td class="nm">Broadcom</td>
+          <td class="num">42.5</td>
+          <td class="num hvc">28.8</td>
+          <td class="num sp prem">+13.7</td>
+          <td class="range">
+            <div class="bar"><span class="lo">21</span>
+              <div class="track"><i class="mark hi" style="left:79.4%"></i></div>
+              <span class="hi">48</span></div>
+          </td>
+          <td class="rk hi">79</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">14d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">AAPL</td>
+          <td class="nm">Apple</td>
+          <td class="num">38.6</td>
+          <td class="num hvc">36.2</td>
+          <td class="num sp prem">+2.4</td>
+          <td class="range">
+            <div class="bar"><span class="lo">13</span>
+              <div class="track"><i class="mark hi" style="left:78.6%"></i></div>
+              <span class="hi">46</span></div>
+          </td>
+          <td class="rk hi">79</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">4d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">AMD</td>
+          <td class="nm">Advanced Micro Devices</td>
+          <td class="num">56.7</td>
+          <td class="num hvc">41.5</td>
+          <td class="num sp prem">+15.2</td>
+          <td class="range">
+            <div class="bar"><span class="lo">36</span>
+              <div class="track"><i class="mark hi" style="left:74.3%"></i></div>
+              <span class="hi">64</span></div>
+          </td>
+          <td class="rk hi">74</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="soon">9d</span></td>
+        </tr>
+        <tr>
+          <td class="sym">BA</td>
+          <td class="nm">Boeing</td>
+          <td class="num">80.3</td>
+          <td class="num hvc">69.1</td>
+          <td class="num sp prem">+11.2</td>
+          <td class="range">
+            <div class="bar"><span class="lo">35</span>
+              <div class="track"><i class="mark hi" style="left:72.0%"></i></div>
+              <span class="hi">98</span></div>
+          </td>
+          <td class="rk hi">72</td>
+          <td class="bd hi">Rich</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">LLY</td>
+          <td class="nm">Eli Lilly</td>
+          <td class="num">38.2</td>
+          <td class="num hvc">27.4</td>
+          <td class="num sp prem">+10.8</td>
+          <td class="range">
+            <div class="bar"><span class="lo">17</span>
+              <div class="track"><i class="mark mid" style="left:69.2%"></i></div>
+              <span class="hi">48</span></div>
+          </td>
+          <td class="rk mid">69</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">UNH</td>
+          <td class="nm">UnitedHealth</td>
+          <td class="num">68.7</td>
+          <td class="num hvc">59.8</td>
+          <td class="num sp prem">+8.9</td>
+          <td class="range">
+            <div class="bar"><span class="lo">34</span>
+              <div class="track"><i class="mark mid" style="left:66.5%"></i></div>
+              <span class="hi">86</span></div>
+          </td>
+          <td class="rk mid">66</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">GLD</td>
+          <td class="nm">Gold ETF</td>
+          <td class="num">18.4</td>
+          <td class="num hvc">12.7</td>
+          <td class="num sp prem">+5.7</td>
+          <td class="range">
+            <div class="bar"><span class="lo">8</span>
+              <div class="track"><i class="mark mid" style="left:64.9%"></i></div>
+              <span class="hi">24</span></div>
+          </td>
+          <td class="rk mid">65</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">CAT</td>
+          <td class="nm">Caterpillar</td>
+          <td class="num">48.9</td>
+          <td class="num hvc">42.8</td>
+          <td class="num sp prem">+6.1</td>
+          <td class="range">
+            <div class="bar"><span class="lo">27</span>
+              <div class="track"><i class="mark mid" style="left:62.3%"></i></div>
+              <span class="hi">62</span></div>
+          </td>
+          <td class="rk mid">62</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">DIA</td>
+          <td class="nm">Dow 30 ETF</td>
+          <td class="num">23.3</td>
+          <td class="num hvc">15.4</td>
+          <td class="num sp prem">+7.9</td>
+          <td class="range">
+            <div class="bar"><span class="lo">15</span>
+              <div class="track"><i class="mark mid" style="left:61.2%"></i></div>
+              <span class="hi">29</span></div>
+          </td>
+          <td class="rk mid">61</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">TSLA</td>
+          <td class="nm">Tesla</td>
+          <td class="num">60.5</td>
+          <td class="num hvc">53.0</td>
+          <td class="num sp prem">+7.5</td>
+          <td class="range">
+            <div class="bar"><span class="lo">33</span>
+              <div class="track"><i class="mark mid" style="left:52.5%"></i></div>
+              <span class="hi">85</span></div>
+          </td>
+          <td class="rk mid">53</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">HD</td>
+          <td class="nm">Home Depot</td>
+          <td class="num">60.9</td>
+          <td class="num hvc">48.4</td>
+          <td class="num sp prem">+12.5</td>
+          <td class="range">
+            <div class="bar"><span class="lo">33</span>
+              <div class="track"><i class="mark mid" style="left:51.8%"></i></div>
+              <span class="hi">87</span></div>
+          </td>
+          <td class="rk mid">52</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">JPM</td>
+          <td class="nm">JPMorgan Chase</td>
+          <td class="num">29.3</td>
+          <td class="num hvc">22.3</td>
+          <td class="num sp prem">+7.0</td>
+          <td class="range">
+            <div class="bar"><span class="lo">16</span>
+              <div class="track"><i class="mark mid" style="left:45.5%"></i></div>
+              <span class="hi">45</span></div>
+          </td>
+          <td class="rk mid">46</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">XOM</td>
+          <td class="nm">Exxon Mobil</td>
+          <td class="num">74.8</td>
+          <td class="num hvc">58.4</td>
+          <td class="num sp prem">+16.4</td>
+          <td class="range">
+            <div class="bar"><span class="lo">42</span>
+              <div class="track"><i class="mark mid" style="left:45.4%"></i></div>
+              <span class="hi">114</span></div>
+          </td>
+          <td class="rk mid">45</td>
+          <td class="bd mid">Middling</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">TLT</td>
+          <td class="nm">20+ Year Treasury ETF</td>
+          <td class="num">21.0</td>
+          <td class="num hvc">17.2</td>
+          <td class="num sp prem">+3.8</td>
+          <td class="range">
+            <div class="bar"><span class="lo">12</span>
+              <div class="track"><i class="mark lo" style="left:38.2%"></i></div>
+              <span class="hi">36</span></div>
+          </td>
+          <td class="rk lo">38</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">CVX</td>
+          <td class="nm">Chevron</td>
+          <td class="num">24.1</td>
+          <td class="num hvc">22.8</td>
+          <td class="num sp prem">+1.3</td>
+          <td class="range">
+            <div class="bar"><span class="lo">16</span>
+              <div class="track"><i class="mark lo" style="left:37.7%"></i></div>
+              <span class="hi">37</span></div>
+          </td>
+          <td class="rk lo">38</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">AMZN</td>
+          <td class="nm">Amazon</td>
+          <td class="num">27.5</td>
+          <td class="num hvc">21.4</td>
+          <td class="num sp prem">+6.1</td>
+          <td class="range">
+            <div class="bar"><span class="lo">20</span>
+              <div class="track"><i class="mark lo" style="left:31.7%"></i></div>
+              <span class="hi">44</span></div>
+          </td>
+          <td class="rk lo">32</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">JNJ</td>
+          <td class="nm">Johnson & Johnson</td>
+          <td class="num">28.8</td>
+          <td class="num hvc">25.3</td>
+          <td class="num sp prem">+3.5</td>
+          <td class="range">
+            <div class="bar"><span class="lo">22</span>
+              <div class="track"><i class="mark lo" style="left:27.2%"></i></div>
+              <span class="hi">48</span></div>
+          </td>
+          <td class="rk lo">27</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">IWM</td>
+          <td class="nm">Russell 2000 ETF</td>
+          <td class="num">30.0</td>
+          <td class="num hvc">21.4</td>
+          <td class="num sp prem">+8.6</td>
+          <td class="range">
+            <div class="bar"><span class="lo">25</span>
+              <div class="track"><i class="mark lo" style="left:21.4%"></i></div>
+              <span class="hi">49</span></div>
+          </td>
+          <td class="rk lo">21</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">V</td>
+          <td class="nm">Visa</td>
+          <td class="num">34.1</td>
+          <td class="num hvc">30.7</td>
+          <td class="num sp prem">+3.4</td>
+          <td class="range">
+            <div class="bar"><span class="lo">27</span>
+              <div class="track"><i class="mark lo" style="left:14.8%"></i></div>
+              <span class="hi">77</span></div>
+          </td>
+          <td class="rk lo">15</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">BAC</td>
+          <td class="nm">Bank of America</td>
+          <td class="num">12.1</td>
+          <td class="num hvc">10.4</td>
+          <td class="num sp prem">+1.7</td>
+          <td class="range">
+            <div class="bar"><span class="lo">10</span>
+              <div class="track"><i class="mark lo" style="left:12.8%"></i></div>
+              <span class="hi">28</span></div>
+          </td>
+          <td class="rk lo">13</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">NFLX</td>
+          <td class="nm">Netflix</td>
+          <td class="num">34.9</td>
+          <td class="num hvc">33.0</td>
+          <td class="num sp prem">+1.9</td>
+          <td class="range">
+            <div class="bar"><span class="lo">34</span>
+              <div class="track"><i class="mark lo" style="left:5.0%"></i></div>
+              <span class="hi">62</span></div>
+          </td>
+          <td class="rk lo">5</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+        <tr>
+          <td class="sym">USO</td>
+          <td class="nm">Crude Oil ETF</td>
+          <td class="num">10.5</td>
+          <td class="num hvc">7.0</td>
+          <td class="num sp prem">+3.5</td>
+          <td class="range">
+            <div class="bar"><span class="lo">10</span>
+              <div class="track"><i class="mark lo" style="left:4.8%"></i></div>
+              <span class="hi">22</span></div>
+          </td>
+          <td class="rk lo">5</td>
+          <td class="bd lo">Cheap</td>
+          <td class="ev"><span class="none">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key">
+    <span><i style="background:var(--hi)"></i>Rich — premium expensive for this name</span>
+    <span><i style="background:var(--mid)"></i>Middling</span>
+    <span><i style="background:var(--lo)"></i>Cheap — premium low for this name</span>
+    <span><i style="background:var(--live)"></i>Earnings within fourteen days</span>
+    <span><i style="background:var(--lo)"></i>IV above HV &mdash; options priced above realised movement</span>
+  </div>
+
+  <div class="notes">
+    <h2>How to read it, and how not to</h2>
+    <p>A high rank means premium is expensive <strong>relative to this name's own history</strong>.
+    It does not mean the options are overpriced. Volatility can be high for good reasons and go higher.</p>
+    <p>A low rank means the opposite, and the same caution applies in reverse.</p>
+    <p>Rank says nothing about <strong>direction</strong>. Volatility measures the size of expected
+    movement, not which way.</p>
+    <p>Where earnings fall inside the next fourteen days, expect rank to be elevated for that reason
+    alone, and expect it to fall sharply after the announcement regardless of the result.</p>
+    <p><strong>This is a measurement, not a recommendation. Nothing here is advice to trade.</strong></p>
+  </div>
+
+  <footer>
+    Updated 25 Aug 2026 · WealthOrbit<br>
+    Education only. Not investment, tax or legal advice.
+  </footer>
+
+</div>
+</body>
+</html>

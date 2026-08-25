@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2. Brokerage accounts and buying power · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 2 &middot; <b>Brokerage accounts and buying power</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Accounts, permissions, and buying power","html":"<p>Day 2 of 17</p><p>No strategies today. Infrastructure.</p>"},{"id":"2","title":"What a brokerage account actually is","html":"<p>Your broker holds your assets and executes your orders.</p><p>They also decide:</p><ul><li>What you may trade</li><li>How much capacity you have</li><li>When they require more collateral</li><li><strong>When they close your position without asking</strong></li></ul>"},{"id":"3","title":"Cash accounts","html":"<ul><li>No borrowing</li><li>No leverage</li><li>Cannot short</li><li>Only strategies fully covered by cash or held shares</li><li>Settlement timing limits reuse of funds</li></ul>"},{"id":"4","title":"Margin accounts","html":"<ul><li>Borrow against your holdings</li><li>Enables short selling</li><li>Enables spreads and uncovered strategies</li><li>Interest on borrowed funds</li><li>Margin call risk</li></ul>"},{"id":"5","title":"Registered and non-registered","html":"<p><strong>Non-registered.</strong> Taxable. Margin available. Full strategy range, subject to approval.</p><p><strong>Registered (TFSA, RRSP, FHSA).</strong> Tax-advantaged. Structurally <strong>cash accounts</strong>.</p><blockquote>No margin. No shorting. Regardless of your approval level.</blockquote><p>Full treatment: <strong>Day 17.</strong></p>"},{"id":"6","title":"What you can do, where","html":"<table><thead><tr><th></th><th>Cash</th><th>Margin</th><th>Registered</th></tr></thead><tbody><tr><td></td></tr><tr><td>Buy calls and puts</td><td>Yes</td><td>Yes</td><td>Usually</td></tr><tr><td>Covered calls</td><td>Yes</td><td>Yes</td><td>Usually</td></tr><tr><td>Cash-secured puts</td><td>Yes</td><td>Yes</td><td><strong>Broker dependent</strong></td></tr><tr><td>Spreads</td><td>No</td><td>Yes</td><td>Generally no</td></tr><tr><td>Uncovered options</td><td>No</td><td>Level 4</td><td>No</td></tr><tr><td>Short stock</td><td>No</td><td>Yes</td><td>No</td></tr></tbody></table>"},{"id":"7","title":"Permission is separate from your account","html":"<p>Opening an account does not give you options access.</p><p>Options permission is a <strong>separate application</strong>, granted at a <strong>level</strong>.</p><blockquote>You can have a funded margin account and be unable to place a single option trade.</blockquote>"},{"id":"8","title":"The approval levels","html":"<table><thead><tr><th>Level</th><th>Unlocks</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>1</strong></td><td>Covered calls, protective puts</td></tr><tr><td><strong>2</strong></td><td>Buying calls and puts. Usually cash-secured puts</td></tr><tr><td><strong>3</strong></td><td>Spreads. Defined risk</td></tr><tr><td><strong>4</strong></td><td>Uncovered writing. Undefined risk</td></tr></tbody></table><p>Registered accounts typically cap at level 2.</p>"},{"id":"9","title":"Ask for more than you need","html":"<p>Request <strong>level 3</strong> now, even though you won&#x27;t use it until Day 11.</p><ul><li>Upgrading later is a new application</li><li>Approval can take days</li><li>Requesting costs nothing</li><li>Having permission doesn&#x27;t oblige you to use it</li></ul>"},{"id":"10","title":"The suitability questionnaire","html":"<p>They ask about income, net worth, liquid assets, experience, objectives.</p><p>They are assessing:</p><ul><li>Whether you can absorb a loss at this level</li><li>Whether you understand what you&#x27;re requesting</li><li>Their own regulatory obligation</li></ul>"},{"id":"11","title":"Answer it honestly","html":"<p class='shout'>Do not overstate your experience.</p><ul><li>The questions exist partly to protect you</li><li>A misstated application is a bad position if something goes wrong</li><li>A level you&#x27;re not ready for is not a privilege</li><li>You can reapply as experience grows</li></ul>"},{"id":"12","title":"Four words that are not the same thing","html":"<p><strong>Account value</strong></p><p><strong>Cash balance</strong></p><p><strong>Buying power</strong></p><p><strong>Margin capacity</strong></p>"},{"id":"13","title":"Account value and net liquidation value","html":"<p><strong>Account value.</strong> Cash plus the market value of your positions.</p><p><strong>Net liquidation value.</strong> What you&#x27;d have if everything closed right now, at current prices.</p><p>Once you hold options, these differ. Closing means crossing the spread.</p>"},{"id":"14","title":"Cash balance","html":"<p>The actual cash in the account.</p><p>Two things beginners miss:</p><ul><li>Cash may be <strong>committed</strong> \u2014 securing a short put</li><li>Cash may be <strong>unsettled</strong> \u2014 not yet reusable</li></ul>"},{"id":"15","title":"Buying power","html":"<p class='shout'>What your broker will currently let you commit.</p><p>Depends on:</p><ul><li>Your cash</li><li>The value and type of your holdings</li><li>How risky your broker considers them</li><li>Your existing positions</li><li>Your account type</li></ul><blockquote>Recalculated continuously. It moves when your positions move.</blockquote>"},{"id":"16","title":"Buying power is not available cash","html":"<p>$10,000 cash in a margin account might show <strong>$20,000 buying power.</strong></p><p>That does not mean you have $20,000.</p><p>It means the broker will let you control $20,000 of exposure, using your $10,000 as collateral.</p><blockquote>Everything beyond your cash is borrowed, carries interest, and can be recalled.</blockquote>"},{"id":"17","title":"Buying power reduction","html":"<p>Sell an option \u2192 you <strong>receive</strong> premium. Cash goes <strong>up</strong>.</p><p>At the same moment, buying power goes <strong>down</strong>. Often by far more.</p><p>Why: you accepted an obligation. The broker reserves capacity against it.</p><blockquote>Sell a put for $200. Watch thousands disappear from buying power.</blockquote>"},{"id":"18","title":"Maintenance margin and excess liquidity","html":"<p><strong>Maintenance margin.</strong> The minimum collateral your broker requires.</p><p><strong>Excess liquidity.</strong> Your cushion above that minimum.</p><p class='shout'>When excess liquidity hits zero, the broker acts.</p><p>Watch this number. Not account value.</p>"},{"id":"19","title":"Realized and unrealized","html":"<p><strong>Unrealized.</strong> Open positions, marked at current prices. Not yours yet.</p><p><strong>Realized.</strong> Closed. Actual outcome.</p><p>Neither is a fact until the position closes.</p>"},{"id":"20","title":"What margin does to a losing position","html":"<p>$20,000 of exposure. $10,000 of your cash.</p><p>The position falls <strong>15%.</strong></p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Position now worth</td><td>$17,000</td></tr><tr><td>You have lost</td><td>$3,000</td></tr><tr><td>As a share of your money</td><td><strong>30%</strong></td></tr><tr><td>Broker&#x27;s requirement</td><td>Unchanged</td></tr><tr><td>Excess liquidity</td><td>Falling fast</td></tr></tbody></table><blockquote>Margin doesn&#x27;t create the loss. It converts a moderate one into a serious one.</blockquote>"},{"id":"21","title":"Margin calls and forced liquidation","html":"<p>If excess liquidity goes negative, the broker may:</p><ul><li>Demand funds immediately</li><li><strong>Close positions of their choosing, at market, without consulting you</strong></li></ul><p>They act to protect themselves, not to optimise your outcome.</p><p>This happens in volatile markets. Which is when prices are worst.</p>"},{"id":"22","title":"The real cost of a trade","html":"<ol><li>Commission, both sides</li><li><strong>The bid-ask spread</strong></li><li>Assignment or exercise fees</li><li>Currency conversion</li><li>Market data subscriptions</li></ol>"},{"id":"23","title":"Look up your assignment fees","html":"<p>Assignment and exercise fees vary <strong>enormously</strong> between brokers.</p><p>Discount brokers: little or nothing.</p><p>Some bank brokerages: a flat fee, plus per contract, with a substantial minimum.</p><blockquote>If you run an income strategy, you will be assigned regularly.</blockquote><p>Find your broker&#x27;s fee schedule. Most people never have.</p>"},{"id":"24","title":"The platform this course teaches on","html":"<p><strong>Interactive Brokers.</strong> Every screenshot, chain and order ticket.</p><ul><li>Currency conversion cost far below the alternatives</li><li>Chain displays Greeks, implied volatility, liquidity</li><li>Assignment and exercise cost close to nothing</li><li>Risk displays make buying power reduction visible</li></ul>"},{"id":"25","title":"And the trade-offs","html":"<ul><li>Genuinely harder to learn than the simpler Canadian platforms</li><li>No RESP or LIRA at IBKR Canada</li><li>Significant US assets raise a US estate tax question for your accountant</li><li>A simpler platform may suit someone planning a few covered calls a year</li></ul><p class='shout'>This is the platform the course teaches on. It is not advice about where to keep your money.</p><p>Established elsewhere? Follow along and translate. Every concept transfers.</p>"},{"id":"26","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Permission is separate, and comes in levels</li><li>Four different numbers, not one</li><li>Buying power is a calculation, not a balance</li><li>Selling adds cash and consumes capacity at once</li><li>Excess liquidity predicts trouble</li><li>Margin converts moderate losses into serious ones</li><li>The spread is the largest hidden cost</li></ul><p><strong>Next: Day 2 Lab.</strong> Open and configure the account.</p><p><strong>Then Day 3.</strong> The language of markets.</p>"}], AU = {}, KEY = 'wo-day-02';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

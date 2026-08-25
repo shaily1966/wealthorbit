@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>8. Lab · Placing an order · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 8 &middot; <b>Lab · Placing an order</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"The order ticket","html":"<p>Day 6 Lab</p><p>You can read a chain. Now place an order from one.</p>"},{"id":"2","title":"Everything here is paper","html":"<p class='shout'>No real money. No exceptions.</p><p>You have not covered pricing, decay, the Greeks, trade selection or position sizing.</p><blockquote>First live order: <strong>not before Day 14.</strong></blockquote>"},{"id":"3","title":"Our worked example","html":"<p><strong>NORTH \u00b7 $50.00 \u00b7 30 days to expiration</strong></p><table><thead><tr><th>Call Bid</th><th>Call Ask</th><th><strong>STRIKE</strong></th><th>Put Bid</th><th>Put Ask</th></tr></thead><tbody><tr><td></td></tr><tr><td>5.40</td><td>5.60</td><td><strong>45.00</strong></td><td>0.55</td><td>0.65</td></tr><tr><td>3.45</td><td>3.60</td><td><strong>47.50</strong></td><td>1.15</td><td>1.25</td></tr><tr><td>2.00</td><td>2.10</td><td><strong>50.00</strong></td><td>2.05</td><td>2.15</td></tr><tr><td>1.00</td><td>1.10</td><td><strong>52.50</strong></td><td>3.50</td><td>3.65</td></tr><tr><td>0.45</td><td>0.55</td><td><strong>55.00</strong></td><td>5.40</td><td>5.60</td></tr><tr><td>0.08</td><td>0.18</td><td><strong>60.00</strong></td><td>10.10</td><td>10.45</td></tr></tbody></table>"},{"id":"4","title":"Step 1 \u2014 Find the underlying","html":"<p>Search the ticker. Open the option chain, not the stock page.</p><p><strong>Confirm before anything else:</strong></p><ul><li>Current price</li><li>That you are looking at <strong>options</strong>, not shares</li></ul>"},{"id":"5","title":"Step 2 \u2014 Select the expiration","html":"<p>A chain shows <strong>one expiration at a time.</strong></p><p>Pick the date <strong>before</strong> you look at any price.</p><blockquote>Comparing a price from one expiry against another is how &quot;cheap&quot; gets misread.</blockquote>"},{"id":"6","title":"Step 3 \u2014 Classify the strikes","html":"<p>NORTH at $50. Before choosing anything, know what you&#x27;re looking at.</p><table><thead><tr><th>Strike</th><th>Call is</th><th>Put is</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>ITM</td><td>OTM</td></tr><tr><td>$47.50</td><td>ITM</td><td>OTM</td></tr><tr><td>$50</td><td>ATM</td><td>ATM</td></tr><tr><td>$52.50</td><td>OTM</td><td>ITM</td></tr><tr><td>$55</td><td>OTM</td><td>ITM</td></tr></tbody></table>"},{"id":"7","title":"Step 4 \u2014 Compare bid and ask","html":"<table><thead><tr><th>Strike</th><th>Bid</th><th>Ask</th><th>Spread</th><th>% of ask</th></tr></thead><tbody><tr><td></td></tr><tr><td>$50 call</td><td>2.00</td><td>2.10</td><td>$0.10</td><td><strong>4.8%</strong></td></tr><tr><td>$52.50 call</td><td>1.00</td><td>1.10</td><td>$0.10</td><td><strong>9.1%</strong></td></tr><tr><td>$55 call</td><td>0.45</td><td>0.55</td><td>$0.10</td><td><strong>18.2%</strong></td></tr><tr><td>$60 call</td><td>0.08</td><td>0.18</td><td>$0.10</td><td><strong>55.6%</strong></td></tr></tbody></table><p>Same ten cents. Four different trades.</p>"},{"id":"8","title":"Step 5 \u2014 Run the liquidity check","html":"<p>Three glances, from Day 6:</p><ol><li>Spread as a <strong>percentage</strong></li><li><strong>Volume</strong> today</li><li><strong>Open interest</strong></li></ol><table><thead><tr><th></th><th>$52.50 call</th><th>$60 call</th></tr></thead><tbody><tr><td></td></tr><tr><td>Spread</td><td>9.1%</td><td>55.6%</td></tr><tr><td>Volume</td><td>1,450</td><td>40</td></tr><tr><td>Open interest</td><td>7,300</td><td>620</td></tr></tbody></table><p class='shout'>The $60 call fails.</p>"},{"id":"9","title":"Step 6 \u2014 Choose the strike","html":"<p>We&#x27;ll buy the <strong>52.50 call.</strong></p><ul><li>Passes liquidity</li><li>Out of the money, so all extrinsic value</li><li>A defined, modest cost</li></ul><blockquote>This is a mechanics exercise. Strike selection as a <em>decision</em> is Day 14.</blockquote>"},{"id":"10","title":"Step 7 \u2014 Read the premium correctly","html":"<p>You are <strong>buying</strong>, so you pay the <strong>ask.</strong></p><p class='shout'>$1.10</p><p>Not $1.00. Not $1.05.</p>"},{"id":"11","title":"Step 8 \u2014 Contract value","html":"<p>$1.10 \u00d7 100 shares \u00d7 1 contract = <strong>$110</strong></p><table><thead><tr><th>Quoted</th><th>You pay</th></tr></thead><tbody><tr><td></td></tr><tr><td>1 contract</td><td>$110</td></tr><tr><td>3 contracts</td><td>$330</td></tr><tr><td>10 contracts</td><td>$1,100</td></tr></tbody></table>"},{"id":"12","title":"Step 9 \u2014 Order type","html":"<table><thead><tr><th>Type</th><th>Use in options?</th></tr></thead><tbody><tr><td></td></tr><tr><td>Market</td><td><strong>Never</strong></td></tr><tr><td>Limit</td><td><strong>Always</strong></td></tr><tr><td>Stop</td><td>Later, with care</td></tr></tbody></table><p>A market order on the $60 call accepts a 55.6% spread.</p>"},{"id":"13","title":"Step 10 \u2014 Build the ticket","html":"<table><thead><tr><th>Field</th><th>Entry</th></tr></thead><tbody><tr><td></td></tr><tr><td>Action</td><td><strong>Buy to open</strong></td></tr><tr><td>Underlying</td><td>NORTH</td></tr><tr><td>Expiration</td><td>30 days</td></tr><tr><td>Strike</td><td>52.50</td></tr><tr><td>Type</td><td>Call</td></tr><tr><td>Quantity</td><td>1</td></tr><tr><td>Order</td><td><strong>Limit $1.05</strong></td></tr></tbody></table><p>Working the mid, not accepting the ask.</p>"},{"id":"14","title":"Step 11 \u2014 Review before submitting","html":"<p>Before you click:</p><ul><li><i class='box'></i><strong>Buy to open</strong>, not sell to open</li><li><i class='box'></i>Correct expiration</li><li><i class='box'></i>Correct strike</li><li><i class='box'></i>Quantity \u2014 remember \u00d7100</li><li><i class='box'></i>Limit, not market</li><li><i class='box'></i><strong>Maximum loss:</strong> $110 (or $105 if filled at the limit)</li><li><i class='box'></i>Buying power impact checked</li></ul>"},{"id":"15","title":"Step 12 \u2014 After the fill","html":"<p>You are filled at <strong>$1.05.</strong> You now hold:</p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Position</td><td>Long 1 NORTH 52.50 call</td></tr><tr><td>Cost</td><td><strong>$105</strong></td></tr><tr><td>Maximum loss</td><td><strong>$105</strong></td></tr><tr><td>Break-even</td><td><strong>$53.55</strong></td></tr><tr><td>Required move</td><td><strong>7.1%</strong> in 30 days</td></tr></tbody></table>"},{"id":"16","title":"Step 13 \u2014 Closing it","html":"<p>To close a long option: <strong>Sell to close.</strong> You receive the <strong>bid.</strong></p><p>NORTH rises to $54. The call is now bid $2.35, ask $2.45.</p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Sell at the bid</td><td>$2.35 \u2192 $235</td></tr><tr><td>Paid</td><td>$105</td></tr><tr><td><strong>Result</strong></td><td><strong>+$130</strong></td></tr></tbody></table><blockquote><strong>Deliverable:</strong> open and close one paper position. Record every number above.</blockquote>"}], AU = {}, KEY = 'wo-day-06-lab';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

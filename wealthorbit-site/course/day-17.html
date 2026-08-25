@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>19. The Canadian layer · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 19 &middot; <b>The Canadian layer</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"The Canadian layer","html":"<p>Day 17 of 17</p><p>The part no American course will teach you.</p>"},{"id":"2","title":"Everything so far was universal","html":"<p>A call is a call in Toronto, London or Singapore. The Greeks do not change at a border.</p><p class='shout'>What changes is the account it sits in, and how the income is taxed.</p>"},{"id":"3","title":"Two gates","html":"<p>Before any trade in a registered account:</p><p><strong>Gate 1 \u2014 CRA.</strong> Is it a qualified investment?</p><p><strong>Gate 2 \u2014 Your broker.</strong> Do they permit it in that account?</p><p class='shout'>Both must open. Either can stop you.</p>"},{"id":"4","title":"Gate 1 \u2014 Qualified investments","html":"<p>Listed options on shares of public companies <strong>are</strong> qualified investments under the Income Tax Act.</p><p>That part is settled.</p><blockquote>Options traded on recognised exchanges qualify. Private or non-listed arrangements do not.</blockquote>"},{"id":"5","title":"Gate 2 \u2014 The structure","html":"<p>Registered accounts are <strong>cash accounts.</strong></p><p>They cannot use margin. They cannot short.</p><table><thead><tr><th>Ruled out, structurally</th></tr></thead><tbody><tr><td></td></tr><tr><td>Naked writing</td></tr><tr><td>Short selling</td></tr><tr><td>Spreads</td></tr></tbody></table><p>Regardless of your approval level.</p>"},{"id":"6","title":"What is typically permitted","html":"<table><thead><tr><th></th><th>TFSA / RRSP</th></tr></thead><tbody><tr><td></td></tr><tr><td>Buy calls</td><td>Yes</td></tr><tr><td>Buy puts</td><td>Yes</td></tr><tr><td>Covered calls</td><td>Yes</td></tr><tr><td>Protective puts</td><td>Yes</td></tr><tr><td>Cash-secured puts</td><td><strong>Broker dependent</strong></td></tr><tr><td>Spreads</td><td>No</td></tr><tr><td>Naked writing</td><td>No</td></tr></tbody></table>"},{"id":"7","title":"Where brokers genuinely disagree","html":"<p>Cash-secured puts in a registered account.</p><p><strong>The CRA permits them.</strong> Not every broker does.</p><p>As of mid-2026: Questrade and Wealthsimple allow them. The banks permit them at your approved level. Interactive Brokers is worth confirming directly.</p><blockquote>Policies change. Confirm yours.</blockquote>"},{"id":"8","title":"Ask your broker one question","html":"<p class='shout'>&quot;Can I sell cash-secured puts in my registered account, and what option level do I need?&quot;</p><p>Phone them. They employ people to answer this.</p><blockquote>A support line is a legitimate research tool. Almost nobody uses it.</blockquote>"},{"id":"9","title":"Now the part that matters more","html":"<p>Being <strong>permitted</strong> to place a trade and having the income stay <strong>tax-free</strong> are two different questions.</p><p class='shout'>The second one is where the money is.</p><blockquote>Everything that follows is <strong>general information</strong> about how the rules are written and how a court has applied them. It is <strong>not tax advice</strong>, and it is not about your situation.</blockquote>"},{"id":"10","title":"A TFSA is not unconditionally tax-free","html":"<p>Under <strong>subsection 146.2(6)</strong> of the Income Tax Act, a TFSA that is <strong>carrying on a business</strong> is taxable on that business income.</p><p>The <strong>TFSA trust itself</strong> is the taxable person. The CRA does not need to reassess you personally.</p>"},{"id":"11","title":"Ahamed v The King","html":"<p><strong>2023 TCC 17.</strong> Affirmed by the Federal Court of Appeal, 2024.</p><p>A self-directed TFSA grew from roughly <strong>$15,000</strong> in contributions to over <strong>$617,000</strong> through frequent trading in speculative stocks.</p><p>The Tax Court held the TFSA was carrying on a business. The income was taxable.</p>"},{"id":"12","title":"The multifactor test","html":"<p>From CRA&#x27;s <strong>Income Tax Folio S3-F9-C1</strong>:</p><ul><li>Frequency of transactions</li><li>Duration of holdings</li><li>Knowledge of securities markets</li><li>Time spent on the activity</li><li>Use of financing</li><li>Nature of the securities</li></ul><p>Weighed <strong>together.</strong> No single factor decides.</p>"},{"id":"13","title":"There is no trade count","html":"<p>The CRA has consistently <strong>refused</strong> to publish a threshold.</p><p>Reassessments have typically involved <strong>hundreds</strong> of trades a year with holding periods of days or less.</p><blockquote>Nobody can tell you how many trades is too many. Anyone who gives you a number is inventing it.</blockquote>"},{"id":"14","title":"The part specific to us","html":"<p>CRA&#x27;s published views have categorised <strong>option writing</strong> as a business activity \u2014 alongside foreign currency trading and excessive stock trading.</p><p class='shout'>That is a direct statement about selling options.</p><p>A systematic covered call programme in a TFSA sits closer to that line than most people running one realise.</p>"},{"id":"15","title":"The asymmetry between the two accounts","html":"<p><strong>RRSP.</strong> The regime contains a business income exemption.</p><p><strong>TFSA.</strong> It does not.</p><p>That was Ahamed&#x27;s argument \u2014 that the two regimes mirror each other and the exemption should be read across.</p><p class='shout'>The court declined.</p>"},{"id":"16","title":"What that suggests","html":"<p>For <strong>systematic, repeated</strong> option writing, the RRSP does not carry the same statutory problem.</p><p>For <strong>occasional</strong> covered calls on long-term holdings, a TFSA looks very different from Ahamed&#x27;s facts.</p><blockquote>This is a conversation to have with your own accountant. It is not advice.</blockquote>"},{"id":"17","title":"Non-registered accounts","html":"<p>Two possible treatments:</p><p><strong>Capital gains</strong> \u2014 50% inclusion rate</p><p><strong>Business income</strong> \u2014 100% inclusion rate</p><p>The same multifactor test decides which.</p><p class='shout'>The difference is a doubling of taxable income.</p>"},{"id":"18","title":"Adjusted cost base and assignment","html":"<p>Your covered call is assigned. The shares are sold at the strike.</p><p>The <strong>premium</strong> you collected adjusts the proceeds.</p><p>Your gain is calculated against your <strong>adjusted cost base</strong>, not against what the shares were worth last week.</p><blockquote>Your broker&#x27;s T5008 may not reflect this correctly. Keep your own records.</blockquote>"},{"id":"19","title":"Superficial losses","html":"<p>Sell at a loss and reacquire an <strong>identical property</strong> within 30 days before or after, and the loss may be denied.</p><p>Options interact with this in ways that are not obvious.</p><blockquote>If you are harvesting losses, take advice. This is not a place to improvise.</blockquote>"},{"id":"20","title":"Currency","html":"<p>Most options liquidity is in <strong>US-listed</strong> names.</p><table><thead><tr><th>Cost</th><th>Typical</th></tr></thead><tbody><tr><td></td></tr><tr><td>Conversion at most Canadian brokers</td><td>~1.5%</td></tr><tr><td>Conversion at Interactive Brokers</td><td>~0.002%</td></tr><tr><td>Norbert&#x27;s Gambit on $10,000+</td><td>two commissions</td></tr></tbody></table><p><strong>Round-tripping</strong> \u2014 converting back after every trade \u2014 pays the spread twice.</p>"},{"id":"21","title":"Assignment fees","html":"<p>Vary <strong>enormously</strong> between brokers.</p><p>Discount brokers: little or nothing.</p><p>Some bank brokerages: a flat fee, plus per contract, with a substantial minimum.</p><blockquote>Run an income strategy and you will be assigned regularly. That is the strategy working.</blockquote>"},{"id":"22","title":"Records to keep","html":"<ul><li>Every trade: date, structure, premium, fills</li><li>Assignments, and the resulting cost base</li><li>Currency conversions and rates used</li><li>Your <strong>holding period</strong> on each position</li><li>Anything showing <strong>intent</strong> \u2014 your journal does this</li></ul><blockquote>Your Day 16 journal is also a tax record. That was not an accident.</blockquote>"},{"id":"23","title":"Your deliverable","html":"<p><strong>The account audit.</strong> For each of your own accounts:</p><ul><li><i class='box'></i>Which strategies are permitted \u2014 <strong>verified with your broker</strong>, not assumed</li><li><i class='box'></i>Options approval level held</li><li><i class='box'></i>Assignment and exercise fees, from the published schedule</li><li><i class='box'></i>Currency handling</li><li><i class='box'></i>Accountant identified, and a conversation booked</li></ul>"},{"id":"24","title":"Seventeen sessions","html":"<p>You can read a chain, price a structure, calculate your own risk, size a position, manage what you hold, and evaluate your own results honestly.</p><p><strong>Most people who trade options never assemble that.</strong></p><p class='shout'>What you do with it is yours.</p><p><em>Education only. Not investment, tax or legal advice.</em></p>"}], AU = {}, KEY = 'wo-day-17';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

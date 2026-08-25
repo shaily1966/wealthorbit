@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6. Put options · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 6 &middot; <b>Put options</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Put options","html":"<p>Day 5 of 17</p><p>Yesterday&#x27;s structure, reflected.</p>"},{"id":"2","title":"A put, in one sentence","html":"<p class='shout'>A put gives its holder the right to <strong>sell</strong> a stock at a fixed price, until a fixed date.</p><p>Someone else is obligated to buy it from them.</p>"},{"id":"3","title":"Calls and puts, side by side","html":"<table><thead><tr><th></th><th>Call</th><th>Put</th></tr></thead><tbody><tr><td></td></tr><tr><td>Buyer&#x27;s right</td><td>To <strong>buy</strong> at the strike</td><td>To <strong>sell</strong> at the strike</td></tr><tr><td>Seller&#x27;s obligation</td><td>To sell</td><td>To buy</td></tr><tr><td>Buyer profits when</td><td>Price <strong>rises</strong></td><td>Price <strong>falls</strong></td></tr><tr><td>Value at expiry</td><td>Stock \u2212 strike</td><td><strong>Strike \u2212 stock</strong></td></tr><tr><td>Break-even</td><td>Strike <strong>+</strong> premium</td><td>Strike <strong>\u2212</strong> premium</td></tr></tbody></table>"},{"id":"4","title":"Reading a put","html":"<p class='shout'>NORTH 50 Put, 30 days, $2.00</p><p>Same anatomy. Only the type changed.</p><p>NORTH trades at <strong>$50.</strong></p><p>Cost: $2.00 \u00d7 100 = <strong>$200</strong></p>"},{"id":"5","title":"What a put is worth at expiration","html":"<p class='shout'>Strike \u2212 Stock price</p><p>Negative means <strong>zero.</strong></p><table><thead><tr><th>NORTH at expiry</th><th>50 put is worth</th></tr></thead><tbody><tr><td></td></tr><tr><td>$55</td><td>$0</td></tr><tr><td>$50</td><td>$0</td></tr><tr><td>$48</td><td>$200</td></tr><tr><td>$45</td><td>$500</td></tr><tr><td>$40</td><td>$1,000</td></tr></tbody></table>"},{"id":"6","title":"Buying the put: every outcome","html":"<p>Paid <strong>$200.</strong></p><table><thead><tr><th>NORTH</th><th>Put worth</th><th>Your P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$55</td><td>$0</td><td><strong>\u2212$200</strong></td></tr><tr><td>$50</td><td>$0</td><td><strong>\u2212$200</strong></td></tr><tr><td>$48</td><td>$200</td><td><strong>$0</strong></td></tr><tr><td>$45</td><td>$500</td><td><strong>+$300</strong></td></tr><tr><td>$40</td><td>$1,000</td><td><strong>+$800</strong></td></tr></tbody></table>"},{"id":"7","title":"Break-even","html":"<p class='shout'>Strike \u2212 Premium</p><p>$50 \u2212 $2.00 = <strong>$48</strong></p><p>NORTH must fall <strong>4%</strong> in 30 days before you make a dollar.</p>"},{"id":"8","title":"The one asymmetry","html":"<p>A call&#x27;s upside has no ceiling. A stock can rise without limit.</p><p><strong>A put&#x27;s does.</strong> A stock can only fall to zero.</p><table><thead><tr><th>NORTH</th><th>Put worth</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$0</td><td>$5,000</td><td><strong>+$4,800</strong></td></tr></tbody></table><p>That is the maximum. Large, but finite.</p>"},{"id":"9","title":"The put buyer","html":"<table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Maximum loss</td><td><strong>$200.</strong> The premium.</td></tr><tr><td>Maximum gain</td><td><strong>$4,800.</strong> Large but capped.</td></tr><tr><td>Break-even</td><td><strong>$48</strong></td></tr><tr><td>Needs</td><td>Direction, magnitude, timing</td></tr></tbody></table>"},{"id":"10","title":"Two reasons to buy a put","html":"<p><strong>Speculation.</strong> You expect a fall and want limited-risk exposure to it.</p><p><strong>Protection.</strong> You <strong>own</strong> the shares and want a floor under them.</p><p>Same contract. Completely different purpose.</p>"},{"id":"11","title":"The protective put","html":"<p>Own 100 NORTH at $50. Buy the 45 put for $1.00.</p><ul><li>You may sell at $45, whatever happens</li><li>Cost: $100</li><li>Your floor: $45 \u2212 $1.00 = <strong>$44 net</strong></li></ul><p>Insurance, with a premium and a deductible.</p>"},{"id":"12","title":"The other side","html":"<p>Someone sold you that put.</p><p>They received <strong>$200</strong> and accepted an obligation: <strong>buy</strong> 100 shares at $50 if asked.</p>"},{"id":"13","title":"Selling the put: every outcome","html":"<p>Received <strong>$200.</strong></p><table><thead><tr><th>NORTH</th><th>They owe</th><th>Their P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$55</td><td>$0</td><td><strong>+$200</strong></td></tr><tr><td>$50</td><td>$0</td><td><strong>+$200</strong></td></tr><tr><td>$48</td><td>$200</td><td><strong>$0</strong></td></tr><tr><td>$45</td><td>$500</td><td><strong>\u2212$300</strong></td></tr><tr><td>$40</td><td>$1,000</td><td><strong>\u2212$800</strong></td></tr><tr><td>$0</td><td>$5,000</td><td><strong>\u2212$4,800</strong></td></tr></tbody></table>"},{"id":"14","title":"The put seller","html":"<table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Maximum gain</td><td><strong>$200.</strong> The premium.</td></tr><tr><td>Maximum loss</td><td><strong>$4,800</strong></td></tr><tr><td>Break-even</td><td><strong>$48</strong></td></tr><tr><td>Wins when</td><td>Price holds up, or does nothing</td></tr></tbody></table><blockquote>Not unlimited. Still very large relative to $200.</blockquote>"},{"id":"15","title":"Cash-secured puts","html":"<p>Set the cash aside first. Then sell the put.</p><ul><li>Sell the <strong>48 put</strong> for <strong>$1.10</strong> \u2014 receive $110</li><li>Reserve <strong>$4,800</strong> against possible assignment</li></ul><p>The obligation is now funded.</p>"},{"id":"16","title":"Cash-secured put: every outcome","html":"<p>Sold the 48 put for $110. Reserved $4,800.</p><table><thead><tr><th>NORTH</th><th>Outcome</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$55</td><td>Expires worthless</td><td><strong>+$110</strong></td></tr><tr><td>$50</td><td>Expires worthless</td><td><strong>+$110</strong></td></tr><tr><td>$48</td><td>Expires worthless</td><td><strong>+$110</strong></td></tr><tr><td>$46.90</td><td>Assigned</td><td><strong>$0</strong></td></tr><tr><td>$45</td><td>Assigned</td><td><strong>\u2212$190</strong></td></tr><tr><td>$40</td><td>Assigned</td><td><strong>\u2212$690</strong></td></tr></tbody></table>"},{"id":"17","title":"What assignment actually means","html":"<p>You buy 100 shares at $48. That&#x27;s $4,800.</p><p>You keep the $110 premium.</p><blockquote>Your effective cost per share: <strong>$46.90</strong></blockquote><p>You now own NORTH, bought below where it was trading when you sold the put.</p>"},{"id":"18","title":"The honest version","html":"<p><strong>The pitch:</strong> get paid to buy a stock at a discount.</p><p><strong>The reality:</strong> you&#x27;re obligated to buy at $48 whether NORTH is at $47 or $12.</p><blockquote>Only sell a put at a strike where you&#x27;d genuinely be happy to own the shares.</blockquote>"},{"id":"19","title":"Strike choice, and what it costs","html":"<p>Own nothing. Thirty days. Which put do you sell?</p><table><thead><tr><th>Strike</th><th>Premium</th><th>Break-even</th><th>Capital tied up</th><th>Return on capital</th></tr></thead><tbody><tr><td></td></tr><tr><td>$48</td><td>$110</td><td>$46.90</td><td>$4,800</td><td>2.29%</td></tr><tr><td>$45</td><td>$55</td><td>$44.45</td><td>$4,500</td><td>1.22%</td></tr><tr><td>$42</td><td>$25</td><td>$41.75</td><td>$4,200</td><td>0.60%</td></tr></tbody></table>"},{"id":"20","title":"Read that table properly","html":"<p>Higher premium is not a better trade.</p><p>The $48 put pays nearly four times the $42 put because <strong>assignment is far more likely.</strong></p><blockquote>You are being paid more because you are accepting more.</blockquote>"},{"id":"21","title":"Common mistakes","html":"<ul><li>Buying puts as a hedge without checking the cost against the risk</li><li>Selling puts on stocks you don&#x27;t want to own</li><li>Treating a cash-secured put as a discount rather than an obligation</li><li>Forgetting the reserved cash is unavailable for anything else</li><li>Choosing strikes by premium size</li><li>Ignoring an earnings date inside the contract&#x27;s life</li></ul>"},{"id":"22","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>A put is a right to sell. The seller owes the purchase.</li><li>Break-even is strike <strong>minus</strong> premium</li><li>Put upside is large but capped, because a stock stops at zero</li><li>Protective put: a floor, with a cost</li><li>Cash-secured put: an obligation to buy, paid for in advance</li><li>Only sell a put at a strike where you&#x27;d be happy to own</li></ul><p><strong>Next: Day 6.</strong> The option chain. Both of these, on a live screen.</p>"}], AU = {}, KEY = 'wo-day-05';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>9. Option pricing · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 9 &middot; <b>Option pricing</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Where an option's price comes from","html":"<p>Day 7 of 17</p>"},{"id":"2","title":"The question","html":"<p>The NORTH 50 call costs <strong>$2.10.</strong></p><p>Not $1.60. Not $3.40.</p><p class='shout'>Why that number?</p>"},{"id":"3","title":"Every option price has two parts","html":"<p class='shout'>Intrinsic value + Extrinsic value</p><p>What it&#x27;s worth <strong>right now.</strong></p><p>Plus what it might <strong>become.</strong></p>"},{"id":"4","title":"Intrinsic value","html":"<p>What you&#x27;d gain by exercising the right <strong>this instant.</strong></p><p><strong>Call:</strong> stock price \u2212 strike</p><p><strong>Put:</strong> strike \u2212 stock price</p><p>Negative means <strong>zero.</strong> Never less.</p>"},{"id":"5","title":"Intrinsic value on our calls","html":"<p>NORTH at $50.</p><table><thead><tr><th>Strike</th><th>Call mid</th><th>Intrinsic</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>$5.50</td><td><strong>$5.00</strong></td></tr><tr><td>$47.50</td><td>$3.53</td><td><strong>$2.50</strong></td></tr><tr><td>$50</td><td>$2.05</td><td><strong>$0</strong></td></tr><tr><td>$52.50</td><td>$1.05</td><td><strong>$0</strong></td></tr><tr><td>$55</td><td>$0.50</td><td><strong>$0</strong></td></tr><tr><td>$60</td><td>$0.13</td><td><strong>$0</strong></td></tr></tbody></table><p>Only in-the-money options have any.</p>"},{"id":"6","title":"Extrinsic value","html":"<p>Everything else.</p><p class='shout'>Price \u2212 Intrinsic value</p><p>What the market charges for the <strong>possibility</strong> that things improve before expiration.</p><p>Also called <strong>time value.</strong></p>"},{"id":"7","title":"The full split, calls","html":"<table><thead><tr><th>Strike</th><th>Price</th><th>Intrinsic</th><th>Extrinsic</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>$5.50</td><td>$5.00</td><td><strong>$0.50</strong></td></tr><tr><td>$47.50</td><td>$3.53</td><td>$2.50</td><td><strong>$1.03</strong></td></tr><tr><td>$50</td><td>$2.05</td><td>$0</td><td><strong>$2.05</strong></td></tr><tr><td>$52.50</td><td>$1.05</td><td>$0</td><td><strong>$1.05</strong></td></tr><tr><td>$55</td><td>$0.50</td><td>$0</td><td><strong>$0.50</strong></td></tr><tr><td>$60</td><td>$0.13</td><td>$0</td><td><strong>$0.13</strong></td></tr></tbody></table>"},{"id":"8","title":"Look at the extrinsic column","html":"<p>$0.50 \u2192 $1.03 \u2192 <strong>$2.05</strong> \u2192 $1.05 \u2192 $0.50 \u2192 $0.13</p><p class='shout'>It peaks at the money. Then falls off both ways.</p>"},{"id":"9","title":"Why it peaks there","html":"<p>Extrinsic value is priced <strong>uncertainty.</strong></p><ul><li>$60 call: NORTH almost certainly won&#x27;t get there. Little uncertainty.</li><li>$45 call: NORTH almost certainly stays above. Little uncertainty.</li><li>$50 call: genuinely could go either way. <strong>Maximum uncertainty.</strong></li></ul>"},{"id":"10","title":"Puts split the same way","html":"<table><thead><tr><th>Strike</th><th>Price</th><th>Intrinsic</th><th>Extrinsic</th></tr></thead><tbody><tr><td></td></tr><tr><td>$45</td><td>$0.60</td><td>$0</td><td><strong>$0.60</strong></td></tr><tr><td>$47.50</td><td>$1.20</td><td>$0</td><td><strong>$1.20</strong></td></tr><tr><td>$50</td><td>$2.10</td><td>$0</td><td><strong>$2.10</strong></td></tr><tr><td>$52.50</td><td>$3.58</td><td>$2.50</td><td><strong>$1.08</strong></td></tr><tr><td>$55</td><td>$5.50</td><td>$5.00</td><td><strong>$0.50</strong></td></tr><tr><td>$60</td><td>$10.28</td><td>$10.00</td><td><strong>$0.28</strong></td></tr></tbody></table><p>Same hump. Same peak at $50.</p>"},{"id":"11","title":"What you're actually buying","html":"<p>Buy the $45 call for $5.50 and you get:</p><ul><li><strong>$5.00</strong> of value you already have</li><li><strong>$0.50</strong> of possibility</li></ul><p>Buy the $50 call for $2.05 and you get:</p><ul><li><strong>$0</strong> of value you already have</li><li><strong>$2.05</strong> of pure possibility</li></ul>"},{"id":"12","title":"The part that expires","html":"<p class='shout'>Intrinsic value survives to expiration. Extrinsic value does not.</p><p>At expiration, every option is worth exactly its intrinsic value.</p><p>Extrinsic value always ends at <strong>zero.</strong></p>"},{"id":"13","title":"The five inputs","html":"<table><thead><tr><th>Input</th><th>Effect on a call</th></tr></thead><tbody><tr><td></td></tr><tr><td>Stock price</td><td>Higher \u2192 more valuable</td></tr><tr><td>Strike</td><td>Higher \u2192 less valuable</td></tr><tr><td><strong>Time remaining</strong></td><td>More \u2192 more valuable</td></tr><tr><td><strong>Implied volatility</strong></td><td>Higher \u2192 more valuable</td></tr><tr><td>Interest rates and dividends</td><td>Small, secondary</td></tr></tbody></table>"},{"id":"14","title":"Time is the one you can predict","html":"<p>Stock price moves unpredictably.</p><p>Volatility moves unpredictably.</p><p><strong>Time only runs one way, at a known rate.</strong></p><p>It is the single certainty in option pricing.</p>"},{"id":"15","title":"The same call, different expirations","html":"<p>NORTH 50 call, all at the money, no intrinsic value at all.</p><table><thead><tr><th>Days to expiration</th><th>Price</th></tr></thead><tbody><tr><td></td></tr><tr><td>7</td><td>$0.99</td></tr><tr><td>30</td><td>$2.05</td></tr><tr><td>90</td><td>$3.55</td></tr><tr><td>180</td><td>$5.02</td></tr></tbody></table>"},{"id":"16","title":"Notice it isn't proportional","html":"<p>$0.99 for 7 days.</p><p>$2.05 for 30 days \u2014 four times the days, <strong>twice</strong> the price.</p><p>$5.02 for 180 days \u2014 twenty-six times the days, <strong>five</strong> times the price.</p><blockquote>Buying more time gets progressively worse value per day.</blockquote>"},{"id":"17","title":"Implied volatility, briefly","html":"<p>Higher expected movement \u2192 more extrinsic value \u2192 more expensive options.</p><p>Two identical stocks. One calm, one prone to large moves.</p><p><strong>The volatile one&#x27;s options cost more.</strong> Every strike, every expiration.</p><blockquote>Full treatment: Day 8.</blockquote>"},{"id":"18","title":"Interest rates and dividends","html":"<p><strong>Interest rates.</strong> Small effect. Higher rates slightly raise calls, slightly lower puts.</p><p><strong>Dividends.</strong> An expected payment slightly lowers calls, slightly raises puts.</p><blockquote>Real, and last on your list. Know they exist.</blockquote>"},{"id":"19","title":"Common mistakes","html":"<ul><li>Thinking a cheap option is good value</li><li>Not knowing how much of a price is extrinsic</li><li>Assuming a longer expiration is proportionally better value</li><li>Expecting a small stock move to move the option one for one</li><li>Forgetting extrinsic value always ends at zero</li><li>Buying at the money options and being surprised by the decay</li></ul>"},{"id":"20","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Every price splits into intrinsic and extrinsic</li><li>Intrinsic is what exercising gains you right now</li><li>Extrinsic is priced uncertainty, and it peaks at the money</li><li>At expiration, extrinsic value is always zero</li><li>Five inputs. Time and volatility matter most.</li><li>Time is the only one that moves predictably</li></ul><p><strong>Next: Day 8.</strong> How extrinsic value disappears, and what volatility does to it.</p>"}], AU = {}, KEY = 'wo-day-07';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

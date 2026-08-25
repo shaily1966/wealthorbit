@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Market Intelligence · WealthOrbit</title>
+<style>
+:root{
+  --paper:#0a0c0f; --card:#13161b; --rule:#242830;
+  --ink:#e8eaed; --ink-2:#b4bbc4; --ink-3:#8b939d;
+  --up:#3ddc84; --down:#ff6b6b; --live:#5b9dff;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+     font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 96px}
+.tape{margin-bottom:40px}
+header{padding:44px 0 8px}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+         color:var(--ink-3);margin:0 0 12px}
+h1{font-size:34px;letter-spacing:-.02em;margin:0 0 10px}
+.sub{color:var(--ink-2);margin:0;max-width:56ch}
+section{padding:36px 0 0}
+.lbl{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+     color:var(--ink-3);margin:0 0 6px}
+.hint{color:var(--ink-3);font-size:14px;margin:0 0 18px;max-width:62ch}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:6px;
+       overflow:hidden;padding:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--rule);
+       font:400 12.5px/1.7 var(--mono);color:var(--ink-3)}
+@media(max-width:880px){.two{grid-template-columns:1fr}}
+@media(max-width:640px){.wrap{padding:0 18px 72px}h1{font-size:27px}}
+</style>
+</head>
+<body>
+<nav style="border-bottom:1px solid #242830;position:sticky;top:0;z-index:50;background:rgba(10,12,15,.93);backdrop-filter:blur(10px)">
+<div style="max-width:1140px;margin:0 auto;padding:17px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#e8eaed">
+<span style="width:21px;height:21px;border:1.5px solid #d4a94a;border-radius:50%;position:relative;display:inline-block"></span>
+<b style="font:600 17px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-.01em">WealthOrbit</b></a>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;font:400 14.5px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<a href="../course/" style="color:#7f8892;text-decoration:none">Course</a>
+<a href="../idea-intelligence/" style="color:#7f8892;text-decoration:none">Idea</a>
+<a href="../volatility/" style="color:#7f8892;text-decoration:none">Volatility</a>
+<a href="../growth/" style="color:#7f8892;text-decoration:none">Growth</a>
+<a href="../markets/" style="color:#e8eaed;text-decoration:none">Markets</a>
+<a href="../insurance/" style="color:#7f8892;text-decoration:none">Insurance</a>
+<a href="../course/" style="background:#5b9dff;color:#04101f;font-weight:600;font-size:14px;padding:10px 17px;border-radius:6px;text-decoration:none;white-space:nowrap">Start the course</a>
+</div></div></nav>
+<!-- ============ TICKER TAPE — put this on EVERY page ============ -->
+<div class="tape">
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {"proName":"TSX:TSX","title":"TSX"},
+    {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
+    {"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},
+    {"proName":"CAPITALCOM:VIX","title":"VIX"},
+    {"proName":"FX_IDC:USDCAD","title":"USD/CAD"},
+    {"proName":"TVC:USOIL","title":"Crude"},
+    {"proName":"TVC:GOLD","title":"Gold"},
+    {"proName":"TVC:CA10Y","title":"CA 10Y"}
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": true,
+  "displayMode": "adaptive",
+  "colorTheme": "dark",
+  "locale": "en"
+  }
+  </script>
+</div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">WealthOrbit</p>
+    <h1>Market Intelligence</h1>
+    <p class="sub">The context every trade sits inside. Check this before you check a chain.</p>
+  </header>
+
+  <!-- ============ MARKET OVERVIEW ============ -->
+  <section>
+    <p class="lbl">Overview</p>
+    <p class="hint">Indices, futures, currencies and rates. The first gate in the trade-selection funnel: is this a normal week?</p>
+    <div class="panel">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+      "colorTheme":"dark","dateRange":"3M","showChart":true,"locale":"en",
+      "largeChartUrl":"","isTransparent":true,"showSymbolLogo":true,
+      "showFloatingTooltip":true,"width":"100%","height":"520",
+      "plotLineColorGrowing":"rgba(74,222,128,1)","plotLineColorFalling":"rgba(248,113,113,1)",
+      "gridLineColor":"rgba(36,40,48,1)","scaleFontColor":"rgba(139,147,157,1)",
+      "belowLineFillColorGrowing":"rgba(74,222,128,0.12)",
+      "belowLineFillColorFalling":"rgba(248,113,113,0.12)",
+      "belowLineFillColorGrowingBottom":"rgba(74,222,128,0)",
+      "belowLineFillColorFallingBottom":"rgba(248,113,113,0)",
+      "symbolActiveColor":"rgba(96,165,250,0.12)",
+      "tabs":[
+        {"title":"Canada","symbols":[
+          {"s":"TSX:TSX","d":"S&P/TSX Composite"},
+          {"s":"TSX:XIU","d":"iShares TSX 60"},
+          {"s":"TSX:XIC","d":"iShares Capped Composite"},
+          {"s":"FX_IDC:USDCAD","d":"USD/CAD"},
+          {"s":"TVC:CA10Y","d":"Canada 10Y"}]},
+        {"title":"US Indices","symbols":[
+          {"s":"FOREXCOM:SPXUSD","d":"S&P 500"},
+          {"s":"FOREXCOM:NSXUSD","d":"Nasdaq 100"},
+          {"s":"FOREXCOM:DJI","d":"Dow 30"},
+          {"s":"CAPITALCOM:RTY","d":"Russell 2000"},
+          {"s":"CAPITALCOM:VIX","d":"VIX"}]},
+        {"title":"Rates & FX","symbols":[
+          {"s":"TVC:US10Y","d":"US 10Y"},
+          {"s":"TVC:US02Y","d":"US 2Y"},
+          {"s":"TVC:DXY","d":"Dollar Index"},
+          {"s":"FX_IDC:USDCAD","d":"USD/CAD"},
+          {"s":"FX:EURUSD","d":"EUR/USD"}]},
+        {"title":"Commodities","symbols":[
+          {"s":"TVC:USOIL","d":"Crude Oil"},
+          {"s":"TVC:GOLD","d":"Gold"},
+          {"s":"TVC:SILVER","d":"Silver"},
+          {"s":"CAPITALCOM:NATURALGAS","d":"Natural Gas"},
+          {"s":"TVC:COPPER","d":"Copper"}]}
+      ]}
+      </script>
+    </div>
+    </div>
+  </section>
+
+  <!-- ============ ECONOMIC CALENDAR + VOLATILITY ============ -->
+  <section>
+    <div class="two">
+      <div>
+        <p class="lbl">Scheduled events</p>
+        <p class="hint">Gate seven. Ten seconds, every trade, no exceptions.</p>
+        <div class="panel">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+          {"colorTheme":"dark","isTransparent":true,"width":"100%","height":"460",
+           "locale":"en","importanceFilter":"0,1","countryFilter":"ca,us"}
+          </script>
+        </div>
+        </div>
+      </div>
+      <div>
+        <p class="lbl">Volatility</p>
+        <p class="hint">The VIX is the market's expectation of movement — not its direction.</p>
+        <div class="panel">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+          {"symbols":[["Volatility Index","CAPITALCOM:VIX|6M"]],
+           "chartOnly":false,"width":"100%","height":"460","locale":"en",
+           "colorTheme":"dark","isTransparent":true,"autosize":false,
+           "showVolume":false,"showMA":false,"hideDateRanges":false,
+           "scalePosition":"right","scaleMode":"Normal",
+           "fontFamily":"-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+           "fontSize":"10","noTimeScale":false,"valuesTracking":"1",
+           "chartType":"area","lineColor":"rgba(96,165,250,1)",
+           "topColor":"rgba(96,165,250,0.25)","bottomColor":"rgba(96,165,250,0)",
+           "lineWidth":2}
+          </script>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HEATMAP ============ -->
+  <section>
+    <p class="lbl">Sector map</p>
+    <p class="hint">Where the money moved today. Sector context is step two of the funnel.</p>
+    <div class="panel">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+      {"exchanges":[],"dataSource":"SPX500","grouping":"sector","blockSize":"market_cap_basic",
+       "blockColor":"change","locale":"en","symbolUrl":"","colorTheme":"dark",
+       "hasTopBar":true,"isDataSetEnabled":true,"isZoomEnabled":true,
+       "hasSymbolTooltip":true,"isMonoSize":false,"width":"100%","height":"520"}
+      </script>
+    </div>
+    </div>
+  </section>
+
+  <footer>
+    Market data by TradingView. Quotes may be delayed.<br>
+    Education only. Not investment, tax or legal advice. Nothing here is a recommendation to trade.
+  </footer>
+
+</div>
+</body>
+</html>

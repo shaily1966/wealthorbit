@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>18. Building your process · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="lessons.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 18 &middot; <b>Building your process</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Your process","html":"<p>Day 16 of 17</p>"},{"id":"2","title":"Nothing new today","html":"<p>Every idea in this session, you already have.</p><p class='shout'>Today we assemble it into one document you own.</p>"},{"id":"3","title":"Why write it down","html":"<p>A process in your head changes when you are tired, excited, or annoyed about a loss.</p><p>A written one does not.</p><blockquote>You are not writing it for today. You are writing it for the day you least want to follow it.</blockquote>"},{"id":"4","title":"The twelve steps","html":"<table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>1</td><td>Market environment</td></tr><tr><td>2</td><td>Stock selection</td></tr><tr><td>3</td><td>Market thesis</td></tr><tr><td>4</td><td>Strategy selection</td></tr><tr><td>5</td><td>Strike selection</td></tr><tr><td>6</td><td>Expiration selection</td></tr><tr><td>7</td><td>Risk calculation</td></tr><tr><td>8</td><td>Position sizing</td></tr><tr><td>9</td><td>Trade entry</td></tr><tr><td>10</td><td>Management plan</td></tr><tr><td>11</td><td>Exit plan</td></tr><tr><td>12</td><td>Journal</td></tr></tbody></table>"},{"id":"5","title":"Steps 1 to 3 \u2014 Before you look at a chain","html":"<p><strong>1. Market environment.</strong> Calm or disorderly? Anything scheduled market-wide?</p><p><strong>2. Stock selection.</strong> Liquidity gate. Implied volatility rank.</p><p><strong>3. Market thesis.</strong> All four dials: direction, magnitude, timing, volatility.</p><blockquote>If step 3 fails, stop. There is no step 4.</blockquote>"},{"id":"6","title":"Steps 4 to 6 \u2014 The structure","html":"<p><strong>4. Strategy.</strong> Match the thesis. Name two rejected alternatives.</p><p><strong>5. Strike.</strong> Chosen by delta, read as rough probability.</p><p><strong>6. Expiration.</strong> Chosen from the theta curve, not by habit.</p>"},{"id":"7","title":"Steps 7 and 8 \u2014 The numbers","html":"<p><strong>7. Risk calculation.</strong> Maximum loss, maximum profit, break-even. Before entry, in your head.</p><p><strong>8. Position sizing.</strong> Risk budget \u00f7 maximum loss. Then check portfolio heat and correlation.</p><p class='shout'>These two are not optional.</p>"},{"id":"8","title":"Steps 9 to 12 \u2014 Execution and after","html":"<p><strong>9. Entry.</strong> Limit order. Work the price.</p><p><strong>10. Management plan.</strong> What you will do if it moves against you, decided now.</p><p><strong>11. Exit plan.</strong> Profit target and invalidation point, decided now.</p><p><strong>12. Journal.</strong> Recorded at entry, not reconstructed later.</p>"},{"id":"9","title":"Five checklists","html":"<table><thead><tr><th>Checklist</th><th>When</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Pre-trade</strong></td><td>Before committing</td></tr><tr><td><strong>Entry</strong></td><td>As you place it</td></tr><tr><td><strong>Monitoring</strong></td><td>While it runs</td></tr><tr><td><strong>Exit</strong></td><td>When closing</td></tr><tr><td><strong>Post-trade review</strong></td><td>After it is done</td></tr></tbody></table>"},{"id":"10","title":"Pre-trade checklist","html":"<ul><li><i class='box'></i>Market environment noted</li><li><i class='box'></i>Liquidity: spread %, volume, open interest</li><li><i class='box'></i>Implied volatility rank calculated</li><li><i class='box'></i>All four dials set</li><li><i class='box'></i>Structure chosen, <strong>two alternatives rejected with reasons</strong></li><li><i class='box'></i>Events check: earnings, ex-dividend, scheduled</li><li><i class='box'></i>Max loss, max profit, break-even calculated</li><li><i class='box'></i>Size calculated from risk budget</li><li><i class='box'></i>Portfolio heat checked, including correlation</li></ul>"},{"id":"11","title":"Entry checklist","html":"<ul><li><i class='box'></i>Limit order, never market</li><li><i class='box'></i>Whole spread priced as one order</li><li><i class='box'></i>Fill price recorded</li><li><i class='box'></i>Journal entry written <strong>before</strong> walking away</li></ul>"},{"id":"12","title":"Monitoring checklist","html":"<ul><li><i class='box'></i>Excess liquidity checked</li><li><i class='box'></i>Short legs: how close to the money?</li><li><i class='box'></i>Ex-dividend dates approaching?</li><li><i class='box'></i>Days to expiration \u2014 inside 21?</li><li><i class='box'></i>Has the thesis been invalidated?</li></ul>"},{"id":"13","title":"Exit checklist","html":"<ul><li><i class='box'></i>Reason for exiting, stated</li><li><i class='box'></i>Both legs closed together</li><li><i class='box'></i>Fill price recorded</li><li><i class='box'></i>Result recorded <strong>before</strong> the next trade</li></ul>"},{"id":"14","title":"Post-trade review","html":"<ul><li><i class='box'></i>Did I follow my own process?</li><li><i class='box'></i>Was the thesis right? Was the <strong>outcome</strong> right?</li><li><i class='box'></i>Did I size correctly?</li><li><i class='box'></i>Did I exit for the reason I planned?</li></ul><blockquote>A good outcome from a bad process is still a bad trade.</blockquote>"},{"id":"15","title":"The journal","html":"<p>Not a record of what happened.</p><p class='shout'>A tool for answering questions about yourself.</p>"},{"id":"16","title":"Record at entry","html":"<table><thead><tr><th>Field</th><th>Why</th></tr></thead><tbody><tr><td></td></tr><tr><td>Date, underlying, structure</td><td>Identification</td></tr><tr><td>All four dials</td><td>Your thesis, before the outcome</td></tr><tr><td>Max loss, max profit, break-even</td><td>What you believed you risked</td></tr><tr><td>Size, and the risk budget used</td><td>Whether you followed your rule</td></tr><tr><td>Implied volatility rank</td><td>Whether premium was rich or cheap</td></tr><tr><td><strong>Two rejected alternatives</strong></td><td>Whether you reasoned or pattern-matched</td></tr><tr><td>Planned exit and invalidation</td><td>What you intended</td></tr></tbody></table>"},{"id":"17","title":"Why entry data is different","html":"<p class='shout'>It is the only unbiased data you will ever have.</p><p>Everything recorded after the outcome is contaminated by knowing the outcome.</p><blockquote>Written at entry: &quot;I expect a 4% rise in 30 days.&quot; Written after: &quot;I thought it might go up a bit.&quot;</blockquote>"},{"id":"18","title":"Record at exit","html":"<table><thead><tr><th>Field</th></tr></thead><tbody><tr><td></td></tr><tr><td>Exit date and fill price</td></tr><tr><td>Result in dollars and in R</td></tr><tr><td>Reason for exiting</td></tr><tr><td>Did the thesis play out?</td></tr><tr><td>Did I follow the plan?</td></tr></tbody></table><p><strong>R</strong> = result \u00f7 maximum loss. Comparable across positions of different sizes.</p>"},{"id":"19","title":"Tagging","html":"<p>Tag each trade so categories can be compared later:</p><p><strong>Structure \u00b7 Direction \u00b7 IV rank band \u00b7 Days to expiration \u00b7 Sector</strong></p><p>Decide the tags <strong>now</strong>, and apply them consistently.</p>"},{"id":"20","title":"Reading the journal","html":"<p>After 30 to 50 trades, ask:</p><ul><li>Am I following my own process?</li><li>Where do I deviate, and what happens when I do?</li><li>Am I sizing consistently?</li><li>Do I exit for planned reasons or emotional ones?</li></ul>"},{"id":"21","title":"Now a demonstration","html":"<p>20 trades. <strong>One</strong> strategy. 70% win rate by design.</p><p>Each trade tagged with a <strong>randomly assigned colour</strong> \u2014 red, blue or green. The colour has no relationship to anything.</p><p>Sorted by colour:</p><table><thead><tr><th>Colour</th><th>Trades</th><th>Net</th><th>Average</th></tr></thead><tbody><tr><td></td></tr><tr><td>green</td><td>4</td><td><strong>+$380</strong></td><td><strong>+$95.0</strong></td></tr><tr><td>blue</td><td>8</td><td>+$260</td><td>+$32.5</td></tr><tr><td>red</td><td>8</td><td>+$260</td><td>+$32.5</td></tr></tbody></table>"},{"id":"22","title":"Green won every trade","html":"<p>Four for four. Nearly three times the average of the others.</p><p class='shout'>The colour was assigned at random.</p><p>Sorted by day of week, the same data made <strong>Wednesday</strong> look like a losing day at \u2212$71.70 average, on three trades.</p>"},{"id":"23","title":"What that means for your journal","html":"<p>Sort a small sample enough ways and something will always look like a pattern.</p><blockquote>Noticing a pattern in your own results is <strong>not evidence.</strong> It is a hypothesis, and an untested one.</blockquote><p><strong>What to do:</strong> write it down as a question, keep trading your process, and check again in 50 trades.</p>"},{"id":"24","title":"Your reason, reread","html":"<p>On Day 1 you wrote one sentence: why you wanted to learn options.</p><p><strong>Read it now.</strong></p><ul><li>Does it still describe what you want?</li><li>Is it something this process could deliver?</li><li>Has it changed?</li></ul><p><strong>Deliverable:</strong> your written trading process, in your own words.</p><p><strong>Next: Day 17.</strong> The Canadian layer.</p>"}], AU = {}, KEY = 'wo-day-16';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>
