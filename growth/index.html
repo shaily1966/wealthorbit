@@ -252,6 +252,8 @@ function init(){
   });
   $('yrs').value = [15,10,5,3,1].find(y=>y<=maxY);
   cur = keys.includes('AAPL') ? 'AAPL' : keys[0];
+
+  const label = k => `${S[k].name}  (${k})`;
   $('sym').value = label(cur);
 
   let hi = -1, shown = [];
@@ -266,7 +268,6 @@ function init(){
       : '<div class="none">No match</div>';
     $('list').classList.add('on');
   };
-  const label = k => `${S[k].name}  (${k})`;
   const choose = k => { cur=k; $('sym').value=label(k); $('list').classList.remove('on'); render(); };
 
   $('sym').addEventListener('focus', e=>{ e.target.select(); render_list(''); });
@@ -293,7 +294,6 @@ function init(){
     render();
   });
   $('yrs').addEventListener('change', render);
-  window.label = label;
   render();
 }
 
