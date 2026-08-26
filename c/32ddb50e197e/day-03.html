@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4. Market terminology · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="index.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 4 &middot; <b>Market terminology</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"The language of markets","html":"<p>Day 3 of 17</p><p>Every term you&#x27;ll need for the next fourteen sessions.</p>"},{"id":"2","title":"Why a whole session on vocabulary","html":"<p>From Day 4 onward, we stop defining things mid-sentence.</p><p>Vocabulary you half-know is worse than vocabulary you don&#x27;t know, because you won&#x27;t ask.</p>"},{"id":"3","title":"Direction words","html":"<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Long</strong></td><td>You own it. You profit if it rises.</td></tr><tr><td><strong>Short</strong></td><td>You owe it. You profit if it falls.</td></tr><tr><td><strong>Bullish</strong></td><td>You expect it to rise</td></tr><tr><td><strong>Bearish</strong></td><td>You expect it to fall</td></tr><tr><td><strong>Neutral</strong></td><td>You expect it to go roughly nowhere</td></tr></tbody></table>"},{"id":"4","title":"Long and short are positions, not predictions","html":"<p><strong>Long</strong> describes what you hold.</p><p><strong>Bullish</strong> describes what you think.</p><p>You can be long and nervous. You can be bearish and hold nothing.</p>"},{"id":"5","title":"The things being traded","html":"<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Share</strong></td><td>A unit of ownership in a company</td></tr><tr><td><strong>Contract</strong></td><td>One option. Controls 100 shares.</td></tr><tr><td><strong>Underlying</strong></td><td>The stock an option is written on</td></tr><tr><td><strong>Ticker</strong></td><td>The symbol identifying it</td></tr></tbody></table><blockquote>One contract = 100 shares. Always check, but almost always 100.</blockquote>"},{"id":"6","title":"The multiplier","html":"<p>A premium quoted at <strong>$2.00</strong> costs <strong>$200.</strong></p><p>$2.00 \u00d7 100 shares \u00d7 1 contract = <strong>$200</strong></p><table><thead><tr><th>Quoted</th><th>You pay</th></tr></thead><tbody><tr><td></td></tr><tr><td>$0.45</td><td>$45</td></tr><tr><td>$2.00</td><td>$200</td></tr><tr><td>$7.30</td><td>$730</td></tr></tbody></table>"},{"id":"7","title":"Bid, ask, and the spread","html":"<p><strong>Bid</strong> \u2014 the highest price a buyer will pay</p><p><strong>Ask</strong> \u2014 the lowest price a seller will accept</p><p><strong>Spread</strong> \u2014 the gap between them</p><p>You buy at the ask. You sell at the bid.</p>"},{"id":"8","title":"The spread is a cost","html":"<p>Bid $2.00 \u00b7 Ask $2.40</p><p>You buy at $2.40. To exit right now, you sell at $2.00.</p><blockquote><strong>Down $40 per contract the instant you&#x27;re filled. Before anything happens.</strong></blockquote>"},{"id":"9","title":"Order types","html":"<table><thead><tr><th>Order</th><th>Does</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Market</strong></td><td>Fills now, at whatever price</td></tr><tr><td><strong>Limit</strong></td><td>Fills only at your price or better</td></tr><tr><td><strong>Stop</strong></td><td>Becomes an order when a price is reached</td></tr></tbody></table><p class='shout'>In options, we use limit orders.</p>"},{"id":"10","title":"Why never a market order in options","html":"<p>A market order accepts whatever the spread is at that moment.</p><p>On a thin option that can be enormous.</p><blockquote>You are handing someone else the right to name your price.</blockquote>"},{"id":"11","title":"Liquidity","html":"<p>How easily you can get in and out at a fair price.</p><p><strong>Signs of good liquidity:</strong></p><ul><li>Tight spread</li><li>Meaningful volume</li><li>Meaningful open interest</li></ul>"},{"id":"12","title":"Volume and open interest","html":"<p><strong>Volume</strong> \u2014 contracts traded today. Resets daily.</p><p><strong>Open interest</strong> \u2014 contracts currently outstanding. Carries over.</p><p>High volume, low open interest = something happened today.</p><p>Low volume, high open interest = an established position.</p>"},{"id":"13","title":"Liquidity is a filter, not a preference","html":"<p>An illiquid option can be impossible to exit at a fair price.</p><blockquote>Being unable to get out is a risk in its own right.</blockquote><p>You will screen for this on every trade from Day 6 onward.</p>"},{"id":"14","title":"Company words","html":"<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Market capitalization</strong></td><td>Share price \u00d7 shares outstanding</td></tr><tr><td><strong>Earnings</strong></td><td>Quarterly results announcement</td></tr><tr><td><strong>Dividend</strong></td><td>Cash paid to shareholders</td></tr><tr><td><strong>Ex-dividend date</strong></td><td>Own it before this to receive the dividend</td></tr></tbody></table>"},{"id":"15","title":"Why earnings matter to options","html":"<p>An earnings date inside your holding period changes everything.</p><ul><li>Option prices rise beforehand</li><li>They fall sharply afterwards, regardless of the result</li><li>The stock can gap past any level you had in mind</li></ul><blockquote>Check the earnings date before every trade.</blockquote>"},{"id":"16","title":"Why ex-dividend dates matter","html":"<p>If you&#x27;ve <strong>sold</strong> a call, you can be assigned early, right before the ex-dividend date.</p><p>Someone wants the dividend. Your obligation delivers it.</p>"},{"id":"17","title":"Chart words","html":"<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td></td></tr><tr><td><strong>Support</strong></td><td>A level where buying has appeared before</td></tr><tr><td><strong>Resistance</strong></td><td>A level where selling has appeared before</td></tr><tr><td><strong>Trend</strong></td><td>The prevailing direction over a period</td></tr></tbody></table>"},{"id":"18","title":"A caution on support and resistance","html":"<p>These describe where price <strong>has</strong> reacted before.</p><p>They do not tell you where it will react next.</p><blockquote>Useful as context. Dangerous as a prediction.</blockquote>"},{"id":"19","title":"Volatility","html":"<p><strong>How much a price moves.</strong> Not which direction.</p><p><strong>Historical volatility</strong> \u2014 how much it has moved</p><p><strong>Implied volatility</strong> \u2014 how much the market expects it to move</p><p>Implied volatility is priced into every option you trade.</p>"},{"id":"20","title":"Volatility is not direction","html":"<p>A stock can be highly volatile and go nowhere.</p><p>A stock can rise steadily with low volatility.</p><blockquote>Volatility is the size of the swings, not where they end up.</blockquote>"},{"id":"21","title":"The terms you'll meet next","html":"<p>Not today. Just so they&#x27;re not a surprise.</p><p><strong>Strike \u00b7 Expiration \u00b7 Premium \u00b7 In the money \u00b7 At the money \u00b7 Out of the money \u00b7 Assignment \u00b7 Exercise \u00b7 Intrinsic value \u00b7 Extrinsic value</strong></p>"},{"id":"22","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Long and short describe positions, not opinions</li><li>One contract controls one hundred shares</li><li>The spread is a cost you pay on entry</li><li>Limit orders, always</li><li>Liquidity is a filter</li><li>Earnings and ex-dividend dates change option behaviour</li><li>Volatility is size, not direction</li></ul><p><strong>Next: Day 4.</strong> Call options. The first real mechanics.</p>"}], AU = {}, KEY = 'wo-day-03';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

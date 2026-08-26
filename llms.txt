@@ -1,0 +1,45 @@
+# WealthOrbit
+
+> Financial intelligence for independent investors. Options education and
+> market research built for self-directed Canadians.
+
+WealthOrbit publishes an options course, a forward record of every trade idea
+its system generates, and free market analysis tools. It is an education
+business, not a signal service, and it does not give investment advice.
+
+## What it publishes
+
+- [Options Course](https://wealthorbit.ca/course/): 19 sessions, 7.8 hours,
+  417 slides. Calls and puts through to pricing, the Greeks, spreads, trade
+  selection, position sizing and process — finishing with Canadian registered
+  account rules and the tax treatment of options income. Session 1 is free.
+- [Idea Intelligence](https://wealthorbit.ca/idea-intelligence/): every idea
+  graded A+ by the system, published the day it is generated, before the
+  outcome is known. Winners and stopped-out trades alike. Never removed,
+  never edited after publication.
+- [Growth Intelligence](https://wealthorbit.ca/growth/): what a lump sum in
+  any S&P 500 company would be worth today on a total-return basis, and the
+  drawdowns a holder would have had to sit through.
+- [Volatility Intelligence](https://wealthorbit.ca/volatility/): implied and
+  historical volatility with 52-week ranks across a fixed US universe,
+  updated daily.
+- [Market Intelligence](https://wealthorbit.ca/markets/): indices, rates,
+  commodities and the scheduled economic calendar.
+- [Insurance](https://wealthorbit.ca/insurance/): life, critical illness,
+  disability and segregated funds, under an LLQP licence.
+
+## Position
+
+The course states in its first session that profitability is not a learning
+outcome. Completing it does not make anyone a profitable trader. What it
+provides is a process for understanding what happened.
+
+Published ideas are not recommendations and are not personalised. Because
+only A+ graded ideas are published, the record cannot demonstrate that the
+grading predicts outcomes — there is no comparison group.
+
+## Notes
+
+- [Disclosures](https://wealthorbit.ca/disclosures/)
+- [About](https://wealthorbit.ca/about/)
+- Contact: wealthorbit9@gmail.com

@@ -1,0 +1,6 @@
+# wealthorbit.ca
+
+User-agent: *
+Allow: /
+
+Sitemap: https://wealthorbit.ca/sitemap.xml

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3. Lab · Setting up IBKR · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="index.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 3 &middot; <b>Lab · Setting up IBKR</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"The lab","html":"<p>Day 2 Lab</p><p>Follow along on your own screen. Pause whenever you need to.</p><p>Nothing here risks money.</p>"},{"id":"2","title":"What you'll have at the end","html":"<ul><li>An account open, or an application submitted</li><li>Options permissions requested at the right level</li><li>Every number from Day 2 located on your own screen</li><li>Paper trading enabled</li><li>Market data set up</li></ul>"},{"id":"3","title":"Before you start","html":"<p>You&#x27;ll need:</p><ul><li>Government photo identification</li><li>Social Insurance Number</li><li>Employer name and address</li><li>A rough figure for income, net worth, and liquid assets</li><li>Bank details for funding</li></ul>"},{"id":"4","title":"Choosing the account type","html":"<p><strong>Individual, non-registered.</strong> The default for this course.</p><p><strong>Margin or cash?</strong> Margin, if you qualify. Spreads need it from Day 11.</p><p><strong>Registered accounts</strong> can be added later, separately.</p><blockquote>You can open more than one. Start with one.</blockquote>"},{"id":"5","title":"The suitability questions","html":"<p>They will ask about:</p><ul><li>Annual income</li><li>Net worth</li><li>Liquid net worth</li><li>Investment experience, by product</li><li>Investment objectives</li></ul><p><strong>Answer accurately. Not aspirationally.</strong></p>"},{"id":"6","title":"The experience question","html":"<p>This is the one people fudge.</p><p>They ask, per product: years of experience, and trades per year.</p><blockquote>If you have never traded an option, say so.</blockquote><p>You can update this later. Being denied level 3 today costs you a few weeks. A misstated application costs you more.</p>"},{"id":"7","title":"Requesting options permissions","html":"<p>Request the highest level you can honestly support.</p><p>Aim for <strong>level 3</strong> \u2014 spreads.</p><p>If you&#x27;re offered less, accept it and reapply after a few weeks of paper trading.</p>"},{"id":"8","title":"Funding","html":"<ul><li>Fund in the currency you&#x27;ll trade in where possible</li><li>Electronic transfer is cheapest and slowest</li><li>Wire is fastest and costs more</li><li>Funds may be held before becoming tradeable</li></ul><blockquote>Currency matters more than you think. Day 17.</blockquote>"},{"id":"9","title":"The account window","html":"<p>Find these six. Write down where each one lives.</p><ol><li>Net liquidation value</li><li>Cash balance</li><li>Buying power</li><li>Maintenance margin</li><li>Excess liquidity</li><li>Unrealized profit and loss</li></ol>"},{"id":"10","title":"Excess liquidity","html":"<p>Find it. Pin it if your platform allows.</p><blockquote>This is the number that tells you how much room you have before someone else starts making decisions about your positions.</blockquote><p>From Day 11 you&#x27;ll check it before every trade.</p>"},{"id":"11","title":"The same numbers on mobile","html":"<p>Locate net liquidation value, buying power, and excess liquidity in the mobile app.</p><p>The labels may differ. The numbers are the same.</p>"},{"id":"12","title":"Market data","html":"<p>For this course you need:</p><ul><li>Real-time quotes on options</li><li>Greeks and implied volatility on the chain</li></ul><p>Delayed data is free and <strong>not sufficient</strong> from Day 9 onward.</p><p>Subscriptions are monthly and cancellable.</p>"},{"id":"13","title":"Paper trading","html":"<p>Enable it now.</p><ul><li>Same interface, no money</li><li>Separate login</li><li>You&#x27;ll use it through Day 13 at minimum</li></ul><blockquote>Every order you place in this course before Day 14 is a paper order.</blockquote>"},{"id":"14","title":"What paper trading won't teach you","html":"<ul><li>Fills are optimistic. Real spreads are worse.</li><li>No emotional weight</li><li>Assignment behaviour can differ</li></ul><p>It is for learning the mechanics, not for testing whether a strategy works.</p>"},{"id":"15","title":"Interfaces change","html":"<p>Screenshots in this course were current when recorded.</p><p>Menus move. Labels get renamed.</p><blockquote>If something isn&#x27;t where the slide says, use the platform&#x27;s own help or support line. That&#x27;s a legitimate research skill.</blockquote>"},{"id":"16","title":"Lab deliverable","html":"<p>Screenshot your own account window.</p><p>Label all six numbers <strong>in your own words</strong>.</p><p>Bring it to Day 3.</p>"}], AU = {}, KEY = 'wo-day-02-lab';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

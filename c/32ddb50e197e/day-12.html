@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14. Condors, straddles and strangles · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="index.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 14 &middot; <b>Condors, straddles and strangles</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Iron condors, straddles and strangles","html":"<p>Day 12 of 17</p><p>Volatility as the trade.</p>"},{"id":"2","title":"Something changes today","html":"<p>Every position so far has carried a directional view. Even the neutral ones.</p><p>Today:</p><p class='shout'>You can be completely agnostic about direction and still have a position.</p><p>The trade becomes <strong>how far</strong>, not <strong>which way.</strong></p>"},{"id":"3","title":"The iron condor","html":"<p>Two credit spreads at once.</p><p><strong>Below the stock:</strong> a bull put spread</p><p><strong>Above the stock:</strong> a bear call spread</p><p>You collect both credits. You profit if NORTH stays between them.</p>"},{"id":"4","title":"Building it","html":"<table><thead><tr><th>Leg</th><th>Action</th><th>Fill</th></tr></thead><tbody><tr><td></td></tr><tr><td>45 put</td><td>Buy at ask</td><td>$0.65</td></tr><tr><td>47.50 put</td><td><strong>Sell</strong> at bid</td><td>$1.15</td></tr><tr><td>52.50 call</td><td><strong>Sell</strong> at bid</td><td>$1.00</td></tr><tr><td>55 call</td><td>Buy at ask</td><td>$0.55</td></tr></tbody></table><p>Put spread credit <strong>$0.50</strong> \u00b7 Call spread credit <strong>$0.45</strong></p><p class='shout'>Total credit $0.95 \u2192 $95</p>"},{"id":"5","title":"The four numbers","html":"<table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>Maximum profit</td><td><strong>$95</strong> \u2014 the credit</td></tr><tr><td>Maximum loss</td><td><strong>$155</strong></td></tr><tr><td>Lower break-even</td><td><strong>$46.55</strong></td></tr><tr><td>Upper break-even</td><td><strong>$53.45</strong></td></tr></tbody></table><p>Each wing is $2.50 wide. Max loss = width \u2212 credit.</p>"},{"id":"6","title":"Every outcome","html":"<table><thead><tr><th>NORTH</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$42</td><td><strong>\u2212$155</strong></td></tr><tr><td>$45</td><td><strong>\u2212$155</strong></td></tr><tr><td>$46.55</td><td><strong>$0</strong></td></tr><tr><td>$47.50</td><td><strong>+$95</strong></td></tr><tr><td>$50</td><td><strong>+$95</strong></td></tr><tr><td>$52.50</td><td><strong>+$95</strong></td></tr><tr><td>$53.45</td><td><strong>$0</strong></td></tr><tr><td>$55</td><td><strong>\u2212$155</strong></td></tr><tr><td>$58</td><td><strong>\u2212$155</strong></td></tr></tbody></table>"},{"id":"7","title":"The profit zone","html":"<p>You win anywhere between <strong>$46.55 and $53.45.</strong></p><p>That is a <strong>$6.90</strong> band \u2014 nearly <strong>14%</strong> of the stock price.</p><p>NORTH can rise 7%, fall 7%, or do nothing at all.</p>"},{"id":"8","title":"Only one side can lose","html":"<p>NORTH cannot finish below $46.55 <strong>and</strong> above $53.45.</p><p>So the maximum loss is <strong>one wing</strong>, not both.</p><blockquote>Four legs. One wing&#x27;s worth of risk.</blockquote>"},{"id":"9","title":"Now read it honestly","html":"<p>Risk <strong>$155</strong> to make <strong>$95.</strong></p><p>Roughly <strong>1.6 to 1 against you</strong> on magnitude.</p><blockquote>The wide profit zone is the appeal. The ratio is the price of it.</blockquote>"},{"id":"10","title":"What the condor actually is","html":"<p class='shout'>A bet that nothing much happens.</p><ul><li>Short premium. Time works for you.</li><li>Short vega. A rise in volatility hurts.</li><li>Wins often, small. Loses rarely, larger.</li></ul><p>Day 10&#x27;s trade-off, with four legs.</p>"},{"id":"11","title":"The straddle","html":"<p>The opposite bet.</p><p>Buy the <strong>50 call at $2.10.</strong> Buy the <strong>50 put at $2.15.</strong></p><p class='shout'>Debit $4.25 \u2192 $425</p><p>You profit if NORTH moves <strong>far enough, either way.</strong></p>"},{"id":"12","title":"Every outcome","html":"<table><thead><tr><th>NORTH</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$40</td><td><strong>+$575</strong></td></tr><tr><td>$45.75</td><td><strong>$0</strong></td></tr><tr><td>$48</td><td><strong>\u2212$225</strong></td></tr><tr><td>$50</td><td><strong>\u2212$425</strong></td></tr><tr><td>$52</td><td><strong>\u2212$225</strong></td></tr><tr><td>$54.25</td><td><strong>$0</strong></td></tr><tr><td>$60</td><td><strong>+$575</strong></td></tr></tbody></table>"},{"id":"13","title":"What a straddle demands","html":"<p>Break-evens: <strong>$45.75</strong> and <strong>$54.25</strong></p><p class='shout'>NORTH must move 8.5%, either way, in 30 days.</p><p>Anything less is a loss. Standing still is the <strong>worst</strong> outcome.</p>"},{"id":"14","title":"The strangle","html":"<p>The cheaper version. Different strikes.</p><p>Buy the <strong>52.50 call at $1.10.</strong> Buy the <strong>47.50 put at $1.25.</strong></p><p class='shout'>Debit $2.35 \u2192 $235</p><p><strong>45% cheaper</strong> than the straddle.</p>"},{"id":"15","title":"Every outcome","html":"<table><thead><tr><th>NORTH</th><th>P/L</th></tr></thead><tbody><tr><td></td></tr><tr><td>$40</td><td><strong>+$515</strong></td></tr><tr><td>$45.15</td><td><strong>$0</strong></td></tr><tr><td>$48</td><td><strong>\u2212$235</strong></td></tr><tr><td>$50</td><td><strong>\u2212$235</strong></td></tr><tr><td>$52.50</td><td><strong>\u2212$235</strong></td></tr><tr><td>$54.85</td><td><strong>$0</strong></td></tr><tr><td>$60</td><td><strong>+$515</strong></td></tr></tbody></table>"},{"id":"16","title":"Straddle against strangle","html":"<table><thead><tr><th></th><th>Straddle</th><th>Strangle</th></tr></thead><tbody><tr><td></td></tr><tr><td>Cost</td><td>$425</td><td><strong>$235</strong></td></tr><tr><td>Move needed</td><td><strong>8.5%</strong></td><td>9.7%</td></tr><tr><td>Break-evens</td><td>$45.75 / $54.25</td><td>$45.15 / $54.85</td></tr><tr><td>Loss at $50</td><td>$425</td><td><strong>$235</strong></td></tr><tr><td>Worst zone</td><td>One point</td><td><strong>$5 wide</strong></td></tr></tbody></table>"},{"id":"17","title":"The flat bottom","html":"<p>The strangle loses <strong>$235</strong> anywhere between $47.50 and $52.50.</p><p>The straddle&#x27;s worst case is a single point.</p><blockquote>Cheaper entry. Wider zone of total loss. That is the exchange.</blockquote>"},{"id":"18","title":"These are volatility positions","html":"<p><strong>Condor:</strong> short volatility. Wants expectations to fall.</p><p><strong>Straddle and strangle:</strong> long volatility. Want expectations to rise.</p><p>You can profit from a <strong>rise in implied volatility</strong> before the stock moves at all.</p><blockquote>Day 9: vega. This is what it is for.</blockquote>"},{"id":"19","title":"Eight spreads","html":"<p>The condor has <strong>four legs.</strong></p><p>Four bid-ask spreads crossed opening. Four more closing.</p><blockquote>A structure that collects $95 cannot afford to give much of it away.</blockquote>"},{"id":"20","title":"When these actually fit","html":"<p><strong>Condor:</strong> you expect a quiet period, and implied volatility is high enough to pay you properly.</p><p><strong>Straddle or strangle:</strong> you expect a large move but genuinely don&#x27;t know the direction, <strong>and</strong> volatility is not already elevated.</p><blockquote>Before earnings, volatility is already high. Buying a straddle there means paying for the uncertainty that is about to vanish.</blockquote>"},{"id":"21","title":"Common mistakes","html":"<ul><li>Buying straddles before earnings, when volatility is already elevated</li><li>Treating the condor&#x27;s wide profit zone as low risk</li><li>Ignoring that four legs means eight spreads crossed</li><li>Placing condors on illiquid chains</li><li>Forgetting a strangle loses its full debit across a $5 range</li><li>Using these when a simpler structure expresses the same view</li></ul>"},{"id":"22","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>Direction stops being the trade. Magnitude becomes it.</li><li>Iron condor: two credit spreads. Wins in a wide band, loses more than it makes.</li><li>Only one wing can lose</li><li>Straddle: expensive, needs 8.5%, worst case at one point</li><li>Strangle: cheaper, needs 9.7%, worst case across a $5 range</li><li>Vega is the shared engine</li></ul><p><strong>Next: Day 13.</strong> Calendars and diagonals. Legs in different expirations.</p>"}], AU = {}, KEY = 'wo-day-12';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>

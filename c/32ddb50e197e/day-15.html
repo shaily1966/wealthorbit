@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>17. Risk and position management · WealthOrbit Trader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1e2229;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--up:#3ddc84;--down:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+ -webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:rgba(13,15,18,.94);
+ backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topin{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;
+ align-items:center;justify-content:space-between;gap:16px}
+.back{color:var(--ink3);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em}
+.back:hover{color:var(--ink)}
+.sess{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--ink3);text-align:right}
+.sess b{color:var(--ink);font-weight:600}
+.prog{height:2px;background:var(--rule2)}
+.prog i{display:block;height:100%;background:var(--live);width:0;transition:width .3s}
+
+.stage{max-width:1080px;margin:0 auto;padding:36px 24px 0}
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:10px;
+ padding:52px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);margin:0 0 20px}
+.slide h2{font-size:31px;line-height:1.2;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
+.slide p{margin:0 0 15px;font-size:17px;color:var(--ink2)}
+.slide p:last-child{margin-bottom:0}
+.slide .shout{font-size:29px;line-height:1.28;font-weight:600;color:var(--ink);
+ margin:22px 0;letter-spacing:-.01em}
+.slide ul,.slide ol{margin:0 0 16px;padding-left:22px}
+.slide li{margin-bottom:11px;font-size:17px;color:var(--ink2)}
+.slide li::marker{color:var(--ink3)}
+.slide ul li .box{display:inline-block;width:13px;height:13px;border:1.5px solid var(--ink3);
+ border-radius:3px;margin-right:11px;vertical-align:-1px}
+.slide blockquote{margin:22px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17px}
+.slide strong{color:var(--ink);font-weight:600}
+.slide code{font-family:var(--mono);font-size:15px;background:var(--rule2);
+ padding:2px 6px;border-radius:3px;color:var(--ink)}
+.slide table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px}
+.slide th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 11px 0;border-bottom:1px solid var(--rule)}
+.slide td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule2);color:var(--ink2)}
+.slide tr:last-child td{border-bottom:none}
+.slide td strong{color:var(--ink)}
+
+.bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
+audio{flex:1;height:38px}
+audio::-webkit-media-controls-panel{background:var(--card)}
+.nav{display:flex;gap:8px}
+button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
+ font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.auto{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);
+ white-space:nowrap;cursor:pointer;user-select:none}
+.auto input{accent-color:var(--live);width:15px;height:15px}
+
+.rail{max-width:1080px;margin:0 auto;padding:14px 24px 60px;display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--rule);background:var(--card);
+ color:var(--ink3);font:500 10px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.dot:hover{border-color:var(--ink3);color:var(--ink)}
+.dot.on{background:var(--live);border-color:var(--live);color:#06101f;font-weight:600}
+.dot.done{color:var(--ink2);border-color:var(--rule)}
+@media(max-width:720px){.slide{padding:32px 24px;min-height:340px}
+ .slide h2{font-size:24px}.slide .shout{font-size:22px}.stage{padding:20px 16px 0}
+ .bar{flex-wrap:wrap;padding:16px}.rail{padding:12px 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <a class="back" href="index.html">&larr; ALL SESSIONS</a>
+    <div class="sess">SESSION 17 &middot; <b>Risk and position management</b></div>
+  </div>
+  <div class="prog"><i id="pg"></i></div>
+</div>
+
+<div class="stage">
+  <div class="slide" id="slide"></div>
+</div>
+
+<div class="bar">
+  <div class="nav">
+    <button id="prev">&larr; Prev</button>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <audio id="au" controls preload="none"></audio>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<script>
+const SL = [{"id":"1","title":"Risk and position management","html":"<p>Day 15 of 17</p><p>The session that decides whether you are still doing this in five years.</p>"},{"id":"2","title":"Everything so far was about one trade","html":"<p>Today is about the <strong>account.</strong></p><p class='shout'>A trader who is right more often than not can still be wiped out by being wrong at the wrong size.</p>"},{"id":"3","title":"Why losses are asymmetric","html":"<table><thead><tr><th>Lose</th><th>Need to get back</th></tr></thead><tbody><tr><td></td></tr><tr><td>10%</td><td>+11.1%</td></tr><tr><td>20%</td><td>+25.0%</td></tr><tr><td>30%</td><td>+42.9%</td></tr><tr><td>50%</td><td><strong>+100%</strong></td></tr><tr><td>75%</td><td><strong>+300%</strong></td></tr><tr><td>90%</td><td><strong>+900%</strong></td></tr></tbody></table>"},{"id":"4","title":"Read that again","html":"<p>A 50% loss requires a <strong>100% gain</strong> to recover.</p><p>Not 50%. One hundred.</p><blockquote>Protecting the account is not caution. It is arithmetic.</blockquote>"},{"id":"5","title":"The sizing rule","html":"<p>Risk a <strong>fixed percentage</strong> of the account on each trade.</p><table><thead><tr><th>Account</th><th>1%</th><th>2%</th></tr></thead><tbody><tr><td></td></tr><tr><td>$25,000</td><td>$250</td><td>$500</td></tr></tbody></table><p>Not a fixed number of contracts. Not what feels right.</p>"},{"id":"6","title":"Sizing a defined-risk trade","html":"<p>Bull call spread 50/55. Maximum loss <strong>$165</strong> per contract.</p><p>$25,000 account, 2% risk = <strong>$500</strong></p><p>$500 \u00f7 $165 = <strong>3 contracts</strong></p><p class='shout'>That is the whole calculation.</p>"},{"id":"7","title":"Now try it on a cash-secured put","html":"<p>47.50 strike. Theoretical maximum loss <strong>$4,635.</strong></p><p>$500 \u00f7 $4,635 = <strong>0.11 contracts</strong></p><p class='shout'>You cannot place this trade.</p>"},{"id":"8","title":"That is not a mistake","html":"<p>A $25,000 account genuinely <strong>cannot</strong> hold a cash-secured put at a 2% risk budget.</p><p>The strategy sold as conservative income requires a far larger account than most people running it have.</p>"},{"id":"9","title":"So how is it ever sized?","html":"<p>You size off a <strong>realistic adverse move</strong>, not the theoretical maximum.</p><p>Effective cost if assigned: <strong>$46.35</strong></p><table><thead><tr><th>NORTH falls</th><th>To</th><th>Loss per contract</th><th>Contracts at $500</th></tr></thead><tbody><tr><td></td></tr><tr><td>10%</td><td>$45.00</td><td>$135</td><td>3.7</td></tr><tr><td>15%</td><td>$42.50</td><td>$385</td><td>1.3</td></tr><tr><td>20%</td><td>$40.00</td><td>$635</td><td>0.8</td></tr><tr><td>30%</td><td>$35.00</td><td>$1,135</td><td>0.4</td></tr></tbody></table>"},{"id":"10","title":"The honest problem with that","html":"<p class='shout'>You chose the scenario.</p><p>A 10% fall gives you 3 contracts. A 20% fall gives you less than one.</p><blockquote>The number you pick is a judgement, and it is the judgement the whole position rests on.</blockquote>"},{"id":"11","title":"Which is why defined risk matters","html":"<p><strong>Defined risk:</strong> maximum loss is a fact. Sizing is arithmetic.</p><p><strong>Undefined risk:</strong> maximum loss is absurd. Sizing is a judgement you may get wrong.</p><blockquote>Day 11&#x27;s argument, arriving.</blockquote>"},{"id":"12","title":"Portfolio heat","html":"<p>Per-trade risk is not enough. Cap the <strong>total.</strong></p><p>Rule: total risk across all open positions \u2264 <strong>6%</strong></p><table><thead><tr><th>Per trade</th><th>Maximum positions</th></tr></thead><tbody><tr><td></td></tr><tr><td>2%</td><td><strong>3</strong></td></tr><tr><td>1%</td><td><strong>6</strong></td></tr></tbody></table>"},{"id":"13","title":"Correlation destroys this","html":"<p>Six bull put spreads. Each risks $360. Each on a different technology stock.</p><p>You believe you hold <strong>six</strong> positions.</p><p class='shout'>In a market-wide fall you hold one, risking $2,160.</p>"},{"id":"14","title":"Correlation is not obvious","html":"<p>Positions correlate through:</p><ul><li><strong>Sector</strong> \u2014 the same industry</li><li><strong>Factor</strong> \u2014 growth, rates, commodities</li><li><strong>Direction</strong> \u2014 six bullish positions are one bullish bet</li><li><strong>Structure</strong> \u2014 six short-premium positions all lose in a volatility spike</li></ul>"},{"id":"15","title":"The rule that follows","html":"<p>Count correlated positions as <strong>one</strong> position for heat purposes.</p><p>Six bullish tech spreads at 2% each is not 12% of heat spread across six trades.</p><p class='shout'>It is one 12% position.</p>"},{"id":"16","title":"Managing winners","html":"<p>Credit spread. Collected <strong>$145.</strong> Maximum profit <strong>$145.</strong> Still risking <strong>$355.</strong></p><table><thead><tr><th>Close at</th><th>You keep</th><th>Left on table</th><th>Still risking</th></tr></thead><tbody><tr><td></td></tr><tr><td>25%</td><td>$36</td><td>$109</td><td>$355</td></tr><tr><td>50%</td><td>$72</td><td>$72</td><td>$355</td></tr><tr><td>75%</td><td>$109</td><td>$36</td><td><strong>$355</strong></td></tr><tr><td>90%</td><td>$130</td><td>$14</td><td><strong>$355</strong></td></tr></tbody></table>"},{"id":"17","title":"Read the last column","html":"<p>The risk <strong>never falls.</strong></p><p>At 75% of maximum profit you are risking <strong>$355</strong> to capture the last <strong>$36.</strong></p><blockquote>That is a poor remaining bet, regardless of how the trade has gone so far.</blockquote>"},{"id":"18","title":"Managing losers","html":"<p>Decide the exit <strong>before</strong> you enter.</p><ul><li>A defined-risk position can be held to its maximum \u2014 you sized for it</li><li>A position that has invalidated your thesis should be closed, whatever the price</li><li>&quot;It might come back&quot; is not a plan</li></ul>"},{"id":"19","title":"Rolling: management or denial?","html":"<p>Short 47.50 put. NORTH falls to $44. The put is now worth <strong>$4.10.</strong></p><p>Loss if closed: <strong>$295</strong></p><p>Roll down and out to the 45 strike, 60 days, collecting <strong>$3.20</strong>:</p><p class='shout'>Net debit $90. You paid to extend.</p>"},{"id":"20","title":"The test for a roll","html":"<p><strong>Management:</strong> the roll brings in a net credit, and your view is unchanged.</p><p><strong>Denial:</strong> the roll costs you money, and its purpose is to avoid recording the loss.</p><blockquote>A loss you have not closed is still a loss.</blockquote>"},{"id":"21","title":"Exercise and assignment","html":"<p>Two words for the two sides of one event.</p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td><strong>Exercise</strong></td><td>The <strong>buyer</strong> acts on their right</td></tr><tr><td><strong>Assignment</strong></td><td>The <strong>seller</strong> is required to deliver</td></tr></tbody></table><blockquote>You never choose to be assigned. Someone else exercised.</blockquote>"},{"id":"21A","title":"When it happens","html":"<p><strong>At expiration.</strong> Anything in the money by $0.01 is exercised automatically. You do not have to be notified in advance.</p><p><strong>Before expiration.</strong> Only the <strong>buyer</strong> can choose this, and they only choose it when holding the option is worth less than acting on it.</p><table><thead><tr><th>Short position</th><th>Early assignment risk</th></tr></thead><tbody><tr><td></td></tr><tr><td>Short call, ex-dividend approaching</td><td><strong>Highest</strong></td></tr><tr><td>Short put, deep in the money</td><td>Moderate</td></tr><tr><td>Anything out of the money</td><td>Effectively nil</td></tr></tbody></table>"},{"id":"21B","title":"What actually happens to you","html":"<p><strong>Short call assigned</strong> \u2014 you deliver 100 shares at the strike. If you owned them, they are gone. If you did not, you are now short 100 shares.</p><p><strong>Short put assigned</strong> \u2014 you buy 100 shares at the strike. Cash leaves. You now own stock.</p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>The premium</td><td><strong>Yours.</strong> Always was.</td></tr><tr><td>Notification</td><td>Usually <strong>overnight</strong>, after the fact</td></tr><tr><td>Choice</td><td><strong>None</strong></td></tr><tr><td>A fee</td><td>Often</td></tr></tbody></table>"},{"id":"21C","title":"Assignment inside a spread","html":"<p>Your short leg is assigned. Your long leg is <strong>still there.</strong></p><ul><li>Maximum loss is <strong>unchanged</strong> \u2014 the long leg still caps it</li><li>But you now hold shares, using capital you had not planned to use</li><li>And you have a position to unwind rather than a tidy structure</li></ul><blockquote>Not a breach of your risk. A mess to tidy.</blockquote>"},{"id":"21D","title":"What it changes about management","html":"<ul><li><strong>Check ex-dividend dates</strong> on every short call. Published in advance.</li><li>Deep in-the-money short options are <strong>more likely</strong> to be assigned</li><li>Assignment uses buying power \u2014 check <strong>excess liquidity</strong> afterwards</li><li>Being assigned on a covered call or cash-secured put is <strong>the strategy working</strong></li></ul><blockquote>Plan for it. Do not be surprised by it.</blockquote>"},{"id":"21E","title":"The wheel","html":"<p>The most widely run retail options strategy. It is <strong>assignment, on purpose, repeatedly.</strong></p><ol><li>Sell a <strong>cash-secured put</strong> on a stock you want to own</li><li>Not assigned? Keep the premium. Repeat step 1.</li><li>Assigned? You now own 100 shares</li><li>Sell a <strong>covered call</strong> against them</li><li>Not assigned? Keep the premium. Repeat step 4.</li><li>Assigned? Shares sold. Return to step 1.</li></ol>"},{"id":"21F","title":"What the wheel does and does not do","html":"<p><strong>Does:</strong> collect premium at every stage \u00b7 lower your effective cost basis \u00b7 give assignment a purpose</p><p><strong>Does not:</strong></p><p class='shout'>Remove downside risk.</p><p>Between step 3 and step 6 you own 100 shares outright. If the stock falls 40%, you own a stock that has fallen 40%.</p><p>The premium collected is a cushion, not a hedge.</p>"},{"id":"21G","title":"The wheel, honestly","html":"<p>NORTH at $50. Sell the 47.50 put for $1.15. Assigned at $47.50 \u2014 effective cost <strong>$46.35.</strong></p><p>NORTH is now at <strong>$38.</strong></p><table><tbody><tr><td></td><td></td></tr><tr><td></td></tr><tr><td>You own</td><td>100 shares, cost basis $46.35</td></tr><tr><td>Unrealised loss</td><td><strong>\u2212$835</strong></td></tr><tr><td>Covered call you can now sell at $47.50</td><td>Worth almost nothing</td></tr><tr><td>Covered call that pays meaningfully</td><td>Strike near $38, locking in the loss</td></tr></tbody></table><blockquote>The wheel does not fail loudly. It traps you in a stock at a strike you no longer want.</blockquote>"},{"id":"22","title":"Expiration week","html":"<p>Gamma is at its most severe \u2014 Day 9.</p><p>Positions swing violently on small moves. There is no time to recover.</p><blockquote>Most positions should be closed or resolved before this week, deliberately.</blockquote>"},{"id":"23","title":"When not to trade","html":"<ul><li>You cannot set all four dials</li><li>Portfolio heat is already at its cap</li><li>You are trying to recover a loss</li><li>You are trading because nothing else is happening</li><li>The liquidity gate failed</li></ul>"},{"id":"24","title":"The one about revenge","html":"<p>Trading to recover a loss is the most reliable way to turn a small loss into a serious one.</p><p>The account does not know what it used to be worth.</p><p class='shout'>Size off what you have, not what you had.</p>"},{"id":"25","title":"Common mistakes","html":"<ul><li>Sizing by contract count rather than by risk</li><li>Sizing an undefined-risk position off the theoretical maximum, or off nothing</li><li>Counting correlated positions separately</li><li>Holding a winner for the last few percent</li><li>Rolling at a debit to avoid recording a loss</li><li>Increasing size after a loss</li></ul>"},{"id":"26","title":"Today, and what's next","html":"<p><strong>Today:</strong></p><ul><li>A 50% loss needs a 100% gain. Protecting capital is arithmetic.</li><li>Size off maximum loss when it is a fact; off a chosen adverse move when it is not</li><li>A $25,000 account cannot hold a cash-secured put at 2% risk</li><li>Correlated positions are one position</li><li>The risk on a credit spread never falls as profit accrues</li><li>A roll at a debit is not management</li></ul><p><strong>Next: Day 16.</strong> Building the process that ties all of this together.</p>"}], AU = {}, KEY = 'wo-day-15';
+let i = 0;
+const $ = x => document.getElementById(x);
+
+function paint(){
+  const s = SL[i];
+  $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
+                         (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
+  const src = AU[s.id];
+  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
+  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  $('prev').disabled = i===0;
+  $('next').disabled = i===SL.length-1;
+  $('pg').style.width = ((i+1)/SL.length*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,n)=>{
+    d.className = 'dot' + (n===i?' on':(n<i?' done':''));
+  });
+  try{ localStorage.setItem(KEY, i); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ if(n>=0 && n<SL.length){ i=n; paint(); } }
+
+SL.forEach((s,n)=>{
+  const b=document.createElement('button');
+  b.className='dot'; b.textContent=s.id; b.title='Slide '+s.id;
+  b.onclick=()=>go(n); $('rail').appendChild(b);
+});
+
+$('prev').onclick = ()=>go(i-1);
+$('next').onclick = ()=>go(i+1);
+$('au').addEventListener('ended', ()=>{
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+});
+try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
+paint();
+</script>
+</body>
+</html>
