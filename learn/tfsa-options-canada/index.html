@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Can You Trade Options in a TFSA? The Canadian Rules · WealthOrbit</title>
+<meta name="description" content="What options strategies a TFSA actually permits, why spreads are impossible, and the CRA rule that can make a TFSA taxable. Includes Ahamed v The King.">
+<link rel="canonical" href="https://wealthorbit.ca/learn/tfsa-options-canada/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1c2027;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--gold:#d4a94a;--warn:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.72 var(--body);
+ -webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 28px 110px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+ color:var(--gold);margin:56px 0 18px}
+h1{font-size:40px;line-height:1.12;letter-spacing:-.03em;margin:0 0 20px;font-weight:600}
+h2{font-size:25px;letter-spacing:-.02em;margin:52px 0 16px;font-weight:600;line-height:1.25}
+h3{font-size:19px;margin:34px 0 12px;font-weight:600}
+p{margin:0 0 18px;color:var(--ink2)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--live)}
+.answer{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--gold);
+ border-radius:11px;padding:26px 30px;margin:0 0 36px}
+.answer p{margin:0;color:var(--ink);font-size:18px;line-height:1.6}
+.answer p+p{margin-top:14px}
+ul,ol{margin:0 0 18px;padding-left:22px}
+li{margin-bottom:10px;color:var(--ink2)}
+li::marker{color:var(--ink3)}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15.5px}
+th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 12px 0;border-bottom:1px solid var(--rule)}
+td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule2);color:var(--ink2);
+ vertical-align:top}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--ink)}
+blockquote{margin:26px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17.5px}
+.warn{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--warn);
+ border-radius:11px;padding:24px 28px;margin:30px 0}
+.warn p{margin:0;color:var(--ink2)}
+.warn strong{color:var(--warn)}
+code{font-family:var(--mono);font-size:15px;background:var(--rule2);padding:2px 7px;
+ border-radius:4px;color:var(--ink)}
+.cta{background:var(--card);border:1px solid var(--rule);border-radius:11px;
+ padding:30px 34px;margin:56px 0 0}
+.cta h3{margin:0 0 10px;font-size:20px}
+.cta p{margin:0 0 18px;font-size:15.5px}
+.cta a{display:inline-block;background:var(--live);color:#04101f;font:600 15px/1 var(--body);
+ padding:15px 26px;border-radius:7px;text-decoration:none}
+.foot{margin-top:52px;padding-top:26px;border-top:1px solid var(--rule);
+ font:400 13px/1.75 var(--mono);color:var(--ink3)}
+.rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--rule)}
+.rel p{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink3);margin:0 0 14px}
+.rel a{display:block;margin-bottom:10px;text-decoration:none;font-size:15.5px}
+.rel a:hover{text-decoration:underline}
+@media(max-width:640px){h1{font-size:29px}h2{font-size:21px}body{font-size:16px}
+ .wrap{padding:0 20px 80px}.answer{padding:22px 24px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Can You Trade Options in a TFSA? The Canadian Rules \u00b7 WealthOrbit",
+ "description": "What options strategies a TFSA actually permits, why spreads are impossible, and the CRA rule that can make a TFSA taxable. Includes Ahamed v The King.",
+ "datePublished": "2026-08-26",
+ "dateModified": "2026-08-26",
+ "author": {
+  "@type": "Organization",
+  "name": "WealthOrbit",
+  "url": "https://wealthorbit.ca/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "WealthOrbit"
+ },
+ "mainEntityOfPage": "https://wealthorbit.ca/learn/tfsa-options-canada/"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can you trade options in a TFSA in Canada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Listed options are qualified investments so the tax rules permit them. But a TFSA is structurally a cash account and cannot use margin, which rules out all spreads, naked writing and short selling. What remains is buying calls, buying puts, covered calls, protective puts, and cash-secured puts where the broker allows them."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why can't I trade spreads in my TFSA?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A spread contains a short leg, which requires collateral, which requires margin. Registered accounts cannot use margin. This is structural and does not change with your options approval level."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can a TFSA be taxed?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Under subsection 146.2(6) of the Income Tax Act a TFSA that is carrying on a business is taxable on that business income, and the TFSA trust itself is the taxable person. Confirmed in Ahamed v The King, 2023 TCC 17, affirmed by the Federal Court of Appeal in 2024."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many trades make a TFSA taxable?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "There is no published threshold and the CRA has refused to provide one. It is a six-factor test from Interpretation Bulletin IT-479R covering frequency, duration of holdings, knowledge of markets, time spent, use of financing and nature of the securities, weighed together."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does selling covered calls in a TFSA cause problems?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The CRA's published views categorise option writing as a business activity. A single covered call on a long-held position looks nothing like the facts in Ahamed. A systematic monthly programme across several holdings sits closer to the line and is worth discussing with an accountant first."
+   }
+  }
+ ]
+}
+</script>
+
+</head>
+<body>
+<nav style="border-bottom:1px solid #242830;position:sticky;top:0;z-index:50;background:rgba(10,12,15,.93);backdrop-filter:blur(10px)">
+<div style="max-width:1140px;margin:0 auto;padding:17px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="../../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#e8eaed">
+<span style="width:21px;height:21px;border:1.5px solid #d4a94a;border-radius:50%;display:inline-block"></span>
+<b style="font:600 17px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-.01em">WealthOrbit</b></a>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;font:400 14.5px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<a href="../../course/" style="color:#7f8892;text-decoration:none">Course</a>
+<a href="../../idea-intelligence/" style="color:#7f8892;text-decoration:none">Idea</a>
+<a href="../../volatility/" style="color:#7f8892;text-decoration:none">Volatility</a>
+<a href="../../growth/" style="color:#7f8892;text-decoration:none">Growth</a>
+<a href="../../markets/" style="color:#7f8892;text-decoration:none">Markets</a>
+<a href="../../course/" style="background:#5b9dff;color:#04101f;font-weight:600;font-size:14px;padding:10px 17px;border-radius:6px;text-decoration:none;white-space:nowrap">Start the course</a>
+</div></div></nav>
+<div class="wrap">
+  <p class="kicker">Learn · Canadian accounts</p>
+  <h1>Can you trade options in a TFSA?</h1>
+
+  <div class="answer">
+    <p><strong>Yes, but far less than most people assume.</strong> Listed options are qualified
+    investments, so the tax rules permit them. What stops you is the account structure: a TFSA is
+    a cash account, so it cannot use margin — which rules out every spread, every naked position,
+    and every short sale.</p>
+    <p>What is left is buying calls, buying puts, covered calls, protective puts, and — depending
+    on your broker — cash-secured puts.</p>
+  </div>
+
+  <h2>Two separate gates</h2>
+  <p>People get this wrong in both directions. Some assume that because the tax rules permit
+  something, their broker must allow it. Others assume that because their broker allows it, the
+  CRA must be fine with it. Neither follows.</p>
+  <table>
+    <tr><td><strong>Gate 1 — CRA</strong></td><td>Is this a qualified investment? Listed options on
+    shares of public companies are. This gate opens for everything a normal investor would trade.</td></tr>
+    <tr><td><strong>Gate 2 — your broker</strong></td><td>Do they permit it in that specific account?
+    This is where most strategies actually die.</td></tr>
+  </table>
+
+  <h2>Why spreads are impossible in a TFSA</h2>
+  <p>Registered accounts are <strong>cash accounts</strong>. That is structural, not a policy your
+  broker chose, and it does not change with your options approval level.</p>
+  <p>A spread contains a short leg. A short leg requires collateral. Collateral requires margin.
+  Registered accounts cannot use margin. So the spread cannot exist there — even if you hold the
+  highest approval level in your non-registered account.</p>
+  <h3>What that rules out</h3>
+  <ul>
+    <li>Vertical spreads — bull call, bear put, bull put, bear call</li>
+    <li>Iron condors, and straddles or strangles sold short</li>
+    <li>Calendars and diagonals</li>
+    <li>Naked calls and naked puts</li>
+    <li>Short selling of any kind</li>
+  </ul>
+
+  <h2>What a TFSA actually permits</h2>
+  <table>
+    <thead><tr><th>Strategy</th><th>Permitted?</th></tr></thead>
+    <tr><td>Buy calls</td><td><strong>Yes</strong> — fully paid at the outset</td></tr>
+    <tr><td>Buy puts</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Covered calls</td><td><strong>Yes</strong> — backed by shares you already own</td></tr>
+    <tr><td>Protective puts</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Cash-secured puts</td><td><strong>Broker dependent</strong> — see below</td></tr>
+    <tr><td>Any spread</td><td>No</td></tr>
+    <tr><td>Naked writing</td><td>No</td></tr>
+  </table>
+
+  <h2>Cash-secured puts: the one that varies</h2>
+  <p>The CRA permits them. The cash is set aside, no margin is involved, and the structure is fine
+  under the qualified investment rules.</p>
+  <p><strong>Not every broker allows them anyway.</strong> Some Canadian brokers permit cash-secured
+  puts in registered accounts at the appropriate approval level; others do not offer them.</p>
+  <p>There is one reliable way to find out, and it takes four minutes:</p>
+  <blockquote>Phone your broker and ask: "Can I sell cash-secured puts in my registered account,
+  and what option level do I need?"</blockquote>
+  <p>They employ people whose job is to answer exactly that. It is faster than searching and far
+  more reliable than a forum, where half the answers are out of date and a good proportion are
+  about a different country.</p>
+
+  <h2>The part almost nobody mentions</h2>
+  <p>Being <em>permitted</em> to place a trade and having the income stay <em>tax-free</em> are two
+  different questions.</p>
+  <p>Under <strong>subsection 146.2(6)</strong> of the Income Tax Act, a TFSA that is
+  <strong>carrying on a business</strong> is taxable on that business income. The TFSA trust itself
+  is the taxable person — the CRA does not need to reassess you personally.</p>
+
+  <div class="warn">
+    <p><strong>This is not theoretical.</strong> In <em>Ahamed v The King</em>, 2023 TCC 17, a
+    self-directed TFSA grew from roughly $15,000 in contributions to over $617,000 through frequent
+    trading in speculative stocks. The Tax Court held the TFSA was carrying on a business and the
+    income was taxable. The Federal Court of Appeal affirmed in 2024 as
+    <em>Canadian Western Trust Company v The King</em>, 2024 FCA 108.</p>
+  </div>
+
+  <p>The facts were extreme — the taxpayer was an investment adviser trading frequently in
+  speculative securities. But the principle established is general, and it applies to options as
+  much as to shares.</p>
+
+  <h2>The detail that matters if you sell options</h2>
+  <p>The CRA's published views have categorised <strong>option writing</strong> as a business
+  activity, alongside foreign currency trading and excessive stock trading.</p>
+  <p>That is a direct statement about selling options, not an inference. It does not mean one
+  covered call makes your account taxable — context matters and the multifactor test still applies.
+  But a systematic covered call programme, run monthly across several holdings, sits closer to
+  that line than most people running one realise.</p>
+
+  <h2>How the CRA decides</h2>
+  <p>The test comes from CRA Interpretation Bulletin <strong>IT-479R, <em>Transactions in
+  Securities</em></strong>, paragraph 11. Six factors, weighed together, with no single one deciding:</p>
+  <ul>
+    <li><strong>Frequency</strong> of transactions</li>
+    <li><strong>Duration</strong> of holdings</li>
+    <li><strong>Knowledge</strong> of securities markets</li>
+    <li><strong>Time spent</strong> on the activity</li>
+    <li><strong>Use of financing</strong></li>
+    <li><strong>Nature of the securities</strong></li>
+  </ul>
+  <h3>How many trades is too many?</h3>
+  <p>There is no answer, and the CRA has consistently refused to publish one. Reassessments have
+  typically involved hundreds of trades a year with holding periods of days or less — but that
+  describes past cases, not a safe harbour.</p>
+  <blockquote>Anyone who gives you a number is inventing it. It does not come from the
+  legislation, the bulletin, or the courts.</blockquote>
+
+  <h2>What to do</h2>
+  <ol>
+    <li><strong>Phone your broker</strong> and confirm what your specific account permits.</li>
+    <li><strong>Look up the fees</strong> — assignment and exercise fees vary enormously and matter
+    if you run any income strategy.</li>
+    <li><strong>Speak to your accountant</strong> before starting anything systematic. Describe what
+    you plan to do, in which account, at what frequency, over what holding periods.</li>
+  </ol>
+
+  <div class="cta">
+    <h3>The full treatment is Session 17</h3>
+    <p>The Canadian layer — what registered accounts permit, what brokers allow, and how the income is taxed — is a full session of the WealthOrbit Trader course. Session 1 is free.</p>
+    <a href="../../course/">See the course &rarr;</a>
+  </div>
+
+  <div class="rel">
+    <p>Related</p>
+    <a href="../options-tax-canada/">How are options taxed in Canada?</a>
+    <a href="../rrsp-covered-calls/">Can you sell covered calls in an RRSP?</a>
+  </div>
+
+  <p class="foot">
+    Last reviewed 26 August 2026 · WealthOrbit<br>
+    General information only. Not tax, legal or investment advice. Tax outcomes depend on
+    facts specific to you — speak to your own accountant.
+  </p>
+</div>
+</body>
+</html>

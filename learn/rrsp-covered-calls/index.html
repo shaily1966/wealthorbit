@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Can You Sell Covered Calls in an RRSP? · WealthOrbit</title>
+<meta name="description" content="Yes — and the RRSP has a statutory protection the TFSA lacks. What the business income exemption means, why the courts refused to read it across, and what still limits you.">
+<link rel="canonical" href="https://wealthorbit.ca/learn/rrsp-covered-calls/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1c2027;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--gold:#d4a94a;--warn:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.72 var(--body);
+ -webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 28px 110px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+ color:var(--gold);margin:56px 0 18px}
+h1{font-size:40px;line-height:1.12;letter-spacing:-.03em;margin:0 0 20px;font-weight:600}
+h2{font-size:25px;letter-spacing:-.02em;margin:52px 0 16px;font-weight:600;line-height:1.25}
+h3{font-size:19px;margin:34px 0 12px;font-weight:600}
+p{margin:0 0 18px;color:var(--ink2)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--live)}
+.answer{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--gold);
+ border-radius:11px;padding:26px 30px;margin:0 0 36px}
+.answer p{margin:0;color:var(--ink);font-size:18px;line-height:1.6}
+.answer p+p{margin-top:14px}
+ul,ol{margin:0 0 18px;padding-left:22px}
+li{margin-bottom:10px;color:var(--ink2)}
+li::marker{color:var(--ink3)}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15.5px}
+th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 12px 0;border-bottom:1px solid var(--rule)}
+td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule2);color:var(--ink2);
+ vertical-align:top}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--ink)}
+blockquote{margin:26px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17.5px}
+.warn{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--warn);
+ border-radius:11px;padding:24px 28px;margin:30px 0}
+.warn p{margin:0;color:var(--ink2)}
+.warn strong{color:var(--warn)}
+code{font-family:var(--mono);font-size:15px;background:var(--rule2);padding:2px 7px;
+ border-radius:4px;color:var(--ink)}
+.cta{background:var(--card);border:1px solid var(--rule);border-radius:11px;
+ padding:30px 34px;margin:56px 0 0}
+.cta h3{margin:0 0 10px;font-size:20px}
+.cta p{margin:0 0 18px;font-size:15.5px}
+.cta a{display:inline-block;background:var(--live);color:#04101f;font:600 15px/1 var(--body);
+ padding:15px 26px;border-radius:7px;text-decoration:none}
+.foot{margin-top:52px;padding-top:26px;border-top:1px solid var(--rule);
+ font:400 13px/1.75 var(--mono);color:var(--ink3)}
+.rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--rule)}
+.rel p{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink3);margin:0 0 14px}
+.rel a{display:block;margin-bottom:10px;text-decoration:none;font-size:15.5px}
+.rel a:hover{text-decoration:underline}
+@media(max-width:640px){h1{font-size:29px}h2{font-size:21px}body{font-size:16px}
+ .wrap{padding:0 20px 80px}.answer{padding:22px 24px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Can You Sell Covered Calls in an RRSP? \u00b7 WealthOrbit",
+ "description": "Yes \u2014 and the RRSP has a statutory protection the TFSA lacks. What the business income exemption means, why the courts refused to read it across, and what still limits you.",
+ "datePublished": "2026-08-26",
+ "dateModified": "2026-08-26",
+ "author": {
+  "@type": "Organization",
+  "name": "WealthOrbit",
+  "url": "https://wealthorbit.ca/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "WealthOrbit"
+ },
+ "mainEntityOfPage": "https://wealthorbit.ca/learn/rrsp-covered-calls/"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can you sell covered calls in an RRSP in Canada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Covered calls are permitted in an RRSP because the shares you already own back the obligation, so no margin is required. Confirm your specific approval level with your broker."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does the RRSP have protection the TFSA does not?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. The RRSP regime contains a business income exemption under paragraph 146(4)(b) that exempts an RRSP trust from tax on business income from qualified investments. The TFSA regime has no equivalent \u2014 subsection 146.2(6) taxes a TFSA carrying on a business."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Was the RRSP-TFSA difference ever tested in court?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. In Ahamed v The King, 2023 TCC 17, the taxpayer argued the two regimes are mirror images so the RRSP exemption should be read into the TFSA rules. The Tax Court disagreed and the Federal Court of Appeal affirmed in Canadian Western Trust Company v The King, 2024 FCA 108."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can you trade spreads in an RRSP?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. An RRSP is structurally a cash account and cannot use margin. A spread contains a short leg requiring collateral, so it cannot be placed in an RRSP regardless of your options approval level."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Are US dividends taxed differently in an RRSP?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Under the Canada-US tax treaty, US dividends paid into an RRSP are generally exempt from the 15% withholding tax that applies to a TFSA. The treatment of option premium is a separate question and worth confirming with an accountant."
+   }
+  }
+ ]
+}
+</script>
+
+</head>
+<body>
+<nav style="border-bottom:1px solid #242830;position:sticky;top:0;z-index:50;background:rgba(10,12,15,.93);backdrop-filter:blur(10px)">
+<div style="max-width:1140px;margin:0 auto;padding:17px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="../../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#e8eaed">
+<span style="width:21px;height:21px;border:1.5px solid #d4a94a;border-radius:50%;display:inline-block"></span>
+<b style="font:600 17px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-.01em">WealthOrbit</b></a>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;font:400 14.5px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<a href="../../course/" style="color:#7f8892;text-decoration:none">Course</a>
+<a href="../../idea-intelligence/" style="color:#7f8892;text-decoration:none">Idea</a>
+<a href="../../volatility/" style="color:#7f8892;text-decoration:none">Volatility</a>
+<a href="../../growth/" style="color:#7f8892;text-decoration:none">Growth</a>
+<a href="../../markets/" style="color:#7f8892;text-decoration:none">Markets</a>
+<a href="../../course/" style="background:#5b9dff;color:#04101f;font-weight:600;font-size:14px;padding:10px 17px;border-radius:6px;text-decoration:none;white-space:nowrap">Start the course</a>
+</div></div></nav>
+<div class="wrap">
+  <p class="kicker">Learn · Canadian accounts</p>
+  <h1>Can you sell covered calls in an RRSP?</h1>
+
+  <div class="answer">
+    <p><strong>Yes.</strong> Covered calls are permitted in an RRSP — the shares you already own
+    back the obligation, so no margin is involved.</p>
+    <p>And there is something the RRSP has that the TFSA does not: a <strong>business income
+    exemption</strong> written into the RRSP regime. That difference has been tested in court, and
+    it stands.</p>
+  </div>
+
+  <h2>The asymmetry between the two accounts</h2>
+  <p>RRSPs and TFSAs feel similar. Both are registered, both shelter growth, both are structurally
+  cash accounts, both rule out the same strategies. It is natural to assume they are treated the
+  same way for tax.</p>
+  <p>They are not.</p>
+  <table>
+    <thead><tr><th>Account</th><th>Business income exemption</th></tr></thead>
+    <tr><td><strong>RRSP</strong></td><td><strong>Yes</strong> — paragraph 146(4)(b) exempts an RRSP
+    trust from tax on business income from qualified investments</td></tr>
+    <tr><td><strong>TFSA</strong></td><td><strong>No</strong> — subsection 146.2(6) taxes a TFSA
+    carrying on a business, with no equivalent carve-out</td></tr>
+  </table>
+
+  <h2>This was argued and lost</h2>
+  <p>In <em>Ahamed v The King</em>, 2023 TCC 17, the taxpayer's central argument was exactly this
+  asymmetry. He contended that the RRSP and TFSA regimes are <strong>"mirror images"</strong> of
+  each other, so the RRSP exemption should be read into the TFSA rules.</p>
+  <p>The Tax Court disagreed, and the Federal Court of Appeal affirmed in
+  <em>Canadian Western Trust Company v The King</em>, 2024 FCA 108. The courts conducted a textual,
+  contextual and purposive analysis and found the phrase "carries on one or more businesses" in
+  subsection 146.2(6) clear and broad enough to capture all businesses.</p>
+  <blockquote>Reading the exemption across would have meant rewriting legislation Parliament
+  actually passed. The court declined.</blockquote>
+  <p>So the asymmetry is not an oversight to be argued around. It has been tested at two levels and
+  it holds.</p>
+
+  <h2>What that means practically</h2>
+  <p>For <strong>systematic, repeated</strong> option writing, the RRSP does not carry the same
+  statutory exposure to the carrying-on-a-business question that a TFSA does.</p>
+  <p>That is a real difference and it is worth knowing. It is also only one input among several.</p>
+
+  <div class="warn">
+    <p><strong>This is not a recommendation to move your options activity into an RRSP.</strong>
+    The two accounts differ in contribution room, withdrawal treatment, whether the shelter is a
+    deferral or an exemption, and what the money is ultimately for. Statutory exposure to one
+    question is not the whole decision — and it is a conversation for your accountant, not an
+    article.</p>
+  </div>
+
+  <h2>What still limits you in an RRSP</h2>
+  <p>The exemption addresses tax treatment. It does nothing about account structure, which is
+  identical to a TFSA:</p>
+  <table>
+    <thead><tr><th>Strategy</th><th>Permitted in an RRSP?</th></tr></thead>
+    <tr><td>Covered calls</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Protective puts</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Buying calls and puts</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Cash-secured puts</td><td>Broker dependent</td></tr>
+    <tr><td>Any spread</td><td><strong>No</strong> — requires margin</td></tr>
+    <tr><td>Naked writing</td><td><strong>No</strong></td></tr>
+  </table>
+  <p>An RRSP is a cash account. It cannot use margin or short. A spread contains a short leg
+  needing collateral, so it cannot exist there regardless of your options approval level.</p>
+
+  <h2>Two things specific to RRSPs</h2>
+  <h3>US withholding tax</h3>
+  <p>Under the Canada–US tax treaty, US dividends paid into an RRSP are generally exempt from the
+  15% withholding that applies to a TFSA. That is an RRSP advantage on dividend-paying US shares —
+  and relevant if you are writing covered calls against them.</p>
+  <p>The treatment of <em>option premium</em> specifically is a separate question from dividends.
+  Ask your accountant rather than assuming it follows.</p>
+
+  <h3>No RESP or LIRA options at some brokers</h3>
+  <p>Not every registered account type supports options at every broker. RRSPs and TFSAs generally
+  do; RESPs, LIRAs and RRIFs frequently do not, or do so with tighter restrictions.</p>
+
+  <h2>The one question to ask your broker</h2>
+  <blockquote>"Can I sell covered calls and cash-secured puts in my RRSP, and what option level do
+  I need?"</blockquote>
+  <p>Four minutes on the phone settles it definitively. Policies differ between brokers and change
+  over time, so no article — including this one — should be your final source on what your specific
+  account permits.</p>
+
+  <h2>What to do</h2>
+  <ol>
+    <li><strong>Confirm with your broker</strong> what your RRSP actually permits and at what
+    approval level.</li>
+    <li><strong>Look up assignment and exercise fees.</strong> Run any income strategy and you will
+    be assigned regularly — that is the strategy working, not failing, but the fees add up.</li>
+    <li><strong>Speak to your accountant</strong> about which account should hold what. The
+    statutory difference above is real, and it is one factor in a decision that depends on facts
+    specific to you.</li>
+  </ol>
+
+  <div class="cta">
+    <h3>Session 17 covers the whole picture</h3>
+    <p>Registered account rules, the multifactor test, the RRSP asymmetry, adjusted cost base on assignment and currency handling — one full session of the WealthOrbit Trader course.</p>
+    <a href="../../course/">See the course &rarr;</a>
+  </div>
+
+  <div class="rel">
+    <p>Related</p>
+    <a href="../tfsa-options-canada/">Can you trade options in a TFSA?</a>
+    <a href="../options-tax-canada/">How are options taxed in Canada?</a>
+  </div>
+
+  <p class="foot">
+    Last reviewed 26 August 2026 · WealthOrbit<br>
+    General information only. Not tax, legal or investment advice. Tax outcomes depend on
+    facts specific to you — speak to your own accountant.
+  </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Are Options Taxed in Canada? Capital vs Business Income · WealthOrbit</title>
+<meta name="description" content="Whether options income is a capital gain or business income, the CRA's specific rule for covered versus naked writing, and what adjusted cost base does on assignment.">
+<link rel="canonical" href="https://wealthorbit.ca/learn/options-tax-canada/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0a0c0f;--card:#13161b;--card2:#181c22;--rule:#242830;--rule2:#1c2027;
+ --ink:#e8eaed;--ink2:#b0b7c0;--ink3:#7f8892;--live:#5b9dff;--gold:#d4a94a;--warn:#ff6b6b;
+ --mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.72 var(--body);
+ -webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 28px 110px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+ color:var(--gold);margin:56px 0 18px}
+h1{font-size:40px;line-height:1.12;letter-spacing:-.03em;margin:0 0 20px;font-weight:600}
+h2{font-size:25px;letter-spacing:-.02em;margin:52px 0 16px;font-weight:600;line-height:1.25}
+h3{font-size:19px;margin:34px 0 12px;font-weight:600}
+p{margin:0 0 18px;color:var(--ink2)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--live)}
+.answer{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--gold);
+ border-radius:11px;padding:26px 30px;margin:0 0 36px}
+.answer p{margin:0;color:var(--ink);font-size:18px;line-height:1.6}
+.answer p+p{margin-top:14px}
+ul,ol{margin:0 0 18px;padding-left:22px}
+li{margin-bottom:10px;color:var(--ink2)}
+li::marker{color:var(--ink3)}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15.5px}
+th{text-align:left;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+ color:var(--ink3);padding:0 16px 12px 0;border-bottom:1px solid var(--rule)}
+td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule2);color:var(--ink2);
+ vertical-align:top}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--ink)}
+blockquote{margin:26px 0;padding:2px 0 2px 20px;border-left:2px solid var(--live);
+ color:var(--ink);font-size:17.5px}
+.warn{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--warn);
+ border-radius:11px;padding:24px 28px;margin:30px 0}
+.warn p{margin:0;color:var(--ink2)}
+.warn strong{color:var(--warn)}
+code{font-family:var(--mono);font-size:15px;background:var(--rule2);padding:2px 7px;
+ border-radius:4px;color:var(--ink)}
+.cta{background:var(--card);border:1px solid var(--rule);border-radius:11px;
+ padding:30px 34px;margin:56px 0 0}
+.cta h3{margin:0 0 10px;font-size:20px}
+.cta p{margin:0 0 18px;font-size:15.5px}
+.cta a{display:inline-block;background:var(--live);color:#04101f;font:600 15px/1 var(--body);
+ padding:15px 26px;border-radius:7px;text-decoration:none}
+.foot{margin-top:52px;padding-top:26px;border-top:1px solid var(--rule);
+ font:400 13px/1.75 var(--mono);color:var(--ink3)}
+.rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--rule)}
+.rel p{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink3);margin:0 0 14px}
+.rel a{display:block;margin-bottom:10px;text-decoration:none;font-size:15.5px}
+.rel a:hover{text-decoration:underline}
+@media(max-width:640px){h1{font-size:29px}h2{font-size:21px}body{font-size:16px}
+ .wrap{padding:0 20px 80px}.answer{padding:22px 24px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "How Are Options Taxed in Canada? Capital vs Business Income \u00b7 WealthOrbit",
+ "description": "Whether options income is a capital gain or business income, the CRA's specific rule for covered versus naked writing, and what adjusted cost base does on assignment.",
+ "datePublished": "2026-08-26",
+ "dateModified": "2026-08-26",
+ "author": {
+  "@type": "Organization",
+  "name": "WealthOrbit",
+  "url": "https://wealthorbit.ca/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "WealthOrbit"
+ },
+ "mainEntityOfPage": "https://wealthorbit.ca/learn/options-tax-canada/"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Are options capital gains or business income in Canada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It depends on the facts. CRA Interpretation Bulletin IT-479R paragraph 25 presumes that a holder of options is on the same account as their share transactions, a writer of covered options is on the same account as the underlying shares, and a writer of naked options is normally on income account. Capital gains are included at 50%, business income at 100%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How are covered calls taxed in Canada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The CRA presumes the gain or loss realised by a writer of covered options is on the same account as the underlying shares. If you hold the shares on capital account, the covered call premium generally follows. The six-factor test in IT-479R still applies to the overall activity."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How are naked options taxed in Canada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "IT-479R paragraph 25 states that the gain or loss realised by a writer of naked options is normally on income account, meaning 100% inclusion as business income rather than 50% as a capital gain. That is the starting presumption before any consideration of trading frequency."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is the difference between 50% and 100% inclusion?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On $20,000 of options profit, capital gains treatment includes $10,000 in taxable income. Business income treatment includes the full $20,000. It is a doubling of taxable income from identical trades."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does the premium affect my cost base when a covered call is assigned?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. When a covered call is assigned the premium you collected adjusts your proceeds on the disposition, so the gain is calculated against your adjusted cost base with the premium accounted for. Broker T5008 slips do not always reflect this correctly, so keep your own records."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can I elect to treat option gains as capital?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The subsection 39(4) election on form T123 applies only to Canadian securities, so it does nothing for US-listed options. Under subsection 39(5) it is also unavailable to traders or dealers in securities, which per Vancouver Art Metal Works means anyone carrying on a business of trading."
+   }
+  }
+ ]
+}
+</script>
+
+</head>
+<body>
+<nav style="border-bottom:1px solid #242830;position:sticky;top:0;z-index:50;background:rgba(10,12,15,.93);backdrop-filter:blur(10px)">
+<div style="max-width:1140px;margin:0 auto;padding:17px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="../../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#e8eaed">
+<span style="width:21px;height:21px;border:1.5px solid #d4a94a;border-radius:50%;display:inline-block"></span>
+<b style="font:600 17px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-.01em">WealthOrbit</b></a>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;font:400 14.5px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<a href="../../course/" style="color:#7f8892;text-decoration:none">Course</a>
+<a href="../../idea-intelligence/" style="color:#7f8892;text-decoration:none">Idea</a>
+<a href="../../volatility/" style="color:#7f8892;text-decoration:none">Volatility</a>
+<a href="../../growth/" style="color:#7f8892;text-decoration:none">Growth</a>
+<a href="../../markets/" style="color:#7f8892;text-decoration:none">Markets</a>
+<a href="../../course/" style="background:#5b9dff;color:#04101f;font-weight:600;font-size:14px;padding:10px 17px;border-radius:6px;text-decoration:none;white-space:nowrap">Start the course</a>
+</div></div></nav>
+<div class="wrap">
+  <p class="kicker">Learn · Canadian tax</p>
+  <h1>How are options taxed in Canada?</h1>
+
+  <div class="answer">
+    <p><strong>It depends whether you are investing or carrying on a business</strong> — and the
+    difference is a doubling of your taxable income.</p>
+    <p>Capital gains are included at <strong>50%</strong>. Business income is included at
+    <strong>100%</strong>. Same trades, same profit, twice the tax.</p>
+  </div>
+
+  <h2>The rule most people have never seen</h2>
+  <p>CRA Interpretation Bulletin <strong>IT-479R</strong>, paragraph 25, sets out presumptions that
+  apply specifically to options. This is the part that actually answers the question, and it is
+  rarely quoted:</p>
+
+  <table>
+    <thead><tr><th>Position</th><th>Presumed treatment</th></tr></thead>
+    <tr><td><strong>Holder of options</strong><br>(you bought them)</td>
+        <td>Same account as your transactions in the underlying shares</td></tr>
+    <tr><td><strong>Writer of covered options</strong><br>(covered calls, cash-secured puts)</td>
+        <td>Same account as the underlying shares</td></tr>
+    <tr><td><strong>Writer of naked options</strong></td>
+        <td><strong>Normally income account</strong></td></tr>
+  </table>
+
+  <p>Read the last row again. If you write naked options, the CRA's starting presumption is that
+  the gains are <strong>business income, taxed at 100% inclusion</strong> — not capital gains.
+  That is a default position, not an accusation, and it exists before any consideration of how
+  often you trade.</p>
+
+  <div class="warn">
+    <p><strong>The practical consequence.</strong> Covered writing inherits the treatment of your
+    shares. Naked writing does not — it starts on income account by default. Two strategies that
+    look similar in a brokerage statement are treated differently before you have placed a
+    second trade.</p>
+  </div>
+
+  <h2>How the CRA decides which you are</h2>
+  <p>The test comes from IT-479R paragraph 11. Six factors, weighed together, no single one
+  deciding:</p>
+  <ul>
+    <li><strong>Frequency</strong> of transactions — how often are you trading?</li>
+    <li><strong>Duration</strong> of holdings — years, or days?</li>
+    <li><strong>Knowledge</strong> of securities markets — are you a sophisticated participant?</li>
+    <li><strong>Time spent</strong> on the activity — is this a serious occupation?</li>
+    <li><strong>Use of financing</strong> — are you borrowing to trade?</li>
+    <li><strong>Nature of the securities</strong> — speculative or established?</li>
+  </ul>
+  <p>There is no trade count. The CRA has consistently refused to publish one, and any number you
+  see quoted came from somebody's imagination rather than from the legislation, the bulletin, or
+  the courts.</p>
+
+  <h2>What a doubling actually costs</h2>
+  <p>Suppose you make <strong>$20,000</strong> from options in a non-registered account.</p>
+  <table>
+    <thead><tr><th></th><th>Included in income</th></tr></thead>
+    <tr><td>Capital gains treatment (50%)</td><td><strong>$10,000</strong></td></tr>
+    <tr><td>Business income treatment (100%)</td><td><strong>$20,000</strong></td></tr>
+  </table>
+  <p>Not an adjustment at the margins. Twice the taxable income from identical trades.</p>
+
+  <h2>Adjusted cost base and assignment</h2>
+  <p>This catches people, and it is mechanical rather than a judgement call.</p>
+  <p>Your covered call is assigned. Your shares are sold at the strike. The <strong>premium you
+  collected adjusts your proceeds</strong> on that disposition — so your gain is not simply the
+  strike minus what you paid for the shares. It is calculated against your adjusted cost base with
+  the premium accounted for.</p>
+  <p><strong>Keep your own records.</strong> Your broker will issue a T5008 reporting your
+  dispositions, and those slips do not always reflect the adjusted cost base correctly where
+  options and assignments are involved. If your slip and your records disagree, you need to be able
+  to show your working — and reconstructing it two years later from a statement is unpleasant.</p>
+
+  <h2>Superficial losses</h2>
+  <p>If you sell at a loss and reacquire <strong>identical property</strong> within 30 days before
+  or after the disposition, the loss may be denied.</p>
+  <p>Options interact with that rule in ways that are genuinely not obvious — whether an option and
+  its underlying share count as identical property, what happens when a position is rolled, how
+  assignment fits in. None of these has an intuitive answer.</p>
+  <blockquote>If you are harvesting losses deliberately, take advice. This is not a place to reason
+  from first principles, because the rule does not always behave the way first principles suggest.</blockquote>
+
+  <h2>The Canadian security election</h2>
+  <p>Under subsection 39(4) of the Income Tax Act, a taxpayer can elect to treat all gains and
+  losses on <strong>Canadian securities</strong> as capital, using form T123.</p>
+  <p>Two limits worth knowing. It applies only to Canadian securities, so it does nothing for a
+  portfolio of US-listed options. And under subsection 39(5) it is <strong>not available to traders
+  or dealers in securities</strong> — which, per the Federal Court of Appeal in <em>Vancouver Art
+  Metal Works</em>, means anyone carrying on a business of trading, not only registered
+  professionals.</p>
+  <p>So the election is unavailable to precisely the people who would most want it.</p>
+
+  <h2>Records to keep</h2>
+  <ul>
+    <li>Every trade: date, structure, premium, fills</li>
+    <li>Assignments, and the resulting cost base</li>
+    <li>Currency conversions and the rates used</li>
+    <li>Your <strong>holding period</strong> on each position — one of the six factors</li>
+    <li>Anything showing <strong>intent</strong> — a contemporaneous trading journal does this
+    better than memory ever will</li>
+  </ul>
+
+  <h2>What to do</h2>
+  <ol>
+    <li><strong>Know which side of the presumption you are on.</strong> Covered writing inherits
+    your share treatment. Naked writing starts on income account.</li>
+    <li><strong>Keep your own records</strong> rather than trusting the T5008.</li>
+    <li><strong>Speak to your accountant</strong> before starting anything systematic — describe the
+    strategy, the account, the frequency and the holding periods. That is a short conversation and
+    it may be the highest-return hour you spend.</li>
+  </ol>
+
+  <div class="cta">
+    <h3>Session 17 covers this properly</h3>
+    <p>The Canadian layer of the WealthOrbit Trader course covers registered account rules, the multifactor test, adjusted cost base on assignment, and currency — with the caveats stated rather than glossed over.</p>
+    <a href="../../course/">See the course &rarr;</a>
+  </div>
+
+  <div class="rel">
+    <p>Related</p>
+    <a href="../tfsa-options-canada/">Can you trade options in a TFSA?</a>
+    <a href="../rrsp-covered-calls/">Can you sell covered calls in an RRSP?</a>
+  </div>
+
+  <p class="foot">
+    Last reviewed 26 August 2026 · WealthOrbit<br>
+    General information only. Not tax, legal or investment advice. Tax outcomes depend on
+    facts specific to you — speak to your own accountant.
+  </p>
+</div>
+</body>
+</html>
