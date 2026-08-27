@@ -112,6 +112,35 @@ h1{font-size:56px;line-height:1.04;letter-spacing:-.035em;margin:0 0 22px;font-w
 @media(max-width:820px){.fcard{grid-template-columns:1fr;gap:24px}
  .fq{border-left:none;border-top:1px solid var(--rule);padding:20px 0 0}
  .fcard .fl h3{font-size:21px}}
+
+.gw{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.gw h3{font-size:24px;margin:0 0 10px;font-weight:600;letter-spacing:-.015em}
+.gw>.gw-l>p{font-size:15.5px;margin:0 0 22px}
+.gw-ctl{display:grid;gap:14px}
+.gw-ctl label{display:block;font:500 10px/1 var(--mono);letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.gw-ctl select,.gw-ctl input{width:100%;background:var(--card2);border:1px solid var(--rule);
+ border-radius:6px;color:var(--ink);font:500 15px/1 var(--body);padding:13px 14px;
+ -webkit-appearance:none;appearance:none}
+.gw-ctl select:focus,.gw-ctl input:focus{outline:2px solid var(--live);outline-offset:1px}
+.gw-ctl select{background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%237f8892' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 14px center;background-size:10px;padding-right:34px}
+.gw-ctl input{font-family:var(--mono)}
+.gw-amt{position:relative}
+.gw-amt span{position:absolute;left:14px;top:13px;color:var(--ink3);font-family:var(--mono);pointer-events:none}
+.gw-amt input{padding-left:27px}
+.gw-r{border-left:1px solid var(--rule);padding-left:36px}
+.gw-lead{font-size:13.5px;color:var(--ink3);margin:0 0 10px}
+.gw-big{font:600 46px/1 var(--mono);letter-spacing:-.03em;margin:0 0 10px;color:var(--up)}
+.gw-sub{font:500 14px/1 var(--mono);color:var(--ink2);margin:0 0 18px}
+.gw-dd{font-size:13.5px;color:var(--ink3);margin:0 0 20px;padding-top:16px;
+ border-top:1px solid var(--rule2);line-height:1.6}
+.gw-dd b{color:var(--down);font-weight:600}
+.gw-more{color:var(--live);text-decoration:none;font-size:14.5px}
+.gw-more:hover{text-decoration:underline}
+@media(max-width:820px){.gw{grid-template-columns:1fr;gap:28px}
+ .gw-r{border-left:none;border-top:1px solid var(--rule);padding:24px 0 0}
+ .gw-big{font-size:36px}}
 .stance{padding:78px 0;border-top:1px solid var(--rule)}
 .stance .q{font-size:31px;line-height:1.32;letter-spacing:-.02em;font-weight:600;
  margin:0 0 20px;max-width:22ch}
@@ -254,24 +283,36 @@ footer a:hover{color:var(--ink)}
     <div class="th"><span class="tn">00</span><h2>Start here</h2></div>
     <p class="ts">Before any strategy, the thing worth understanding first.</p>
 
-    <a class="card wide fcard" href="growth/">
-      <div class="fl">
+    <div class="card wide gw">
+      <div class="gw-l">
         <span class="n">Growth Intelligence</span>
-        <h3>What patient ownership actually did <span class="ar">&rarr;</span></h3>
-        <p>Pick any company in the S&amp;P 500 and see what a lump sum would be worth today
-        &mdash; total return, dividends reinvested, no trading. Then see the drawdowns you
-        would have had to sit through to collect it.</p>
-        <div class="meta">495 companies and ETFs &nbsp;·&nbsp; 15 years &nbsp;·&nbsp; free</div>
-      </div>
-      <div class="fr">
-        <div class="fq">
-          <p>Compounding does the work, not timing.</p>
-          <p>Dividends are a large part of the answer.</p>
-          <p>Most individual names lost to the index.</p>
-          <p><b>Hindsight hides what it cost.</b></p>
+        <h3>What patient ownership actually did</h3>
+        <p>Total return, dividends reinvested, no trading. Try it.</p>
+
+        <div class="gw-ctl">
+          <div>
+            <label for="gw-s">Invested in</label>
+            <select id="gw-s"></select>
+          </div>
+          <div>
+            <label for="gw-a">Amount</label>
+            <div class="gw-amt"><span>$</span><input id="gw-a" type="text" inputmode="numeric" value="1,000"></div>
+          </div>
+          <div>
+            <label for="gw-y">Years ago</label>
+            <select id="gw-y"></select>
+          </div>
         </div>
       </div>
-    </a>
+
+      <div class="gw-r">
+        <p class="gw-lead" id="gw-lead">would be worth</p>
+        <p class="gw-big" id="gw-big">&mdash;</p>
+        <p class="gw-sub" id="gw-sub"></p>
+        <p class="gw-dd" id="gw-dd"></p>
+        <a class="gw-more" href="growth/">All 495 companies, with the drawdowns &rarr;</a>
+      </div>
+    </div>
   </section>
 
   <section class="tier">
@@ -370,5 +411,60 @@ footer a:hover{color:var(--ink)}
   </div>
 </div></footer>
 
+
+<script>
+(function(){
+  const G = {"SPY":{"n":"S&P 500 ETF","s":[["2011-08-31",93.75],["2012-08-31",110.78],["2013-08-30",131.23],["2014-08-29",164.11],["2015-08-31",164.8],["2016-08-31",185.17],["2017-08-31",215.1],["2018-08-31",257.03],["2019-08-30",264.05],["2020-08-31",321.68],["2021-08-31",422.04],["2022-08-31",374.6],["2023-08-31",433.87],["2024-08-30",550.65],["2025-08-29",637.98],["2026-08-25",765.91]]},"QQQ":{"n":"Nasdaq 100 ETF","s":[["2011-08-31",48.33],["2012-08-31",60.36],["2013-08-30",67.76],["2014-08-29",90.97],["2015-08-31",96.12],["2016-08-31",108.5],["2017-08-31",137.63],["2018-08-31",177.13],["2019-08-30",179.46],["2020-08-31",284.55],["2021-08-31",368.74],["2022-08-31",292.05],["2023-08-31",371.5],["2024-08-30",471.33],["2025-08-29",567.67],["2026-08-25",710.72]]},"AAPL":{"n":"Apple","s":[["2011-08-31",11.51],["2012-08-31",19.98],["2013-08-30",14.98],["2014-08-29",22.56],["2015-08-31",25.25],["2016-08-31",24.26],["2017-08-31",38.17],["2018-08-31",53.77],["2019-08-30",50.08],["2020-08-31",125.06],["2021-08-31",148.09],["2022-08-31",154.21],["2023-08-31",185.36],["2024-08-30",227.1],["2025-08-29",231.29],["2026-08-25",309.9]]},"MSFT":{"n":"Microsoft","s":[["2011-08-31",20.55],["2012-08-31",24.46],["2013-08-30",27.33],["2014-08-29",38.24],["2015-08-31",37.61],["2016-08-31",51.02],["2017-08-31",67.99],["2018-08-31",103.99],["2019-08-30",129.63],["2020-08-31",214.48],["2021-08-31",289.72],["2022-08-31",253.04],["2023-08-31",320.26],["2024-08-30",410.65],["2025-08-29",502.56],["2026-08-25",491.71]]},"NVDA":{"n":"NVIDIA","s":[["2011-08-31",0.24],["2012-08-31",0.25],["2013-08-30",0.29],["2014-08-29",0.41],["2015-08-31",0.5],["2016-08-31",1.44],["2017-08-31",4.06],["2018-08-31",6.8],["2019-08-30",4.12],["2020-08-31",13.27],["2021-08-31",22.31],["2022-08-31",15.05],["2023-08-31",49.26],["2024-08-30",119.17],["2025-08-29",173.95],["2026-08-25",213.05]]},"AMZN":{"n":"Amazon","s":[["2011-08-31",10.76],["2012-08-31",12.41],["2013-08-30",14.05],["2014-08-29",16.95],["2015-08-31",25.64],["2016-08-31",38.46],["2017-08-31",49.03],["2018-08-31",100.64],["2019-08-30",88.81],["2020-08-31",172.55],["2021-08-31",173.54],["2022-08-31",126.77],["2023-08-31",138.01],["2024-08-30",178.5],["2025-08-29",229.0],["2026-08-25",261.06]]},"GOOGL":{"n":"Alphabet A","s":[["2015-10-30",36.55],["2016-10-31",40.14],["2017-10-31",51.2],["2018-10-31",54.05],["2019-10-31",62.39],["2020-10-30",80.1],["2021-10-29",146.74],["2022-10-31",93.68],["2023-10-31",122.99],["2024-10-31",170.03],["2025-10-31",280.64],["2026-08-25",346.96]]},"TSLA":{"n":"Tesla","s":[["2011-08-31",1.65],["2012-08-31",1.9],["2013-08-30",11.27],["2014-08-29",17.98],["2015-08-31",16.6],["2016-08-31",14.13],["2017-08-31",23.73],["2018-08-31",20.11],["2019-08-30",15.04],["2020-08-31",166.11],["2021-08-31",245.24],["2022-08-31",275.61],["2023-08-31",258.08],["2024-08-30",214.11],["2025-08-29",333.87],["2026-08-25",350.25]]},"META":{"n":"Meta Platforms","s":[["2012-05-31",29.34],["2013-05-31",24.14],["2014-05-30",62.75],["2015-05-29",78.5],["2016-05-31",117.78],["2017-05-31",150.14],["2018-05-31",190.11],["2019-05-31",175.93],["2020-05-29",223.13],["2021-05-28",325.87],["2022-05-31",191.95],["2023-05-31",262.42],["2024-05-31",463.26],["2025-05-30",644.88],["2026-05-29",631.92],["2026-08-25",570.05]]},"JPM":{"n":"JPMorgan Chase","s":[["2011-08-31",25.09],["2012-08-31",25.58],["2013-08-30",35.78],["2014-08-29",43.25],["2015-08-31",47.88],["2016-08-31",51.9],["2017-08-31",71.58],["2018-08-31",92.2],["2019-08-30",91.07],["2020-08-31",85.96],["2021-08-31",141.14],["2022-08-31",103.22],["2023-08-31",136.98],["2024-08-30",215.74],["2025-08-29",295.76],["2026-08-25",356.69]]},"KO":{"n":"Coca-Cola","s":[["2011-08-31",22.24],["2012-08-31",24.29],["2013-08-30",25.49],["2014-08-29",28.69],["2015-08-31",27.88],["2016-08-31",31.78],["2017-08-31",34.47],["2018-08-31",34.89],["2019-08-30",44.52],["2020-08-31",41.39],["2021-08-31",48.57],["2022-08-31",54.85],["2023-08-31",54.77],["2024-08-30",68.47],["2025-08-29",67.09],["2026-08-25",91.64]]},"XOM":{"n":"Exxon Mobil","s":[["2011-08-31",41.56],["2012-08-31",50.23],["2013-08-30",51.49],["2014-08-29",60.4],["2015-08-31",47.19],["2016-08-31",56.57],["2017-08-31",51.42],["2018-08-31",56.2],["2019-08-30",50.21],["2020-08-31",31.25],["2021-08-31",45.75],["2022-08-31",83.85],["2023-08-31",100.75],["2024-08-30",110.62],["2025-08-29",111.07],["2026-08-25",160.64]]},"BA":{"n":"Boeing","s":[["2011-08-31",54.36],["2012-08-31",59.47],["2013-08-30",88.5],["2014-08-29",110.26],["2015-08-31",116.48],["2016-08-31",119.1],["2017-08-31",227.17],["2018-08-31",331.56],["2019-08-30",359.84],["2020-08-31",171.82],["2021-08-31",219.5],["2022-08-31",160.25],["2023-08-31",224.03],["2024-08-30",173.74],["2025-08-29",234.68],["2026-08-25",211.08]]}};
+  const $ = i => document.getElementById(i);
+  const sel = $('gw-s'), yrs = $('gw-y'), amt = $('gw-a');
+  if(!sel) return;
+
+  Object.keys(G).forEach(k=>{
+    const o=document.createElement('option'); o.value=k; o.textContent=G[k].n+' ('+k+')';
+    sel.appendChild(o);
+  });
+  sel.value = 'AAPL' in G ? 'AAPL' : Object.keys(G)[0];
+  [1,3,5,10,15].forEach(y=>{
+    const o=document.createElement('option'); o.value=y; o.textContent=y+(y===1?' year':' years');
+    yrs.appendChild(o);
+  });
+  yrs.value = 15;
+
+  const money = v => '$' + Math.round(v).toLocaleString('en-US');
+
+  function draw(){
+    const k = sel.value, y = +yrs.value;
+    const a = parseFloat(amt.value.replace(/,/g,'')) || 0;
+    const ser = G[k].s, n = Math.min(y, ser.length-1);
+    const cut = ser.slice(ser.length-1-n);
+    const p0 = cut[0][1], p1 = cut[cut.length-1][1];
+    const vals = cut.map(r=>a*r[1]/p0);
+    const fin = vals[vals.length-1], gain = fin-a;
+    const cagr = (Math.pow(p1/p0,1/y)-1)*100;
+    const up = gain >= 0;
+
+    $('gw-lead').textContent = money(a)+' in '+G[k].n+', '+y+(y===1?' year':' years')+' ago, would be worth';
+    $('gw-big').textContent = money(fin);
+    $('gw-big').style.color = up ? 'var(--up)' : 'var(--down)';
+    $('gw-sub').textContent = (up?'+':'\u2212')+money(Math.abs(gain)).slice(1)
+                            + '  \u00b7  '+cagr.toFixed(1)+'% a year';
+
+    let peak=vals[0], mdd=0;
+    vals.forEach(v=>{ if(v>peak) peak=v; const dd=(peak-v)/peak; if(dd>mdd) mdd=dd; });
+    $('gw-dd').innerHTML = mdd > 0.15
+      ? 'To collect that you had to hold through a <b>'+(mdd*100).toFixed(0)+'% fall</b> and keep holding.'
+      : 'A calm stretch. Most periods ask more of you than this one did.';
+  }
+
+  amt.addEventListener('input', e=>{
+    const raw = e.target.value.replace(/[^0-9]/g,'');
+    e.target.value = raw ? parseInt(raw,10).toLocaleString('en-US') : '';
+    draw();
+  });
+  sel.addEventListener('change', draw);
+  yrs.addEventListener('change', draw);
+  draw();
+})();
+</script>
 </body>
 </html>

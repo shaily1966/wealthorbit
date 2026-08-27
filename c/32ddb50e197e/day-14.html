@@ -53,11 +53,22 @@ body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)
 .slide td strong{color:var(--ink)}
 
 .bar{max-width:1080px;margin:0 auto;padding:20px 24px 8px;display:flex;align-items:center;gap:16px}
-audio{flex:1;height:38px}
-audio::-webkit-media-controls-panel{background:var(--card)}
+audio{display:none}
+.play{width:54px;height:54px;flex:none;border-radius:50%;border:none;cursor:pointer;
+ background:var(--live);color:#04101f;display:grid;place-items:center;padding:0;
+ box-shadow:0 4px 18px rgba(91,157,255,.32);transition:transform .12s,box-shadow .12s}
+.play:hover{transform:scale(1.06);box-shadow:0 6px 24px rgba(91,157,255,.45)}
+.play:active{transform:scale(.97)}
+.play svg{fill:#04101f;pointer-events:none}
+.play:disabled{background:var(--rule);box-shadow:none;cursor:default;transform:none}
+.play:disabled svg{fill:var(--ink3)}
+.track{flex:1;height:6px;background:var(--rule);border-radius:3px;cursor:pointer;position:relative}
+.track .fill{height:100%;width:0;background:var(--live);border-radius:3px;transition:width .1s linear}
+.time{font:500 13px/1 var(--mono);color:var(--ink3);min-width:42px;text-align:right;
+ font-variant-numeric:tabular-nums}
 .nav{display:flex;gap:8px}
 button{background:var(--card);border:1px solid var(--rule);color:var(--ink);
- font:500 14px/1 var(--body);padding:11px 18px;border-radius:6px;cursor:pointer}
+ font:500 15px/1 var(--body);padding:14px 16px;border-radius:6px;cursor:pointer}
 button:hover:not(:disabled){background:var(--card2);border-color:var(--ink3)}
 button:disabled{opacity:.35;cursor:default}
 button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
@@ -92,12 +103,18 @@ button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
 </div>
 
 <div class="bar">
+  <button class="play" id="play" aria-label="Play narration">
+    <svg class="i-play" viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l11-6.5z"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24" width="22" height="22" style="display:none"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+  </button>
+  <div class="track" id="track"><div class="fill" id="fill"></div></div>
+  <span class="time" id="time">0:00</span>
   <div class="nav">
-    <button id="prev">&larr; Prev</button>
-    <button id="next">Next &rarr;</button>
+    <button id="prev">&larr;</button>
+    <button id="next">&rarr;</button>
   </div>
-  <audio id="au" controls preload="none"></audio>
-  <label class="auto"><input type="checkbox" id="ap" checked> Auto-advance</label>
+  <label class="auto"><input type="checkbox" id="ap" checked> Auto</label>
+  <audio id="au" preload="none"></audio>
 </div>
 
 <div class="rail" id="rail"></div>
@@ -112,8 +129,13 @@ function paint(){
   $('slide').innerHTML = `<p class="sn">SLIDE ${s.id} / ${SL.length}</p>` +
                          (s.title ? `<h2>${s.title}</h2>` : '') + s.html;
   const src = AU[s.id];
-  if(src){ $('au').src = src; $('au').style.visibility='visible'; }
-  else   { $('au').removeAttribute('src'); $('au').style.visibility='hidden'; }
+  const au = $('au');
+  au.pause();
+  if(src){ au.src = src; $('play').disabled = false; }
+  else   { au.removeAttribute('src'); $('play').disabled = true; }
+  setIcon(false);
+  $('fill').style.width = '0%';
+  $('time').textContent = '0:00';
   $('prev').disabled = i===0;
   $('next').disabled = i===SL.length-1;
   $('pg').style.width = ((i+1)/SL.length*100)+'%';
@@ -133,14 +155,42 @@ SL.forEach((s,n)=>{
 
 $('prev').onclick = ()=>go(i-1);
 $('next').onclick = ()=>go(i+1);
-$('au').addEventListener('ended', ()=>{
-  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>$('au').play().catch(()=>{}),350); }
+
+const au = $('au');
+function setIcon(playing){
+  document.querySelector('.i-play').style.display  = playing ? 'none' : '';
+  document.querySelector('.i-pause').style.display = playing ? '' : 'none';
+  $('play').setAttribute('aria-label', playing ? 'Pause narration' : 'Play narration');
+}
+function mmss(t){
+  if(!isFinite(t)) return '0:00';
+  const m = Math.floor(t/60), s2 = Math.floor(t%60);
+  return m + ':' + String(s2).padStart(2,'0');
+}
+$('play').onclick = ()=>{ au.paused ? au.play().catch(()=>{}) : au.pause(); };
+au.addEventListener('play',  ()=>setIcon(true));
+au.addEventListener('pause', ()=>setIcon(false));
+au.addEventListener('timeupdate', ()=>{
+  if(au.duration){
+    $('fill').style.width = (au.currentTime/au.duration*100)+'%';
+    $('time').textContent = mmss(au.duration - au.currentTime);
+  }
+});
+au.addEventListener('loadedmetadata', ()=>{ $('time').textContent = mmss(au.duration); });
+$('track').addEventListener('click', e=>{
+  if(!au.duration) return;
+  const r = $('track').getBoundingClientRect();
+  au.currentTime = (e.clientX - r.left) / r.width * au.duration;
+});
+au.addEventListener('ended', ()=>{
+  setIcon(false);
+  if($('ap').checked && i<SL.length-1){ go(i+1); setTimeout(()=>au.play().catch(()=>{}),350); }
 });
 document.addEventListener('keydown', e=>{
   if(e.target.tagName==='INPUT') return;
   if(e.key==='ArrowRight') go(i+1);
   if(e.key==='ArrowLeft')  go(i-1);
-  if(e.key===' '){ e.preventDefault(); $('au').paused ? $('au').play() : $('au').pause(); }
+  if(e.key===' '){ e.preventDefault(); au.paused ? au.play().catch(()=>{}) : au.pause(); }
 });
 try{ const v=parseInt(localStorage.getItem(KEY)); if(v>0 && v<SL.length) i=v; }catch(e){}
 paint();
