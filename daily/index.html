@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WealthOrbit &middot; Daily Brief</title>
+<meta name="description" content="The day's research output: SPX barrier levels for tomorrow, the ideas our systems generated today, and how yesterday's call turned out. Published as it happens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0B0D11;
+  --card:#14181E; --card2:#1B2028; --card-2:#1B2028;
+  --rule:#262C34; --rule2:#1C222A; --rule-2:#1C222A;
+  --ink:#EAEDF1;
+  --ink2:#B6BDC7; --ink-2:#B6BDC7;
+  --ink3:#8A93A0; --ink-3:#8A93A0;
+  --live:#5B9DFF;
+  --up:#3FD68A; --down:#FF6B6B;
+  --gold:#D4A94A;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --display:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px 90px}
+header{padding:58px 0 30px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 16px}
+h1{font-size:42px;line-height:1.05;letter-spacing:-.035em;margin:0 0 16px;font-weight:600}
+.lede{font-size:18px;color:var(--ink-2);margin:0;max-width:56ch}
+.sect{padding:38px 0;border-top:1px solid var(--rule)}
+.sh{display:flex;align-items:baseline;gap:13px;margin:0 0 6px}
+.sn{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--gold)}
+h2{font-size:25px;letter-spacing:-.02em;margin:0;font-weight:600}
+.sub{color:var(--ink-3);font-size:14.5px;margin:7px 0 22px;max-width:62ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin-bottom:18px}
+.st{background:var(--card);padding:19px}
+.st .k{display:block;font:500 10.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+.st .v{font:500 22px var(--mono);font-variant-numeric:tabular-nums}
+.wall{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;background:var(--card);border:1px solid var(--rule);
+  border-left:2px solid var(--gold);border-radius:7px;padding:17px 20px;margin-bottom:11px}
+.wl{font:500 10.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);min-width:110px}
+.wv{font:600 27px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.wm{font:400 13px var(--mono);color:var(--ink-3)}
+.side{font-size:15px;color:var(--ink-2);margin:16px 0 0}
+.side.no{color:var(--gold)}
+.ev{white-space:pre-wrap;font:400 13px/1.65 var(--mono);color:var(--ink-2);background:var(--card);
+  border:1px solid var(--rule);border-radius:7px;padding:20px;margin-top:18px;overflow-x:auto}
+.tw{border:1px solid var(--rule);border-radius:7px;overflow:auto;background:var(--card)}
+table{width:100%;border-collapse:collapse;font:400 14px var(--mono);font-variant-numeric:tabular-nums}
+th{font:500 10.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  text-align:right;padding:13px 14px;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:19px}
+td{padding:14px;text-align:right;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:normal;min-width:250px}
+.dir{font:500 10.5px var(--mono);letter-spacing:.1em;padding:2px 6px;border-radius:3px}
+.dir.up{color:var(--up);background:rgba(63,214,138,.11)}
+.dir.down{color:var(--down);background:rgba(255,107,107,.11)}
+.badge{font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:8px}
+.badge.held{color:var(--gold)}
+.thesis{display:block;font:400 13px/1.5 var(--body);color:var(--ink-3);margin-top:7px;max-width:52ch}
+.up{color:var(--up)} .down{color:var(--down)} .dim{color:var(--ink-3)}
+.sm{font-size:13px;margin:0 0 14px}
+.none{color:var(--ink-3);font-size:15px;background:var(--card);border:1px solid var(--rule);
+  border-radius:7px;padding:24px;margin:0}
+.wait{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;background:var(--card);border:1px dashed var(--rule);
+  border-radius:7px;padding:22px;color:var(--ink-3)}
+.wait b{color:var(--ink-2);font-weight:500}
+.wait span{font:400 13px var(--mono)}
+.note{border:1px solid var(--rule);border-left:2px solid var(--gold);border-radius:7px;
+  padding:18px 22px;font-size:14.5px;line-height:1.6;color:var(--ink-2);margin-top:24px}
+footer{border-top:1px solid var(--rule);padding:26px 0 0;font:400 12.5px/1.7 var(--mono);color:var(--ink-3)}
+@media(max-width:700px){h1{font-size:31px}.wrap{padding:0 20px 60px}.wv{font-size:23px}}
+</style></head><body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Daily brief &middot; 06 Sep 2026, 10:43</p>
+  <h1>What the systems said today.</h1>
+  <p class="lede">Published through the day as each part runs. Levels for tomorrow, the ideas
+  generated today, and how the last call actually turned out.</p>
+</header>
+
+<section class="sect">
+  <div class="sh"><span class="sn">01</span><h2>SPX &middot; tomorrow's barriers</h2></div>
+  <p class="sub">Where the engine thinks SPX is unlikely to trade tomorrow, and where it
+  disagrees with what the options market is pricing.</p>
+  <div class="wait"><b>Tomorrow's SPX levels</b><span>runs at 15:05 ET</span></div>
+</section>
+
+<section class="sect">
+  <div class="sh"><span class="sn">02</span><h2>Ideas today</h2></div>
+  <p class="sub">Generated at 9:55 and marked every two minutes until the close.</p>
+  <div class="wait"><b>Today's ideas</b><span>runs at 9:55 ET</span></div>
+</section>
+
+<section class="sect">
+  <div class="sh"><span class="sn">03</span><h2>Held overnight</h2></div>
+  <p class="sub">Decided at 15:55. Everything else was closed at the bell.</p>
+  <div class="wait"><b>Overnight holds</b><span>runs at 15:55 ET</span></div>
+</section>
+
+<section class="sect">
+  <div class="sh"><span class="sn">04</span><h2>How the last call did</h2></div>
+  <p class="sub">Scored against what actually happened, not against what we hoped.</p>
+  <div class="wait"><b>Yesterday's result</b><span>runs at 16:10 ET</span></div>
+  <div class="note">Every call is published before the outcome is known, and nothing is
+  removed afterwards. The record includes the misses because a record without them is
+  not a record.</div>
+</section>
+
+<footer>
+  Updated 06 Sep 2026, 10:43 &middot; wealthorbit.ca<br>
+  Education and research only. Not investment advice, and not a recommendation to trade.
+  Positions shown are a journal of what the systems generated, calibrated at a notional
+  size. No orders are placed from this page.
+</footer>
+
+</div></body></html>
