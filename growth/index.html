@@ -238,7 +238,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);font:40
     <p><strong>Past performance does not predict future results. Nothing here is a recommendation.</strong></p>
   </div>
 
-  <footer>Data through 04 Sep 2026 · WealthOrbit<br>
+  <footer>Data through 11 Sep 2026 · WealthOrbit<br>
   Education only. Not investment, tax or legal advice.</footer>
 </div>
 
@@ -273,10 +273,13 @@ function init(){
     q = q.trim().toLowerCase();
     shown = keys.filter(k => !q || k.toLowerCase().includes(q) ||
                              S[k].name.toLowerCase().includes(q) ||
-                             (S[k].sector||'').toLowerCase().includes(q)).slice(0,120);
+                             (S[k].sector||'').toLowerCase().includes(q));
     hi = -1;
+    const count = shown.length === keys.length
+      ? `<div class="none">All ${keys.length} names \u00b7 type to narrow</div>`
+      : `<div class="none">${shown.length} of ${keys.length}</div>`;
     $('list').innerHTML = shown.length
-      ? shown.map(k=>`<div class="opt" data-k="${k}"><b>${k}</b><span>${S[k].name}</span><i>${S[k].sector||''}</i></div>`).join('')
+      ? count + shown.map(k=>`<div class="opt" data-k="${k}"><b>${k}</b><span>${S[k].name}</span><i>${S[k].sector||''}</i></div>`).join('')
       : '<div class="none">No match</div>';
     $('list').classList.add('on');
   };
